@@ -8,4 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class RegistrationDetail extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'nama',
+        'nisn',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'jenis_kelamin',
+        'agama',
+        'nomer_hp',
+        'email',
+        'nama_ibu',
+        'nama_bapak',
+        'pendidikan_ibu',
+        'pendidikan_bapak',
+        'pekerjaan_ibu',
+        'pekerjaan_bapak',
+        'penghasilan_ibu',
+        'penghasilan_bapak',
+        'pendidikan',
+        'nama_sekolah',
+        'alamat',
+    ];
 }

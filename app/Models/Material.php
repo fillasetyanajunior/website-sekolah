@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Registration extends Model
+class Material extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_siswa',
-        'kode',
-        'pilihan_1',
-        'pilihan_2',
-        'info',
-        'password',
-        'is_active',
+        'id_user',
+        'mapel',
+        'judul',
+        'kelas',
+        'path',
     ];
 }

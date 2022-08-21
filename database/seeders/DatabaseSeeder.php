@@ -24,5 +24,8 @@ class DatabaseSeeder extends Seeder
         Teacher::factory(1)->create();
         TeacherDetail::factory(1)->create();
         Admin::factory(1)->create();
+        $this->call([
+            IndoRegionSeeder::class,
+        ]);
     }
 }

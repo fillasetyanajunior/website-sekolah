@@ -3,12 +3,16 @@
 use App\Http\Controllers\Admin\DashboardController as Dashboard;
 use App\Http\Controllers\Admin\DepartmentController as Department;
 use App\Http\Controllers\Admin\DeuteronomiController as Deuteronomi;
+use App\Http\Controllers\Admin\GradeController as Grade;
+use App\Http\Controllers\Admin\MaterialController as Material;
+use App\Http\Controllers\Admin\RegistrationController as Registration;
 use App\Http\Controllers\Admin\ScheduleController as Schedule;
 use App\Http\Controllers\Admin\StudentController as Student;
 use App\Http\Controllers\Admin\SubjectController as Subject;
 use App\Http\Controllers\Admin\TeacherController as Teacher;
 use App\Http\Controllers\Admin\YearController as Year;
 use App\Http\Controllers\Auth\Admin\LoginController as Login;
+use App\Http\Controllers\Auth\Admin\LogoutController as Logout;
 use Illuminate\Support\Facades\Route;
 
 $root = getDomain(config('app.url'));
@@ -20,9 +24,25 @@ Route::group([
 ], function () {
     Route::get('login', [Login::class, 'form'])->name('admin.login.form');
     Route::post('login', [Login::class, 'login'])->name('admin.login.post');
-    // Route::get('logout', [Login::class, 'logout'])->name('admin.logout');
+    Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
+
+    Route::get('materi', [Material::class, 'index'])->name('admin.material');
+    Route::post('materi/store', [Material::class, 'store'])->name('admin.material.store');
+    Route::post('materi/edit/{material}', [Material::class, 'edit'])->name('admin.material.edit');
+    Route::post('materi/update/{material}', [Material::class, 'update'])->name('admin.material.update');
+    Route::delete('materi/destroy/{material}', [Material::class, 'destroy'])->name('admin.material.destroy');
+
+    Route::get('nilai', [Grade::class, 'index'])->name('admin.grade');
+    Route::post('nilai/store', [Grade::class, 'store'])->name('admin.grade.store');
+    Route::post('nilai/edit/{grade}', [Grade::class, 'edit'])->name('admin.grade.edit');
+    Route::post('nilai/update/{grade}', [Grade::class, 'update'])->name('admin.grade.update');
+    Route::delete('nilai/destroy/{grade}', [Grade::class, 'destroy'])->name('admin.grade.destroy');
+
+    Route::get('pendaftaran', [Registration::class,'index'])->name('admin.registration');
+    Route::post('pendaftaran/edit/{registration}', [Registration::class, 'edit'])->name('admin.registration.edit');
+    Route::post('pendaftaran/update/{registration}', [Registration::class, 'update'])->name('admin.registration.update');
 
     Route::get('siswa', [Student::class,'index'])->name('admin.student');
     Route::post('siswa/store', [Student::class, 'store'])->name('admin.student.store');

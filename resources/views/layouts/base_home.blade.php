@@ -9,13 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
      <!-- Site Metas -->
-    <title>{{env('APP_NAME')}}</title>
+    <title>{{env('APP_NAME')}} - @yield('title')</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="{{url('assets/login/images/avatar-01.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{url('assets/auth/images/avatar-01.png')}}" type="image/x-icon" />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{url('assets/home/css/bootstrap.min.css')}}">

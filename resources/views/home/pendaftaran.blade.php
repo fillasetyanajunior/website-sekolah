@@ -490,7 +490,10 @@
                         </div>
                     </div>
                     <div class="d-flex mt-3">
-                        <button class="btn btn-primary ms-auto">Daftar</button>
+                        <div class="ms-auto">
+                            <a href="{{route('home')}}" class="btn btn-warning">Back</a>
+                            <button class="btn btn-primary">Daftar</button>
+                        </div>
                     </div>
                 </form>
             </div>

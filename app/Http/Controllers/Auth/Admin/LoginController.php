@@ -35,13 +35,4 @@ class LoginController extends Controller
 
         return redirect()->route('admin.login.form')->with(['error' => "Kata sandi dan username tidak cocok"]);
     }
-
-    public function logout(Request $request)
-    {
-        Auth::guard('admin')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('admin.login.form')->with(['error' => 'Anda berhasil logout']);
-    }
 }

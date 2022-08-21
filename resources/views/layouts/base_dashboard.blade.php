@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="csrf-token" content="{{csrf_token()}}">
     <link rel="icon" href="favicon.ico">
-    <title>{{env('APP_NAME')}}</title>
+    <title>{{env('APP_NAME')}} - @yield('title')</title>
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="{{url('assets/login/images/avatar-01.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{url('assets/auth/images/avatar-01.png')}}" type="image/x-icon" />
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="{{url('assets/dashboard/css/simplebar.css')}}">
     <!-- Fonts CSS -->
@@ -67,10 +66,6 @@
     <script src="{{url('assets/dashboard/js/dropzone.min.js')}}"></script>
     <script src="{{url('assets/dashboard/js/uppy.min.js')}}"></script>
     <script src="{{url('assets/dashboard/js/quill.min.js')}}"></script>
-    {{-- <script src="{{url('assets/dashboard/js/add.js')}}"></script> --}}
-    <script src="{{url('assets/dashboard/js/search.js')}}"></script>
-    <script src="{{url('assets/dashboard/js/kota.js')}}"></script>
-    <script src="{{url('assets/dashboard/js/profile.js')}}"></script>
     @stack('scripts')
     <script>
         $('.select2').select2(

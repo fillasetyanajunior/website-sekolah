@@ -20,7 +20,7 @@ class CreateRegistrationsTable extends Migration
             $table->integer('pilihan_1');
             $table->integer('pilihan_2');
             $table->integer('info');
-            $table->integer('password');
+            $table->string('password');
             $table->enum('is_active',['belum test', 'sudah test', 'lulus', 'ditolak']);
             $table->timestamps();
         });

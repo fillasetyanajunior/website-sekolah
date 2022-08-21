@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/pendaftaran', [Registration::class,'index'])->name('regisration');
 Route::post('/pendaftaran', [Registration::class,'store'])->name('regisration.store');

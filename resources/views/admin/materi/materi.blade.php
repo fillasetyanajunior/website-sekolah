@@ -13,7 +13,7 @@
                     <div class="col-auto">
                         <div class="d-flex flex-row-reverse bd-highlight">
                             <div class="p-2 bd-highlight">
-                                <input type="text" class="form-control" id="search" placeholder="Search">
+                                <a href="" class="btn mb-2 btn-primary " id="tambahmateri" data-toggle="modal" data-target="#MateriModal"><i class="fas fa-plus"></i><span>&nbsp; Tambah Materi</span></a>
                             </div>
                         </div>
                     </div>
@@ -29,35 +29,35 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nama</th>
-                                            <th>NISN</th>
-                                            <th>Kode</th>
-                                            <th>Status</th>
+                                            <th>Mata Pelajaran</th>
+                                            <th>Judul Materi</th>
+                                            <th>Kelas</th>
+                                            <th>File Materi</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="myTable">
+                                    <tbody>
                                         @php
                                             $i = 1;
                                         @endphp
-                                        @foreach ($registration as $showregistration)
+                                        @foreach ($material as $showmaterial)
                                             @php
-                                                $detail = App\Models\RegistrationDetail::find($showregistration->id_siswa);
+                                                $path = explode('/', $showmaterial->path);
                                             @endphp
                                             <tr>
-                                                <th>{{$i++}}</th>
-                                                <td>{{$detail->nama}}</td>
-                                                <td>{{$detail->nisn}}</td>
-                                                <td>{{$showregistration->kode}}</td>
-                                                <td class="text-capitalize">{{$showregistration->is_active}}</td>
+                                                <td>{{$i++}}</td>
+                                                <td>{{$showmaterial->mapel}}</td>
+                                                <td>{{$showmaterial->judul}}</td>
+                                                <td>{{$showmaterial->kelas}}</td>
+                                                <td>{{$path[1]}}</td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <button class="btn btn-sm dropdown-toggle more-vertical" type="button" id="dr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <span class="text-muted sr-only">Action</span>
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dr1">
-                                                            <a class="dropdown-item" href="" id="editpendaftaran" data-toggle="modal" data-target="#PendaftaranModal" data-id="{{$showregistration->id}}">Edit</a>
-                                                            <form action="/pendaftaran/{{$showregistration->id}}" method="post" >
+                                                            <a class="dropdown-item" href="" id="editmateri" data-toggle="modal" data-target="#MateriModal" data-id="{{$showmaterial->id}}">Edit</a>
+                                                            <form action="{{route('admin.meterial.destroy', $showmaterial->id)}}" method="post" >
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button type="submit" class="dropdown-item">Hapus</button>
@@ -69,7 +69,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{$registration->links()}}
+                                {{$material->links()}}
                             </div>
                         </div>
                     </div>
@@ -78,52 +78,50 @@
         </div>
     </div>
 </main>
-<div class="modal fade" id="PendaftaranModal" tabindex="-1" aria-labelledby="ModalPendaftaranLabel" aria-hidden="true">
+<div class="modal fade" id="MateriModal" tabindex="-1" aria-labelledby="ModalMateriLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalPendaftaranLabel">Modal title</h5>
+                <h5 class="modal-title" id="ModalMateriLabel">Modal title</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="body_pendaftaran">
-                <form action="" method="POST">
+            <div class="body_materi">
+                <form action="" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="name">Nama</label>
-                            <input type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="nisn">NISN</label>
-                            <input type="text" class="form-control" id="nisn" name="nisn">
-                        </div>
-                        <div class="form-group">
-                            <label for="kode">Kode Pendaftaran</label>
-                            <input type="text" class="form-control" id="kode" name="kode">
-                        </div>
                         <div class="form-group mb-3">
-                            <label for="jurusan">Jurusan</label>
-                            <select class="form-control" id="jurusan" name="jurusan">
+                            <label for="mapel">Mata Pelajaran</label>
+                            <select class="form-control" id="mapel" name="mapel">
                                 <option value="">-- Pilih --</option>
-                                @foreach ($department as $department)
-                                    <option value="{{$department->kode}}">{{$department->jurusan}}</option>
+                                @foreach ($subject as $showsubject)
+                                    <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="active">Status</label>
-                            <select class="form-control" id="active" name="active">
+                            <label for="judul">Judul</label>
+                            <input type="text" id="judul" class="form-control" name="judul">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="kelas">Kelas</label>
+                            <select class="form-control" id="kelas" name="kelas">
                                 <option value="">-- Pilih --</option>
-                                <option value="1">Belum Test</option>
-                                <option value="2">Sudah Test</option>
-                                <option value="3">Lulus</option>
-                                <option value="4">Tolak</option>
+                                <option value="1">10</option>
+                                <option value="2">11</option>
+                                <option value="3">12</option>
                             </select>
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="file">File Materi</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="file" name="file">
+                                <label class="custom-file-label" for="file">File Materi</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer footer_pendaftaran">
+                    <div class="modal-footer footer_materi">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
@@ -136,14 +134,24 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
-            $('#editpendaftaran*').on('click', function () {
-                const id = $(this).data('id');
-                let _url = '{{route("admin.registration.edit",":id")}}'.replace(':id',id);
+            $('#tambahmateri').on('click', function () {
+                $('.footer_materi button[type=submit]').html('Add');
+                $('#ModalMateriLabel').html('Tambah Materi');
+                $('.body_materi form').attr('action', '{{route("admin.material.store")}}');
+                $('.body_materi form').attr('method', 'post');
 
-                $('.footer_pendaftaran* button[type=submit]').html('Edit');
-                $('#ModalPendaftaranLabel*').html('Edit Pendaftaran');
-                $('.body_pendaftaran form*').attr('action', '{{route("admin.registration.update",":id")}}'.replace(':id',id));
-                $('.body_pendaftaran form*').attr('method', 'post');
+                $("#mapel").val('');
+                $("#judul").val('');
+                $("#kelas").val('');
+            });
+            $('#editmateri*').on('click', function () {
+                const id = $(this).data('id');
+                let _url = '{{route("admin.material.edit",":id")}}'.replace(':id', id);
+
+                $('.footer_materi* button[type=submit]').html('Edit');
+                $('#ModalMateriLabel*').html('Edit Materi');
+                $('.body_materi form*').attr('action', '{{route("admin.material.update",":id")}}'.replace(':id', id));
+                $('.body_materi form*').attr('method', 'post');
 
                 $.ajax({
                     type: 'POST',
@@ -152,21 +160,12 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#name').val(hasil.detail.nama)
-                        $('#nisn').val(hasil.detail.nisn)
-                        $('#kode').val(hasil.registration.kode)
-                        if (hasil.registration.is_active == 'belum test') {
-                            $('#active').val(1)
-                        } else if (hasil.registration.is_active == 'sudah test') {
-                            $('#active').val(2)
-                        } else if (hasil.registration.is_active == 'lulus') {
-                            $('#active').val(3)
-                        }else{
-                            $('#active').val(4)
-                        }
+                        $('#mapel').val(hasil.mapel)
+                        $('#judul').val(hasil.judul)
+                        $('#kelas').val(hasil.kelas)
                     }
                 });
             });
-        })
+        });
     </script>
 @endpush

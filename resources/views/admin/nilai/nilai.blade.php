@@ -13,7 +13,7 @@
                     <div class="col-auto">
                         <div class="d-flex flex-row-reverse bd-highlight">
                             <div class="p-2 bd-highlight">
-                                <input type="text" class="form-control" id="search" placeholder="Search">
+                                <a href="" class="btn mb-2 btn-primary" id="tambahnilai" data-toggle="modal" data-target="#NilaiModal" ><i class="fas fa-plus"></i><span>&nbsp; Tambah Nilai</span></a>
                             </div>
                         </div>
                     </div>
@@ -30,34 +30,34 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nama</th>
-                                            <th>NISN</th>
-                                            <th>Kode</th>
-                                            <th>Status</th>
+                                            <th>Mata Pelajaran</th>
+                                            <th>Angka</th>
+                                            <th>Huruf</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="myTable">
+                                    <tbody>
                                         @php
-                                            $i = 1;
+                                            $i=1;
                                         @endphp
-                                        @foreach ($registration as $showregistration)
+                                        @foreach ($grade as $showgrade)
                                             @php
-                                                $detail = App\Models\RegistrationDetail::find($showregistration->id_siswa);
+                                                $mapel = App\Models\Subject::find($showgrade->mapel);
                                             @endphp
                                             <tr>
-                                                <th>{{$i++}}</th>
-                                                <td>{{$detail->nama}}</td>
-                                                <td>{{$detail->nisn}}</td>
-                                                <td>{{$showregistration->kode}}</td>
-                                                <td class="text-capitalize">{{$showregistration->is_active}}</td>
+                                                <td>{{$i++}}</td>
+                                                <td>{{$showgrade->nama}}</td>
+                                                <td>{{$mapel->matapelajaran}}</td>
+                                                <td>{{$showgrade->angka}}</td>
+                                                <td>{{$showgrade->huruf}}</td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <button class="btn btn-sm dropdown-toggle more-vertical" type="button" id="dr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <span class="text-muted sr-only">Action</span>
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dr1">
-                                                            <a class="dropdown-item" href="" id="editpendaftaran" data-toggle="modal" data-target="#PendaftaranModal" data-id="{{$showregistration->id}}">Edit</a>
-                                                            <form action="/pendaftaran/{{$showregistration->id}}" method="post" >
+                                                            <a class="dropdown-item" href="" id="editnilai" data-toggle="modal" data-target="#NilaiModal" data-id="{{$showgrade->id}}">Edit</a>
+                                                            <form action="{{route('admin.grade.destroy', $showgrade->id)}}" method="post" >
                                                                 @csrf
                                                                 @method('delete')
                                                                 <button type="submit" class="dropdown-item">Hapus</button>
@@ -69,7 +69,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{$registration->links()}}
+                                {{$grade->links()}}
                             </div>
                         </div>
                     </div>
@@ -78,52 +78,45 @@
         </div>
     </div>
 </main>
-<div class="modal fade" id="PendaftaranModal" tabindex="-1" aria-labelledby="ModalPendaftaranLabel" aria-hidden="true">
+<div class="modal fade" id="NilaiModal" tabindex="-1" aria-labelledby="ModalNilaiLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalPendaftaranLabel">Modal title</h5>
+                <h5 class="modal-title" id="ModalNilaiLabel">Modal title</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="body_pendaftaran">
-                <form action="" method="POST">
+            <div class="body_nilai">
+                <form action="" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="name">Nama</label>
-                            <input type="text" class="form-control" id="name" name="name">
+                        <div class="form-group mb-3 angka">
+                            <label for="angka">Nilai Angka</label>
+                            <input type="text" class="form-control" id="angka" name="angka">
                         </div>
-                        <div class="form-group">
-                            <label for="nisn">NISN</label>
-                            <input type="text" class="form-control" id="nisn" name="nisn">
+                        <div class="form-group mb-3 huruf">
+                            <label for="huruf">Nilai Huruf</label>
+                            <input type="text" class="form-control" id="huruf" name="huruf">
                         </div>
-                        <div class="form-group">
-                            <label for="kode">Kode Pendaftaran</label>
-                            <input type="text" class="form-control" id="kode" name="kode">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="jurusan">Jurusan</label>
-                            <select class="form-control" id="jurusan" name="jurusan">
+                        <div class="form-group mb-3 guru">
+                            <label for="guru">Guru Pengampu</label>
+                            <select class="form-control" id="guru" name="guru">
                                 <option value="">-- Pilih --</option>
-                                @foreach ($department as $department)
-                                    <option value="{{$department->kode}}">{{$department->jurusan}}</option>
+                                @foreach ($teacher as $showteacher)
+                                    <option value="{{$showteacher->id}}">{{$showteacher->name}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="active">Status</label>
-                            <select class="form-control" id="active" name="active">
-                                <option value="">-- Pilih --</option>
-                                <option value="1">Belum Test</option>
-                                <option value="2">Sudah Test</option>
-                                <option value="3">Lulus</option>
-                                <option value="4">Tolak</option>
-                            </select>
+                        <div class="form-group mb-3 import_excel">
+                            <label for="import_excel">Import File Nilai Excel</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="import_excel" name="import_excel">
+                                <label class="custom-file-label" for="import_excel">Import File Nilai Excel</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer footer_pendaftaran">
+                    <div class="modal-footer footer_nilai">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
@@ -135,15 +128,30 @@
 @endsection
 @push('scripts')
     <script>
-        $(document).ready(function(){
-            $('#editpendaftaran*').on('click', function () {
-                const id = $(this).data('id');
-                let _url = '{{route("admin.registration.edit",":id")}}'.replace(':id',id);
+        $(document).ready(function(){$('#tambahnilai').on('click', function () {
+            $('.footer_nilai button[type=submit]').html('Add');
+                $('#ModalNilaiLabel').html('Tambah Nilai');
+                $('.body_nilai form').attr('action', '{{route("admin.grade.store")}}');
+                $('.body_nilai form').attr('method', 'post');
 
-                $('.footer_pendaftaran* button[type=submit]').html('Edit');
-                $('#ModalPendaftaranLabel*').html('Edit Pendaftaran');
-                $('.body_pendaftaran form*').attr('action', '{{route("admin.registration.update",":id")}}'.replace(':id',id));
-                $('.body_pendaftaran form*').attr('method', 'post');
+                $('.angka').hide()
+                $('.huruf').hide()
+                $('.import_excel').show()
+                $('.guru').show()
+            });
+            $('#editnilai*').on('click', function () {
+                const id = $(this).data('id');
+                let _url = '{{route("admin.grade.edit",":id")}}'.replace(':id', id);
+
+                $('.footer_nilai* button[type=submit]').html('Edit');
+                $('#ModalNilaiLabel*').html('Edit Nilai');
+                $('.body_nilai form*').attr('action', '{{route("admin.grade.update",":id")}}'.replace(':id', id));
+                $('.body_nilai form*').attr('method', 'post');
+
+                $('.angka').show()
+                $('.huruf').show()
+                $('.import_excel').hide()
+                $('.guru').hide()
 
                 $.ajax({
                     type: 'POST',
@@ -152,21 +160,11 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#name').val(hasil.detail.nama)
-                        $('#nisn').val(hasil.detail.nisn)
-                        $('#kode').val(hasil.registration.kode)
-                        if (hasil.registration.is_active == 'belum test') {
-                            $('#active').val(1)
-                        } else if (hasil.registration.is_active == 'sudah test') {
-                            $('#active').val(2)
-                        } else if (hasil.registration.is_active == 'lulus') {
-                            $('#active').val(3)
-                        }else{
-                            $('#active').val(4)
-                        }
+                        $('#angka').val(hasil.angka)
+                        $('#huruf').val(hasil.huruf)
                     }
                 });
             });
-        })
+        });
     </script>
 @endpush
