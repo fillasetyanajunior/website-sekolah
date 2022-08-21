@@ -22,7 +22,7 @@ class GradeController extends AppController
     public function store(Request $request)
     {
         Excel::import(new GradeImport($request->guru), $request->import_excel);
-        return redirect(route('admin.grade'))->with('status', 'Data Berhasil Ditambahkan');
+        return redirect(route('admin.grade'))->with('success', 'Data Berhasil Ditambahkan');
     }
 
     public function edit(Grade $grade)
@@ -37,12 +37,12 @@ class GradeController extends AppController
                 'angka'         => $request->angka,
                 'huruf'         => $request->huruf,
             ]);
-        return redirect(route('admin.grade'))->with('status', 'Data Berhasil Update');
+        return redirect(route('admin.grade'))->with('success', 'Data Berhasil Update');
     }
 
     public function destroy(Grade $grade)
     {
         Grade::destroy($grade->id);
-        return redirect(route('admin.grade'))->with('status', 'Data Berhasil Delete');
+        return redirect(route('admin.grade'))->with('success', 'Data Berhasil Delete');
     }
 }

@@ -45,7 +45,7 @@ class MaterialController extends AppController
             'path'  => $path,
         ]);
 
-        return redirect(route('admin.material'))->with('status', 'Data Berhasil Ditambahkan');
+        return redirect(route('admin.material'))->with('success', 'Data Berhasil Ditambahkan');
     }
 
     public function edit(Material $material)
@@ -82,12 +82,12 @@ class MaterialController extends AppController
                 'path'  => $path,
             ]);
 
-        return redirect(route('admin.meterial'))->with('status', 'Data Berhasil Update');
+        return redirect(route('admin.meterial'))->with('success', 'Data Berhasil Update');
     }
 
     public function destroy(Material $material)
     {
         Material::destroy($material->id);
-        return redirect(route('admin.meterial'))->with('status', 'Data Berhasil Delete');
+        return redirect(route('admin.meterial'))->with('success', 'Data Berhasil Delete');
     }
 }

@@ -63,6 +63,6 @@ class RegistrationController extends AppController
         Registration::destroy($registration->id);
         RegistrationDetail::destroy($registration->id_siswa);
 
-        return redirect()->route('admin.registration')->with('status', 'Data Berhasil Update');
+        return redirect()->route('admin.registration')->with('success', 'Data Berhasil Update');
     }
 }

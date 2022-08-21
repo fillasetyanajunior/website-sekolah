@@ -162,7 +162,7 @@
                 </a>
                 <ul class="collapse list-unstyled pl-4 w-100" id="berita">
                     <li class="nav-item active">
-                        <a class="nav-link pl-3" href="">
+                        <a class="nav-link pl-3" href="{{route('admin.news')}}">
                             <i class="fas fa-newspaper fe-16"></i>
                             <span class="ml-1 item-text">Upload Berita</span>
                         </a>

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DepartmentController as Department;
 use App\Http\Controllers\Admin\DeuteronomiController as Deuteronomi;
 use App\Http\Controllers\Admin\GradeController as Grade;
 use App\Http\Controllers\Admin\MaterialController as Material;
+use App\Http\Controllers\Admin\NewsController as News;
 use App\Http\Controllers\Admin\RegistrationController as Registration;
 use App\Http\Controllers\Admin\ScheduleController as Schedule;
 use App\Http\Controllers\Admin\StudentController as Student;
@@ -27,6 +28,12 @@ Route::group([
     Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
+
+    Route::get('informasi', [News::class, 'index'])->name('admin.news');
+    Route::post('informasi/store', [News::class, 'store'])->name('admin.news.store');
+    Route::post('informasi/edit/{news}', [News::class, 'edit'])->name('admin.news.edit');
+    Route::post('informasi/update/{news}', [News::class, 'update'])->name('admin.news.update');
+    Route::delete('informasi/destroy/{news}', [News::class, 'destroy'])->name('admin.news.destroy');
 
     Route::get('materi', [Material::class, 'index'])->name('admin.material');
     Route::post('materi/store', [Material::class, 'store'])->name('admin.material.store');
