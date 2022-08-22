@@ -15,6 +15,7 @@ class CreateDeuteronomisTable extends Migration
     {
         Schema::create('deuteronomis', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_siswa');
             $table->date('tanggal');
             $table->string('jam');
             $table->integer('matapelajaran');
@@ -22,7 +23,7 @@ class CreateDeuteronomisTable extends Migration
             $table->integer('jurusan');
             $table->integer('kursi');
             $table->integer('ruangan');
-            $table->string('kelas');
+            $table->enum('kelas', ['X', 'XI', 'XII']);
             $table->timestamps();
         });
     }

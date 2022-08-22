@@ -80,9 +80,9 @@
                                             <tr>
                                                 <td>{{$i++}}</td>
                                                 <td>{{$showyear->tahun}}</td>
-                                                <td>
+                                                <td width="100px">
                                                     <button type="button" class="btn btn-sm btn-warning" id="edittahun" data-bs-toggle="modal" data-bs-target="#TahunModal" data-id="{{$showyear->id}}">Edit</button>
-                                                    <form action="{{route('admin.year.destroy',$showyear->id)}}" method="post" >
+                                                    <form action="{{route('admin.year.destroy',$showyear->id)}}" method="post" class="d-inline">
                                                         @csrf
                                                         @method('delete')
                                                         <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

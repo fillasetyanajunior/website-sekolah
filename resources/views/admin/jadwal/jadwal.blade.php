@@ -82,10 +82,10 @@
                                             <?php $i = 1; ?>
                                             @foreach ($schedule as $showschedule)
                                                 @php
-                                                $mapel = App\Models\Subject::find($showschedule->matapelajaran);
-                                                $tahun = App\Models\Year::find($showschedule->tahun);
-                                                $jurusan = App\Models\Department::find($showschedule->jurusan);
-                                                $guru = App\Models\Teacher::find($showschedule->guru);
+                                                    $mapel      = App\Models\Subject::find($showschedule->matapelajaran);
+                                                    $tahun      = App\Models\Year::find($showschedule->tahun);
+                                                    $jurusan    = App\Models\Department::find($showschedule->jurusan);
+                                                    $guru       = App\Models\Teacher::find($showschedule->guru);
                                                 @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>

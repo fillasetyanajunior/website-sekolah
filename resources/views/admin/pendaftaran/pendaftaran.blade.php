@@ -64,9 +64,9 @@
                                                     <td>{{$detail->nisn}}</td>
                                                     <td>{{$showregistration->kode}}</td>
                                                     <td class="text-capitalize">{{$showregistration->is_active}}</td>
-                                                    <td>
+                                                    <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-warning" id="editpendaftaran" data-bs-toggle="modal" data-bs-target="#PendaftaranModal" data-id="{{$showregistration->id}}">Edit</button>
-                                                        <form action="/pendaftaran/{{$showregistration->id}}" method="post" >
+                                                        <form action="/pendaftaran/{{$showregistration->id}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

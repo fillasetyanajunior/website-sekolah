@@ -89,7 +89,7 @@
                                                     <td>{{$showmaterial->judul}}</td>
                                                     <td>{{$showmaterial->kelas}}</td>
                                                     <td>{{$path[1]}}</td>
-                                                    <td>
+                                                    <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-warning" id="editmateri" data-bs-toggle="modal" data-bs-target="#MateriModal" data-id="{{$showmaterial->id}}">Ubah</button>
                                                         <form action="{{route('admin.meterial.destroy', $showmaterial->id)}}" method="post" class="d-inline">
                                                             @csrf

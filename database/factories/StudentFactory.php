@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\Types\This;
 
 class StudentFactory extends Factory
 {
@@ -16,11 +18,10 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Student',
-            'username' => 'students',
-            'password' => Hash::make('students'),
-            'password_encrypted' => Crypt::encrypt('students'),
-
+            'name'                  => $this->faker->name(),
+            'username'              => $this->faker->userName(),
+            'password'              => Hash::make('students'),
+            'password_encrypted'    => Crypt::encrypt('students'),
         ];
     }
 }

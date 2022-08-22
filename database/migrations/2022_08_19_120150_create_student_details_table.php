@@ -36,6 +36,7 @@ class CreateStudentDetailsTable extends Migration
             $table->string('nama_sekolah');
             $table->string('alamat');
             $table->integer('jurusan');
+            $table->enum('kelas', ['X', 'XI', 'XII'])->default('X');
             $table->string('foto')->nullable();
             $table->timestamps();
         });

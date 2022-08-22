@@ -86,7 +86,7 @@
                                                     $matapelajaran  = App\Models\Subject::find($showdeuteronomi->matapelajaran);
                                                     $jurusan        = App\Models\Department::find($showdeuteronomi->jurusan);
                                                     $tahun          = App\Models\Year::find($showdeuteronomi->tahun);
-                                                    $kelas          = explode('/', $showdeuteronomi->kelas);
+                                                    // $kelas          = explode('/', $showdeuteronomi->kelas);
                                                 @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
@@ -97,7 +97,7 @@
                                                     <td>{{$jurusan->jurusan}}</td>
                                                     <td>{{$showdeuteronomi->kursi}}</td>
                                                     <td>
-                                                        @if ($kelas[0] == 1)
+                                                        {{-- @if ($kelas[0] == 1)
                                                             X
                                                         @elseif ($kelas[0] == 2)
                                                             XI
@@ -111,12 +111,12 @@
                                                             XI
                                                         @else
                                                             XII
-                                                        @endif
+                                                        @endif --}}
                                                     </td>
                                                     <td>Ruangan {{$showdeuteronomi->ruangan}}</td>
-                                                    <td>
+                                                    <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-warning" href="" id="editulangan" data-bs-toggle="modal" data-bs-target="#UlanganModal" data-id="{{$showdeuteronomi->id}}">Ubah</button>
-                                                        <form action="{{route('admin.deuteronomi.destroy', $showdeuteronomi->id)}}" method="post" >
+                                                        <form action="{{route('admin.deuteronomi.destroy', $showdeuteronomi->id)}}" method="post" class="d-inline" >
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

@@ -89,9 +89,9 @@
                                                     <td>{{$mapel->matapelajaran}}</td>
                                                     <td>{{$showgrade->angka}}</td>
                                                     <td>{{$showgrade->huruf}}</td>
-                                                    <td>
+                                                    <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-warning" id="editnilai" data-bs-toggle="modal" data-bs-target="#NilaiModal" data-id="{{$showgrade->id}}">Ubah</button>
-                                                        <form action="{{route('admin.grade.destroy', $showgrade->id)}}" method="post" >
+                                                        <form action="{{route('admin.grade.destroy', $showgrade->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

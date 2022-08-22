@@ -82,7 +82,7 @@
                                                     <th>{{$i++}}</th>
                                                     <td><img src="{{Storage::url($shownews->thumnail)}}" alt="" width="100px"></td>
                                                     <td>{{$shownews->title}}</td>
-                                                    <td>
+                                                    <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-primary" id="editinformasi" data-bs-toggle="modal" data-bs-target="#InformasiModal" data-id="{{$shownews->id}}">Ubah</button>
                                                         <form action="{{route('admin.news.destory', $shownews->id)}}" method="post" class="d-inline">
                                                             @csrf

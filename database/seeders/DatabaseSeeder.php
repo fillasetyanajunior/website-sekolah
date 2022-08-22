@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        Student::factory(1)->create();
-        StudentDetail::factory(1)->create();
-        Teacher::factory(1)->create();
-        TeacherDetail::factory(1)->create();
+        Student::factory(10)->create();
+        StudentDetail::factory(10)->create();
+        Teacher::factory(10)->create();
+        TeacherDetail::factory(10)->create();
         Admin::factory(1)->create();
         $this->call([
             IndoRegionSeeder::class,
