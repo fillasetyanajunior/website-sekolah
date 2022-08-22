@@ -13,6 +13,11 @@ class GradeController extends AppController
     {
         $title = 'Nilai';
         $grade = Grade::where('nama', Auth::user()->name)->get();
-        return view('student,nilai.nilai', compact('title', 'grade'));
+        return view('student.nilai.nilai', compact('title', 'grade'));
+    }
+
+    public function download()
+    {
+        //
     }
 }
