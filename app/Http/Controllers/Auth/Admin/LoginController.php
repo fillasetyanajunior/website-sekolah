@@ -12,6 +12,7 @@ class LoginController extends Controller
     {
         $this->middleware('throttle:6,1')->only('login');
     }
+
     public function form()
     {
         if (Auth::guard('admin')->check()) {

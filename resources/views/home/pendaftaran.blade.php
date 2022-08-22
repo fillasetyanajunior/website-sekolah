@@ -1,4 +1,4 @@
-@extends('layouts.base_registration')
+@extends('layouts.base_dashboard')
 @section('title', $title)
 @section('content')
 <div class="page">

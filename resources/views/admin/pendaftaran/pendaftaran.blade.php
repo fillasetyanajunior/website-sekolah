@@ -1,91 +1,100 @@
 @extends('layouts.base_dashboard')
 @section('title', $title)
 @section('content')
-<x-sliderbar-admin></x-sliderbar-admin>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="row align-items-center mb-2">
-                    <div class="col">
-                        <h2 class="h5 page-title">{{$title}}</h2>
-                    </div>
-                    <div class="col-auto">
-                        <div class="d-flex flex-row-reverse bd-highlight">
-                            <div class="p-2 bd-highlight">
-                                <input type="text" class="form-control" id="search" placeholder="Search">
+<div class="page">
+    <x-sliderbar-admin></x-sliderbar-admin>
+    <div class="page-wrapper">
+        <div class="page-wrapper">
+            <div class="container-xl">
+                <div class="page-header d-print-none">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <div class="page-pretitle">
+                                PSB
                             </div>
+                            <h2 class="page-title">
+                                {{$title}}
+                            </h2>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <div class="card shadow">
-                            <div class="card-header">
-                                <strong class="card-title">{{$title}}</strong>
-                            </div>
-                            <div class="card-body my-n2">
-                                <table class="table table-striped table-hover table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Nama</th>
-                                            <th>NISN</th>
-                                            <th>Kode</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="myTable">
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @foreach ($registration as $showregistration)
-                                            @php
-                                                $detail = App\Models\RegistrationDetail::find($showregistration->id_siswa);
-                                            @endphp
+            </div>
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="row row-deck row-cards">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{$title}}</h3>
+                                </div>
+                                <div class="card-body border-bottom py-3">
+                                    <div class="d-flex">
+                                        <div class="ms-auto text-muted">
+                                            Search:
+                                            <div class="ms-2 d-inline-block">
+                                                <input type="text" class="form-control form-control-sm"
+                                                    aria-label="Search invoice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
                                             <tr>
-                                                <th>{{$i++}}</th>
-                                                <td>{{$detail->nama}}</td>
-                                                <td>{{$detail->nisn}}</td>
-                                                <td>{{$showregistration->kode}}</td>
-                                                <td class="text-capitalize">{{$showregistration->is_active}}</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" id="dr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dr1">
-                                                            <a class="dropdown-item" href="" id="editpendaftaran" data-toggle="modal" data-target="#PendaftaranModal" data-id="{{$showregistration->id}}">Edit</a>
-                                                            <form action="/pendaftaran/{{$showregistration->id}}" method="post" >
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="dropdown-item">Hapus</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                                <th>#</th>
+                                                <th>Nama</th>
+                                                <th>NISN</th>
+                                                <th>Kode</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                {{$registration->links()}}
+                                        </thead>
+                                        <tbody id="myTable">
+                                            @php
+                                                $i = 1;
+                                            @endphp
+                                            @foreach ($registration as $showregistration)
+                                                @php
+                                                    $detail = App\Models\RegistrationDetail::find($showregistration->id_siswa);
+                                                @endphp
+                                                <tr>
+                                                    <th>{{$i++}}</th>
+                                                    <td>{{$detail->nama}}</td>
+                                                    <td>{{$detail->nisn}}</td>
+                                                    <td>{{$showregistration->kode}}</td>
+                                                    <td class="text-capitalize">{{$showregistration->is_active}}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editpendaftaran" data-bs-toggle="modal" data-bs-target="#PendaftaranModal" data-id="{{$showregistration->id}}">Edit</button>
+                                                        <form action="/pendaftaran/{{$showregistration->id}}" method="post" >
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer d-flex align-items-center">
+                                    {{$registration->links()}}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <x-footer></x-footer>
         </div>
     </div>
-</main>
-<div class="modal fade" id="PendaftaranModal" tabindex="-1" aria-labelledby="ModalPendaftaranLabel" aria-hidden="true">
-    <div class="modal-dialog">
+</div>
+<div class="modal modal-blur fade" id="PendaftaranModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalPendaftaranLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Large modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="body_pendaftaran">
                 <form action="" method="POST">
@@ -123,9 +132,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="modal-footer footer_pendaftaran">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -134,16 +143,17 @@
 </div>
 @endsection
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
             $('#editpendaftaran*').on('click', function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.registration.edit",":id")}}'.replace(':id',id);
 
-                $('.footer_pendaftaran* button[type=submit]').html('Edit');
-                $('#ModalPendaftaranLabel*').html('Edit Pendaftaran');
-                $('.body_pendaftaran form*').attr('action', '{{route("admin.registration.update",":id")}}'.replace(':id',id));
-                $('.body_pendaftaran form*').attr('method', 'post');
+                $('.body_pendaftaran button[type=submit]').html('Edit');
+                $('.modal-title').html('Edit Pendaftaran');
+                $('.body_pendaftaran form').attr('action', '{{route("admin.registration.update",":id")}}'.replace(':id',id));
+                $('.body_pendaftaran form').attr('method', 'post');
 
                 $.ajax({
                     type: 'POST',

@@ -1,131 +1,165 @@
 @extends('layouts.base_dashboard')
 @section('title', $title)
 @section('content')
-<x-sliderbar-admin></x-sliderbar-admin>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="row align-items-center mb-2">
-                    <div class="col">
-                        <h2 class="h5 page-title">{{$title}}</h2>
-                    </div>
-                    <div class="col-auto">
-                        <div class="d-flex flex-row-reverse bd-highlight">
-                            <div class="p-2 bd-highlight">
-                                <a href="" class="btn mb-2 btn-primary " id="tambahulangan" data-toggle="modal" data-target="#UlanganModal"><i class="fas fa-plus"></i><span>&nbsp; Tambah Jadwal</span></a>
+<div class="page">
+    <x-sliderbar-admin></x-sliderbar-admin>
+    <div class="page-wrapper">
+        <div class="page-wrapper">
+            <div class="container-xl">
+                <div class="page-header d-print-none">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <div class="page-pretitle">
+                                Management Sekolah
                             </div>
+                            <h2 class="page-title">
+                                {{$title}}
+                            </h2>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <div class="card shadow">
-                            <div class="card-header">
-                                <strong class="card-title">{{$title}}</strong>
-                            </div>
-                            <div class="card-body my-n2">
-                                <table class="table table-striped table-hover table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Tanggal</th>
-                                            <th>Jam</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Tahun</th>
-                                            <th>Jurusan</th>
-                                            <th>Kursi</th>
-                                            <th>Kelas</th>
-                                            <th>Ruangan</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $i = 1; ?>
-                                        @foreach ($deuteronomi as $showdeuteronomi)
-                                            @php
-                                                $matapelajaran  = App\Models\Subject::find($showdeuteronomi->matapelajaran);
-                                                $jurusan        = App\Models\Department::find($showdeuteronomi->jurusan);
-                                                $tahun          = App\Models\Year::find($showdeuteronomi->tahun);
-                                                $kelas          = explode('/', $showdeuteronomi->kelas);
-                                            @endphp
-                                            <tr>
-                                                <td>{{$i++}}</td>
-                                                <td>{{$showdeuteronomi->tanggal}}</td>
-                                                <td>{{$showdeuteronomi->jam}}</td>
-                                                <td>{{$matapelajaran->matapelajaran}}</td>
-                                                <td>{{$tahun->tahun}}</td>
-                                                <td>{{$jurusan->jurusan}}</td>
-                                                <td>{{$showdeuteronomi->kursi}}</td>
-                                                <td>
-                                                    @if ($kelas[0] == 1)
-                                                        X
-                                                    @elseif ($kelas[0] == 2)
-                                                        XI
-                                                    @else
-                                                        XII
-                                                    @endif
-                                                    /
-                                                    @if ($kelas[1] == 1)
-                                                        X
-                                                    @elseif ($kelas[1] == 2)
-                                                        XI
-                                                    @else
-                                                        XII
-                                                    @endif
-                                                </td>
-                                                <td>Ruangan {{$showdeuteronomi->ruangan}}</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" id="dr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dr1">
-                                                            <a class="dropdown-item" href="" id="editulangan" data-toggle="modal" data-target="#UlanganModal" data-id="{{$showdeuteronomi->id}}">Edit</a>
-                                                            <form action="{{route('admin.deuteronomi.destroy', $showdeuteronomi->id)}}" method="post" >
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="dropdown-item">Hapus</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                {{$deuteronomi->links()}}
+                        <div class="col-12 col-md-auto ms-auto d-print-none">
+                            <div class="btn-list">
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                    data-bs-target="#UlanganModal" id="tambahulangan">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Tambah Jadwal Ulangan
+                                </a>
+                                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                    data-bs-target="#UlanganModal" id="tambahulangan" aria-label="Tambah Jadwal Ulangan">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="row row-deck row-cards">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{$title}}</h3>
+                                </div>
+                                <div class="card-body border-bottom py-3">
+                                    <div class="d-flex">
+                                        <div class="ms-auto text-muted">
+                                            Search:
+                                            <div class="ms-2 d-inline-block">
+                                                <input type="text" class="form-control form-control-sm"
+                                                    aria-label="Search invoice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Tanggal</th>
+                                                <th>Jam</th>
+                                                <th>Mata Pelajaran</th>
+                                                <th>Tahun</th>
+                                                <th>Jurusan</th>
+                                                <th>Kursi</th>
+                                                <th>Kelas</th>
+                                                <th>Ruangan</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $i = 1; ?>
+                                            @foreach ($deuteronomi as $showdeuteronomi)
+                                                @php
+                                                    $matapelajaran  = App\Models\Subject::find($showdeuteronomi->matapelajaran);
+                                                    $jurusan        = App\Models\Department::find($showdeuteronomi->jurusan);
+                                                    $tahun          = App\Models\Year::find($showdeuteronomi->tahun);
+                                                    $kelas          = explode('/', $showdeuteronomi->kelas);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{$i++}}</td>
+                                                    <td>{{$showdeuteronomi->tanggal}}</td>
+                                                    <td>{{$showdeuteronomi->jam}}</td>
+                                                    <td>{{$matapelajaran->matapelajaran}}</td>
+                                                    <td>{{$tahun->tahun}}</td>
+                                                    <td>{{$jurusan->jurusan}}</td>
+                                                    <td>{{$showdeuteronomi->kursi}}</td>
+                                                    <td>
+                                                        @if ($kelas[0] == 1)
+                                                            X
+                                                        @elseif ($kelas[0] == 2)
+                                                            XI
+                                                        @else
+                                                            XII
+                                                        @endif
+                                                        /
+                                                        @if ($kelas[1] == 1)
+                                                            X
+                                                        @elseif ($kelas[1] == 2)
+                                                            XI
+                                                        @else
+                                                            XII
+                                                        @endif
+                                                    </td>
+                                                    <td>Ruangan {{$showdeuteronomi->ruangan}}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-warning" href="" id="editulangan" data-bs-toggle="modal" data-bs-target="#UlanganModal" data-id="{{$showdeuteronomi->id}}">Ubah</button>
+                                                        <form action="{{route('admin.deuteronomi.destroy', $showdeuteronomi->id)}}" method="post" >
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer d-flex align-items-center">
+                                    {{$deuteronomi->links()}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <x-footer></x-footer>
         </div>
     </div>
-</main>
-<div class="modal fade" id="UlanganModal" tabindex="-1" aria-labelledby="ModalUlanganLabel" aria-hidden="true">
-    <div class="modal-dialog">
+</div>
+<div class="modal modal-blur fade" id="UlanganModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalUlanganLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Large modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="body_ulangan">
                 <form action="" method="POST" class="needs-validation" novalidate>
                     <div class="modal-body">
                         @csrf
-                        <div class="form-group mb-3">
-                            <label for="tanggal">Tanggal</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="tanggal">Tanggal</label>
                             <input type="date" class="form-control" id="tanggal" name="tanggal">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="jam">Jam Ulangan</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="jam">Jam Ulangan</label>
                             <input type="text" class="form-control" id="jam" name="jam" placeholder="08:00 - 09:00">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="matapelajaran">Mata Pelajaran</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
                             <select class="form-control" id="matapelajaran" name="matapelajaran">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($subject as $subject)
@@ -133,8 +167,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="tahun">Tahun Pelajaran</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="tahun">Tahun Pelajaran</label>
                             <select class="form-control" id="tahun" name="tahun">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($year as $year)
@@ -142,8 +176,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="jurusan">Jurusan</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="jurusan">Jurusan</label>
                             <select class="form-control" id="jurusan" name="jurusan">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($department as $department)
@@ -151,12 +185,12 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="kursi">Jumlah Kursi</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="kursi">Jumlah Kursi</label>
                             <input type="text" class="form-control" id="kursi" name="kursi" placeholder="40">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="ruangan">Ruangan</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="ruangan">Ruangan</label>
                             <select class="form-control" id="ruangan" name="ruangan">
                                 <option value="">-- Pilih --</option>
                                 @for ($i = 1; $i <= 18; $i++)
@@ -164,8 +198,8 @@
                                 @endfor
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="kelas_pertama">Kelas Pertama</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="kelas_pertama">Kelas Pertama</label>
                             <select class="form-control" id="kelas_pertama" name="kelas_pertama">
                                 <option value="">-- Pilih --</option>
                                 <option value="1">10</option>
@@ -173,8 +207,8 @@
                                 <option value="3">12</option>
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="kelas_kedua">Kelas KEdua</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="kelas_kedua">Kelas KEdua</label>
                             <select class="form-control" id="kelas_kedua" name="kelas_kedua">
                                 <option value="">-- Pilih --</option>
                                 <option value="1">10</option>
@@ -183,9 +217,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="modal-footer footer_ulangan">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -194,11 +228,12 @@
 </div>
 @endsection
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#tambahulangan').on('click', function () {
-                $('.footer_ulangan button[type=submit]').html('Add');
-                $('#ModalUlanganLabel').html('Tambah Jadwal Ulangan');
+                $('.body_ulangan button[type=submit]').html('Add');
+                $('.modal-title').html('Tambah Jadwal Ulangan');
                 $('.body_ulangan form').attr('action', '{{route("admin.deuteronomi.store")}}');
                 $('.body_ulangan form').attr('method', 'post');
 
@@ -216,8 +251,8 @@
                 const id = $(this).data('id');
                 let _url = '{{route("admin.deuteronomi.edit",":id")}}'.replace(':id', id);
 
-                $('.footer_ulangan button[type=submit]').html('Edit');
-                $('#ModalUlanganLabel').html('Edit Jadwal Ulangan');
+                $('.body_ulangan button[type=submit]').html('Edit');
+                $('.modal-title').html('Edit Jadwal Ulangan');
                 $('.body_ulangan form').attr('action', '{{route("admin.deuteronomi.update",":id")}}'.replace(':id', id));
                 $('.body_ulangan form').attr('method', 'post');
 

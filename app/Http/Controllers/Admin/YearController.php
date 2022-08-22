@@ -11,8 +11,8 @@ class YearController extends AppController
     public function index()
     {
         $title  = 'Tahun Ajaran';
-        $tahun  = Year::paginate(20);
-        return view('admin.tahun.tahun', compact('tahun', 'title'));
+        $year   = Year::paginate(20);
+        return view('admin.tahun.tahun', compact('year', 'title'));
     }
 
     public function store(Request $request)

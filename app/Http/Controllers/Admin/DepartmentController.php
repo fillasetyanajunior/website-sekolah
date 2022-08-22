@@ -11,8 +11,8 @@ class DepartmentController extends AppController
     public function index()
     {
         $title      = 'Jurusan';
-        $jurusan    = Department::paginate(10);
-        return view('admin.jurusan.jurusan', compact('jurusan', 'title'));
+        $department = Department::paginate(10);
+        return view('admin.jurusan.jurusan', compact('department', 'title'));
     }
 
     public function store(Request $request)

@@ -1,98 +1,132 @@
 @extends('layouts.base_dashboard')
 @section('title', $title)
 @section('content')
-<x-sliderbar-admin></x-sliderbar-admin>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="row align-items-center mb-2">
-                    <div class="col">
-                        <h2 class="h5 page-title">{{$title}}</h2>
-                    </div>
-                    <div class="col-auto">
-                        <div class="d-flex flex-row-reverse bd-highlight">
-                            <div class="p-2 bd-highlight">
-                                <a href="" class="btn mb-2 btn-primary " id="tambahmateri" data-toggle="modal" data-target="#MateriModal"><i class="fas fa-plus"></i><span>&nbsp; Tambah Materi</span></a>
+<div class="page">
+    <x-sliderbar-admin></x-sliderbar-admin>
+    <div class="page-wrapper">
+        <div class="page-wrapper">
+            <div class="container-xl">
+                <div class="page-header d-print-none">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <div class="page-pretitle">
+                                Upload Materi
                             </div>
+                            <h2 class="page-title">
+                                {{$title}}
+                            </h2>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <div class="card shadow">
-                            <div class="card-header">
-                                <strong class="card-title">{{$title}}</strong>
-                            </div>
-                            <div class="card-body my-n2">
-                                <table class="table table-striped table-hover table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Judul Materi</th>
-                                            <th>Kelas</th>
-                                            <th>File Materi</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @foreach ($material as $showmaterial)
-                                            @php
-                                                $path = explode('/', $showmaterial->path);
-                                            @endphp
-                                            <tr>
-                                                <td>{{$i++}}</td>
-                                                <td>{{$showmaterial->mapel}}</td>
-                                                <td>{{$showmaterial->judul}}</td>
-                                                <td>{{$showmaterial->kelas}}</td>
-                                                <td>{{$path[1]}}</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" id="dr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <span class="text-muted sr-only">Action</span>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dr1">
-                                                            <a class="dropdown-item" href="" id="editmateri" data-toggle="modal" data-target="#MateriModal" data-id="{{$showmaterial->id}}">Edit</a>
-                                                            <form action="{{route('admin.meterial.destroy', $showmaterial->id)}}" method="post" >
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button type="submit" class="dropdown-item">Hapus</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                {{$material->links()}}
+                        <div class="col-12 col-md-auto ms-auto d-print-none">
+                            <div class="btn-list">
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                    data-bs-target="#MateriModal" id="tambahmateri">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Tambah Materi
+                                </a>
+                                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                    data-bs-target="#MateriModal" id="tambahmateri" aria-label="Tambah Materi">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="row row-deck row-cards">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{$title}}</h3>
+                                </div>
+                                <div class="card-body border-bottom py-3">
+                                    <div class="d-flex">
+                                        <div class="ms-auto text-muted">
+                                            Search:
+                                            <div class="ms-2 d-inline-block">
+                                                <input type="text" class="form-control form-control-sm"
+                                                    aria-label="Search invoice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Mata Pelajaran</th>
+                                                <th>Judul Materi</th>
+                                                <th>Kelas</th>
+                                                <th>File Materi</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 1;
+                                            @endphp
+                                            @foreach ($material as $showmaterial)
+                                                @php
+                                                    $path = explode('/', $showmaterial->path);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{$i++}}</td>
+                                                    <td>{{$showmaterial->mapel}}</td>
+                                                    <td>{{$showmaterial->judul}}</td>
+                                                    <td>{{$showmaterial->kelas}}</td>
+                                                    <td>{{$path[1]}}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editmateri" data-bs-toggle="modal" data-bs-target="#MateriModal" data-id="{{$showmaterial->id}}">Ubah</button>
+                                                        <form action="{{route('admin.meterial.destroy', $showmaterial->id)}}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer d-flex align-items-center">
+                                    {{$material->links()}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <x-footer></x-footer>
         </div>
     </div>
-</main>
-<div class="modal fade" id="MateriModal" tabindex="-1" aria-labelledby="ModalMateriLabel" aria-hidden="true">
-    <div class="modal-dialog">
+</div>
+<div class="modal modal-blur fade" id="MateriModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalMateriLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Large modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="body_materi">
-                <form action="" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group mb-3">
-                            <label for="mapel">Mata Pelajaran</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="mapel">Mata Pelajaran</label>
                             <select class="form-control" id="mapel" name="mapel">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($subject as $showsubject)
@@ -100,12 +134,12 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="judul">Judul</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="judul">Judul</label>
                             <input type="text" id="judul" class="form-control" name="judul">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="kelas">Kelas</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="kelas">Kelas</label>
                             <select class="form-control" id="kelas" name="kelas">
                                 <option value="">-- Pilih --</option>
                                 <option value="1">10</option>
@@ -113,17 +147,14 @@
                                 <option value="3">12</option>
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="file">File Materi</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="file" name="file">
-                                <label class="custom-file-label" for="file">File Materi</label>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="file">File Materi</label>
+                            <input type="file" class="form-control" id="file" name="file">
                         </div>
                     </div>
-                    <div class="modal-footer footer_materi">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -132,11 +163,12 @@
 </div>
 @endsection
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
             $('#tambahmateri').on('click', function () {
-                $('.footer_materi button[type=submit]').html('Add');
-                $('#ModalMateriLabel').html('Tambah Materi');
+                $('.body_materi button[type=submit]').text('Add');
+                $('.modal-title').text('Tambah Materi');
                 $('.body_materi form').attr('action', '{{route("admin.material.store")}}');
                 $('.body_materi form').attr('method', 'post');
 
@@ -148,10 +180,10 @@
                 const id = $(this).data('id');
                 let _url = '{{route("admin.material.edit",":id")}}'.replace(':id', id);
 
-                $('.footer_materi* button[type=submit]').html('Edit');
-                $('#ModalMateriLabel*').html('Edit Materi');
-                $('.body_materi form*').attr('action', '{{route("admin.material.update",":id")}}'.replace(':id', id));
-                $('.body_materi form*').attr('method', 'post');
+                $('.body_materi button[type=submit]').text('Edit');
+                $('.modal-title').text('Edit Materi');
+                $('.body_materi form').attr('action', '{{route("admin.material.update",":id")}}'.replace(':id', id));
+                $('.body_materi form').attr('method', 'post');
 
                 $.ajax({
                     type: 'POST',

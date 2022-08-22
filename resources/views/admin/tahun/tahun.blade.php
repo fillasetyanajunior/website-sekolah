@@ -1,94 +1,129 @@
 @extends('layouts.base_dashboard')
 @section('title', $title)
 @section('content')
-<x-sliderbar-admin></x-sliderbar-admin>
-<main role="main" class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="row align-items-center mb-2">
-                    <div class="col">
-                        <h2 class="h5 page-title">{{$title}}</h2>
-                    </div>
-                    <div class="col-auto">
-                        <div class="d-flex flex-row-reverse bd-highlight">
-                            <div class="p-2 bd-highlight">
-                                <a href="" class="btn mb-2 btn-primary " id="tambahtahun" data-toggle="modal" data-target="#tahunModal"><i class="fas fa-plus"></i><span>&nbsp; Tambah Tahun Ajaran</span></a>
+<div class="page">
+    <x-sliderbar-admin></x-sliderbar-admin>
+    <div class="page-wrapper">
+        <div class="page-wrapper">
+            <div class="container-xl">
+                <div class="page-header d-print-none">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <div class="page-pretitle">
+                                Management Sekolah
                             </div>
+                            <h2 class="page-title">
+                                {{$title}}
+                            </h2>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <div class="card shadow">
-                            <div class="card-header">
-                                <strong class="card-title">{{$title}}</strong>
-                            </div>
-                            <div class="card-body my-n2">
-                                <table class="table table-striped table-hover table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Tahun</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @foreach ($tahun as $item)
-                                        <tr>
-                                            <td>{{$i++}}</td>
-                                            <td>{{$item->tahun}}</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-sm dropdown-toggle more-vertical" type="button" id="dr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <span class="text-muted sr-only">Action</span>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dr1">
-                                                        <a class="dropdown-item" href="" id="edittahun" data-toggle="modal" data-target="#tahunModal" data-id="{{$item->id}}">Edit</a>
-                                                        <form action="{{route('admin.year.destroy',$item->id)}}" method="post" >
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="dropdown-item">Hapus</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                        <div class="col-12 col-md-auto ms-auto d-print-none">
+                            <div class="btn-list">
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                    data-bs-target="#TahunModal" id="tambahtahun">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Tambah Tahun
+                                </a>
+                                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                    data-bs-target="#TahunModal" id="tambahtahun" aria-label="Tambah Tahun">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="row row-deck row-cards">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{$title}}</h3>
+                                </div>
+                                <div class="card-body border-bottom py-3">
+                                    <div class="d-flex">
+                                        <div class="ms-auto text-muted">
+                                            Search:
+                                            <div class="ms-2 d-inline-block">
+                                                <input type="text" class="form-control form-control-sm"
+                                                    aria-label="Search invoice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Tahun</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 1;
+                                            @endphp
+                                            @foreach ($year as $showyear)
+                                            <tr>
+                                                <td>{{$i++}}</td>
+                                                <td>{{$showyear->tahun}}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-warning" id="edittahun" data-bs-toggle="modal" data-bs-target="#TahunModal" data-id="{{$showyear->id}}">Edit</button>
+                                                    <form action="{{route('admin.year.destroy',$showyear->id)}}" method="post" >
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer d-flex align-items-center">
+                                    {{$year->links()}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <x-footer></x-footer>
         </div>
     </div>
-</main>
-<div class="modal fade" id="tahunModal" tabindex="-1" aria-labelledby="ModalTahunLabel" aria-hidden="true">
-    <div class="modal-dialog">
+</div>
+<div class="modal modal-blur fade" id="TahunModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalTahunLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Large modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="body_tahun">
                 <form action="" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="tahun">Tahun Ajaran</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="tahun">Tahun Ajaran</label>
                             <input type="text" class="form-control" id="tahun" name="tahun" placeholder="2021/2022">
                         </div>
                     </div>
-                    <div class="modal-footer footer_tahun">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -97,11 +132,12 @@
 </div>
 @endsection
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#tambahtahun').on('click', function () {
-                $('.footer_tahun button[type=submit]').html('Add');
-                $('#ModalTahunLabel').html('Tambah Tahun Ajaran');
+                $('.body_tahun button[type=submit]').html('Add');
+                $('.modal-title').html('Tambah Tahun Ajaran');
                 $('.body_tahun form').attr('action', '{{route("admin.year.store")}}');
                 $('.body_tahun form').attr('method', 'post');
 
@@ -111,10 +147,10 @@
                 const id = $(this).data('id');
                 let _url = '{{route("admin.year.edit",":id")}}'.replace(':id', id);
 
-                $('.footer_tahun* button[type=submit]').html('Edit');
-                $('#ModalTahunLabel*').html('Edit Tahun Ajaran');
-                $('.body_tahun form*').attr('action', '{{route("admin.year.update",":id")}}'.replace(':id', id));
-                $('.body_tahun form*').attr('method', 'post');
+                $('.body_tahun button[type=submit]').html('Edit');
+                $('.modal-title').html('Edit Tahun Ajaran');
+                $('.body_tahun form').attr('action', '{{route("admin.year.update",":id")}}'.replace(':id', id));
+                $('.body_tahun form').attr('method', 'post');
 
                 $.ajax({
                     type: 'POST',

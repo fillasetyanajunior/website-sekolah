@@ -52,12 +52,12 @@ class Handler extends ExceptionHandler
             case 'admin':
                 return redirect()->guest(route('admin.login.form'));
                 break;
-            // case 'mitra':
-            //     return redirect()->guest(route('mitra.login.form'));
-            //     break;
-            // case 'user':
-            //     return redirect()->guest(route('login'));
-            //     break;
+            case 'teacher':
+                return redirect()->guest(route('teacher.login.form'));
+                break;
+            case 'student':
+                return redirect()->guest(route('student.login.form'));
+                break;
                 // default:
                 //     return redirect()->guest(route('index'));
                 //     break;

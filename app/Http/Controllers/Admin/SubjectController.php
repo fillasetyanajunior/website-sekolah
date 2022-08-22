@@ -10,9 +10,9 @@ class SubjectController extends AppController
 {
     public function index()
     {
-        $title          = 'Mata Pelajaran';
-        $matapelajaran  = Subject::paginate(20);
-        return view('admin.matapelajaran.matapelajaran', compact('matapelajaran','title'));
+        $title      = 'Mata Pelajaran';
+        $subject    = Subject::paginate(20);
+        return view('admin.matapelajaran.matapelajaran', compact('subject','title'));
     }
 
     public function store(Request $request)
