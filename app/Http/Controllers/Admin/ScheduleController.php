@@ -49,14 +49,6 @@ class ScheduleController extends AppController
             $hari = 'sabtu';
         }
 
-        if ($request->jam == 1) {
-            $jam = '1 Jam';
-        }elseif ($request->jam == 2) {
-            $jam = '2 Jam';
-        }else {
-            $jam = '3 Jam';
-        }
-
         if ($request->kelas == 1) {
             $kelas = 'X';
         }elseif ($request->kelas == 2) {
@@ -65,9 +57,29 @@ class ScheduleController extends AppController
             $kelas = 'XII';
         }
 
+        $schedule = Schedule::orderBy('created_at','DESC')->where('hari', $hari)->where('kelas', $kelas)->where('jurusan', $request->jurusan)->first();
+
+        if ($schedule == null) {
+            $start  = date('H:i:s',strtotime('07:00'));
+        } else {
+            $start  = date('H:i:s',strtotime($schedule->jam_end));
+        }
+
+        if ($request->jam == 1) {
+            $jam_start = $start;
+            $jam_end = date('H:i:s', strtotime('+45 minutes', strtotime($start)));
+        } elseif ($request->jam == 2) {
+            $jam_start = $start;
+            $jam_end = date('H:i:s', strtotime('+1 hours 30 minutes', strtotime($start)));
+        } else {
+            $jam_start = $start;
+            $jam_end = date('H:i:s', strtotime('+2 hours 15 minutes', strtotime($start)));
+        }
+
         Schedule::create([
             'hari'          => $hari,
-            'jam'           => $jam,
+            'jam_start'     => $jam_start,
+            'jam_end'       => $jam_end,
             'matapelajaran' => $request->matapelajaran,
             'guru'          => $request->guru,
             'tahun'         => $request->tahun,

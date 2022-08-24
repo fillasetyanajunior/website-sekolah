@@ -16,7 +16,8 @@ class CreateSchedulesTable extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->enum('hari', ['senin', 'selasa', 'rabu', 'kamis', 'jum`at', 'sabtu']);
-            $table->enum('jam', ['1 Jam', '2 Jam', '3 Jam']);
+            $table->time('jam_start', $precision = 0);
+            $table->time('jam_end', $precision = 0);
             $table->integer('matapelajaran');
             $table->integer('guru');
             $table->integer('tahun');

@@ -73,7 +73,6 @@
                                                 <th>Mata Pelajaran</th>
                                                 <th>Tahun</th>
                                                 <th>Jurusan</th>
-                                                <th>Kursi</th>
                                                 <th>Kelas</th>
                                                 <th>Ruangan</th>
                                                 <th>Action</th>
@@ -83,40 +82,23 @@
                                             <?php $i = 1; ?>
                                             @foreach ($deuteronomi as $showdeuteronomi)
                                                 @php
-                                                    $matapelajaran  = App\Models\Subject::find($showdeuteronomi->matapelajaran);
-                                                    $jurusan        = App\Models\Department::find($showdeuteronomi->jurusan);
-                                                    $tahun          = App\Models\Year::find($showdeuteronomi->tahun);
-                                                    // $kelas          = explode('/', $showdeuteronomi->kelas);
+                                                    $detail         = App\Models\Deuteronomi::where('kelas', $showdeuteronomi->kelas)->first();
+                                                    $matapelajaran  = App\Models\Subject::find($detail->matapelajaran);
+                                                    $jurusan        = App\Models\Department::find($detail->jurusan);
+                                                    $tahun          = App\Models\Year::find($detail->tahun);
                                                 @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{$showdeuteronomi->tanggal}}</td>
-                                                    <td>{{$showdeuteronomi->jam}}</td>
+                                                    <td>{{$detail->tanggal}}</td>
+                                                    <td>{{$detail->jam}}</td>
                                                     <td>{{$matapelajaran->matapelajaran}}</td>
                                                     <td>{{$tahun->tahun}}</td>
                                                     <td>{{$jurusan->jurusan}}</td>
-                                                    <td>{{$showdeuteronomi->kursi}}</td>
-                                                    <td>
-                                                        {{-- @if ($kelas[0] == 1)
-                                                            X
-                                                        @elseif ($kelas[0] == 2)
-                                                            XI
-                                                        @else
-                                                            XII
-                                                        @endif
-                                                        /
-                                                        @if ($kelas[1] == 1)
-                                                            X
-                                                        @elseif ($kelas[1] == 2)
-                                                            XI
-                                                        @else
-                                                            XII
-                                                        @endif --}}
-                                                    </td>
-                                                    <td>Ruangan {{$showdeuteronomi->ruangan}}</td>
+                                                    <td>{{$detail->kelas}}</td>
+                                                    <td>Ruangan {{$detail->ruangan}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" href="" id="editulangan" data-bs-toggle="modal" data-bs-target="#UlanganModal" data-id="{{$showdeuteronomi->id}}">Ubah</button>
-                                                        <form action="{{route('admin.deuteronomi.destroy', $showdeuteronomi->id)}}" method="post" class="d-inline" >
+                                                        <button type="button" class="btn btn-sm btn-warning" href="" id="editulangan" data-bs-toggle="modal" data-bs-target="#UlanganModal" data-id="{{$detail->id}}">Ubah</button>
+                                                        <form action="{{route('admin.deuteronomi.destroy', $detail->id)}}" method="post" class="d-inline" >
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

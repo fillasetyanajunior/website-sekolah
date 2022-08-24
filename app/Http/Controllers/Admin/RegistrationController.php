@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Registration;
 use App\Models\RegistrationDetail;
 use App\Models\Student;
+use App\Models\StudentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -35,7 +36,7 @@ class RegistrationController extends AppController
 
             $detail = RegistrationDetail::find($registration->id_siswa);
 
-            Student::create([
+            StudentDetail::create([
                 'nama'                  => $detail->nama,
                 'nisn'                  => $detail->nisn,
                 'tempat_lahir'          => $detail->tempat_lahir,

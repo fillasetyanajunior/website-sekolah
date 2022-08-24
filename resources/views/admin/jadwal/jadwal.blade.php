@@ -90,7 +90,7 @@
                                                 <tr>
                                                     <td>{{$i++}}</td>
                                                     <td class="text-capitalize">{{$showschedule->hari}}</td>
-                                                    <td>{{$showschedule->jam}} Pelajaran</td>
+                                                    <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
                                                     <td>{{$mapel->matapelajaran}}</td>
                                                     <td>{{$guru->name}}</td>
                                                     <td>{{$tahun->tahun}}</td>
