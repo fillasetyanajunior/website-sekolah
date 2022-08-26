@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController as Dashboard;
 use App\Http\Controllers\Admin\DepartmentController as Department;
 use App\Http\Controllers\Admin\DeuteronomiController as Deuteronomi;
+use App\Http\Controllers\Admin\ExtracurricularController as Extracurricular;
 use App\Http\Controllers\Admin\GradeController as Grade;
 use App\Http\Controllers\Admin\MaterialController as Material;
 use App\Http\Controllers\Admin\NewsController as News;
@@ -34,6 +35,12 @@ Route::group([
     Route::post('informasi/edit/{news}', [News::class, 'edit'])->name('admin.news.edit');
     Route::post('informasi/update/{news}', [News::class, 'update'])->name('admin.news.update');
     Route::delete('informasi/destroy/{news}', [News::class, 'destroy'])->name('admin.news.destroy');
+
+    Route::get('ekstra', [Extracurricular::class, 'index'])->name('admin.extracurricular');
+    Route::post('ekstra/store', [Extracurricular::class, 'store'])->name('admin.extracurricular.store');
+    Route::post('ekstra/edit/{extracurricular}', [Extracurricular::class, 'edit'])->name('admin.extracurricular.edit');
+    Route::post('ekstra/update/{extracurricular}', [Extracurricular::class, 'update'])->name('admin.extracurricular.update');
+    Route::delete('ekstra/destroy/{extracurricular}', [Extracurricular::class, 'destroy'])->name('admin.extracurricular.destroy');
 
     Route::get('materi', [Material::class, 'index'])->name('admin.material');
     Route::post('materi/store', [Material::class, 'store'])->name('admin.material.store');

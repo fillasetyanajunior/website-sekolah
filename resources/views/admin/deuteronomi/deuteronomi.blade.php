@@ -82,18 +82,15 @@
                                             <?php $i = 1; ?>
                                             @foreach ($deuteronomi as $showdeuteronomi)
                                                 @php
-                                                    $detail         = App\Models\Deuteronomi::where('kelas', $showdeuteronomi->kelas)->first();
-                                                    $matapelajaran  = App\Models\Subject::find($detail->matapelajaran);
-                                                    $jurusan        = App\Models\Department::find($detail->jurusan);
-                                                    $tahun          = App\Models\Year::find($detail->tahun);
+                                                    $detail = App\Models\Deuteronomi::where('kelas', $showdeuteronomi->kelas)->first();
                                                 @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
                                                     <td>{{$detail->tanggal}}</td>
                                                     <td>{{$detail->jam}}</td>
-                                                    <td>{{$matapelajaran->matapelajaran}}</td>
-                                                    <td>{{$tahun->tahun}}</td>
-                                                    <td>{{$jurusan->jurusan}}</td>
+                                                    <td>{{App\Models\Subject::find($detail->matapelajaran)->matapelajaran}}</td>
+                                                    <td>{{App\Models\Year::find($detail->tahun)->tahun}}</td>
+                                                    <td>{{App\Models\Department::find($detail->jurusan)->jurusan}}</td>
                                                     <td>{{$detail->kelas}}</td>
                                                     <td>Ruangan {{$detail->ruangan}}</td>
                                                     <td width="100px">

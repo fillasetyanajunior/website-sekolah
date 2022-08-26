@@ -20,6 +20,7 @@ class Student extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id_siswa',
         'name',
         'username',
         'password',

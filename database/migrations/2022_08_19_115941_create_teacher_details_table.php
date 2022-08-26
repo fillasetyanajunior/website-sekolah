@@ -15,18 +15,18 @@ class CreateTeacherDetailsTable extends Migration
     {
         Schema::create('teacher_details', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
             $table->string('nama');
             $table->string('nuptk');
             $table->string('alamat');
             $table->string('nomer');
             $table->string('email');
             $table->string('lulusan');
-            $table->string('mapel');
-            $table->string('kelas');
-            $table->string('jurusan');
+            $table->integer('mapel');
             $table->string('kelas_mengajar');
-            $table->string('status');
+            $table->string('jurusan_mengajar');
+            $table->enum('wali_kelas', ['X', 'XI', 'XII']);
+            $table->integer('wali_jurusan');
+            $table->enum('status', ['PNS', 'Non PNS']);
             $table->string('foto')->nullable();
             $table->string('sertifikat_pendidikan')->nullable();
             $table->string('izasah')->nullable();

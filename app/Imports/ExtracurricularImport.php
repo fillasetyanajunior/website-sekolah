@@ -2,14 +2,12 @@
 
 namespace App\Imports;
 
-use App\Models\Grade;
+use App\Models\Extracurricular;
 use App\Models\StudentDetail;
-use App\Models\Subject;
-use App\Models\Teacher;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class GradeImport implements ToModel, WithHeadingRow
+class ExtracurricularImport implements ToModel
 {
     public $teacher;
     public function __construct($teacher)
@@ -25,14 +23,13 @@ class GradeImport implements ToModel, WithHeadingRow
             $semester = 'Genap';
         }
 
-        $subject = Subject::where('matapelajaran', $row['matapelajaran'])->first();
         $student = StudentDetail::where('nama', $row['nama'])->first();
 
-        return new Grade([
+        return new Extracurricular([
             'id_siswa'  => $student->id,
             'angka'     => $row['angka'],
             'huruf'     => $row['huruf'],
-            'mapel'     => $subject->id,
+            'extra'     => $row['extra'],
             'tahun'     => $row['tahun'],
             'semester'  => $semester,
             'guru'      => $this->teacher,

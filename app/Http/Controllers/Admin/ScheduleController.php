@@ -20,7 +20,7 @@ class ScheduleController extends AppController
         $teacher    = Teacher::all();
         $year       = Year::all();
         $department = Department::all();
-        return view('admin.jadwal.jadwal', compact('schedule', 'subject', 'teacher', 'year', 'department', 'title'));
+        return view('admin.schedule.schedule', compact('schedule', 'subject', 'teacher', 'year', 'department', 'title'));
     }
 
     public function store(Request $request)

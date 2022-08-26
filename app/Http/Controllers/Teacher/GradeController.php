@@ -15,13 +15,13 @@ class GradeController extends AppController
     public function index()
     {
         $title      = 'Nilai';
-        $grade      = Grade::where('guru', Auth::user()->id)->paginate(20);
-        return view('teacher.nilai.nilai', compact('title', 'grade'));
+        $grade      = Grade::where('guru', Auth::user()->id_guru)->paginate(20);
+        return view('teacher.grade.grade', compact('title', 'grade'));
     }
 
     public function store(Request $request)
     {
-        Excel::import(new GradeImport(Auth::user()->id), $request->import_excel);
+        Excel::import(new GradeImport(Auth::user()->id_guru), $request->import_excel);
         return redirect(route('teacher.grade'))->with('success', 'Data Berhasil Ditambahkan');
     }
 

@@ -12,7 +12,7 @@ class SubjectController extends AppController
     {
         $title      = 'Mata Pelajaran';
         $subject    = Subject::paginate(20);
-        return view('admin.matapelajaran.matapelajaran', compact('subject','title'));
+        return view('admin.subject.subject', compact('subject','title'));
     }
 
     public function store(Request $request)

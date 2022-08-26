@@ -9,7 +9,6 @@ class TeacherDetail extends Model
 {
     use HasFactory;
     protected $filleable = [
-        'user_id',
         'nama',
         'nuptk',
         'alamat',

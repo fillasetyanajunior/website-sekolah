@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 <div class="page">
-    <x-sliderbar-admin></x-sliderbar-admin>
+    <x-sliderbar-teacher></x-sliderbar-teacher>
     <div class="page-wrapper">
         <div class="page-wrapper">
             <div class="container-xl">
@@ -10,7 +10,7 @@
                     <div class="row g-2 align-items-center">
                         <div class="col">
                             <div class="page-pretitle">
-                                Management User
+                                Nilai
                             </div>
                             <h2 class="page-title">
                                 {{$title}}
@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#GuruModal" id="tambahguru">
+                                    data-bs-target="#NilaiModal" id="tambahnilai">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -27,10 +27,10 @@
                                         <line x1="12" y1="5" x2="12" y2="19" />
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
-                                    Tambah Guru
+                                    Mengunggah Nilai
                                 </a>
                                 <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#GuruModal" id="tambahguru" aria-label="Tambah Guru">
+                                    data-bs-target="#NilaiModal" id="tambahnilai" aria-label="Mengunggah Nilai">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -69,22 +69,26 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama</th>
-                                                <th>Username</th>
+                                                <th>Mata Pelajaran</th>
+                                                <th>Angka</th>
+                                                <th>Huruf</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @php
-                                                $i = 1;
+                                                $i=1;
                                             @endphp
-                                            @foreach ($teacher as $showteacher)
+                                            @foreach ($extra as $showextra)
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{$showteacher->name}}</td>
-                                                    <td>{{$showteacher->username}}</td>
-                                                    <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editguru" data-bs-toggle="modal" data-bs-target="#GuruModal" data-id="{{$showteacher->id}}">Ubah</button>
-                                                        <form action="{{route('admin.teacher.destroy', $showteacher->id)}}" method="post" class="d-inline">
+                                                    <td>{{App\Models\StudentDetail::find($showextra->id_siswa)}}</td>
+                                                    <td>{{$showextra->extra}}</td>
+                                                    <td>{{$showextra->angka}}</td>
+                                                    <td>{{$showextra->huruf}}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editnilai" data-bs-toggle="modal" data-bs-target="#NilaiModal" data-id="{{$showextra->id}}">Ubah</button>
+                                                        <form action="{{route('teacher.extracurricular.destroy', $showextra->id)}}" method="post" >
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -96,7 +100,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer d-flex align-items-center">
-                                    {{$teacher->links()}}
+                                    {{$extra->links()}}
                                 </div>
                             </div>
                         </div>
@@ -107,33 +111,28 @@
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="GuruModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="NilaiModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Large modal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="body_guru">
-                <form action="" method="POST">
+            <div class="body_nilai">
+                <form action="" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label" for="name">Name Guru</label>
-                            <select class="form-control" id="name" name="name">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($guru as $guru)
-                                    <option value="{{$guru->nama}}">{{$guru->nama}}</option>
-                                @endforeach
-                            </select>
+                        <div class="mb-3 angka">
+                            <label class="form-label" for="angka">Nilai Angka</label>
+                            <input type="text" class="form-control" id="angka" name="angka">
                         </div>
-                         <div class="mb-3 username">
-                            <label class="form-label" for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username">
+                        <div class="mb-3 huruf">
+                            <label class="form-label" for="huruf">Nilai Huruf</label>
+                            <input type="text" class="form-control" id="huruf" name="huruf">
                         </div>
-                        <div class="mb-3 password">
-                            <label class="form-label" for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password">
+                        <div class="mb-3 import_excel">
+                            <label class="form-label" for="import_excel">Import File Nilai Excel</label>
+                            <input type="file" class="form-control" id="import_excel" name="import_excel">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -149,32 +148,29 @@
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#tambahguru').on('click', function () {
-                $('.body_guru button[type=submit]').text('Add');
-                $('.modal-title').text('Tambah User Guru');
-                $('.body_guru form').attr('action', '{{route("admin.teacher.store")}}');
-                $('.body_guru form').attr('method', 'post');
+        $(document).ready(function(){
+            $('#tambahnilai').on('click', function () {
+                $('.body_nilai button[type=submit]').text('Add');
+                $('.modal-title').text('Tambah Nilai');
+                $('.body_nilai form').attr('action', '{{route("teacher.extracurricular.store")}}');
+                $('.body_nilai form').attr('method', 'post');
 
-                $('.username').hide()
-                $('.password').hide()
-
-                $('#name').val('')
-                $('#username').val('')
-                $('#password').val('')
+                $('.angka').hide()
+                $('.huruf').hide()
+                $('.import_excel').show()
             });
-            $('#editguru*').on('click', function () {
+            $('#editnilai*').on('click', function () {
                 const id = $(this).data('id');
-                let _url = '{{route("admin.teacher.edit",":id")}}'.replace(':id', id);
+                let _url = '{{route("teacher.extracurricular.edit",":id")}}'.replace(':id', id);
 
-                $('.body_guru button[type=submit]').text('Edit');
-                $('.modal-title').text('Edit User Guru');
-                $('.body_guru form').attr('action', '{{route("admin.teacher.update",":id")}}'.replace(':id', id));
-                $('.body_guru form').attr('method', 'post');
+                $('.body_nilai button[type=submit]').text('Edit');
+                $('.modal-title').text('Edit Nilai');
+                $('.body_nilai form').attr('action', '{{route("teacher.extracurricular.update",":id")}}'.replace(':id', id));
+                $('.body_nilai form').attr('method', 'post');
 
-                $('.username').show()
-                $('.password').show()
-
+                $('.angka').show()
+                $('.huruf').show()
+                $('.import_excel').hide()
 
                 $.ajax({
                     type: 'POST',
@@ -183,9 +179,8 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#name').val(hasil.teacher.name)
-                        $('#username').val(hasil.teacher.username)
-                        $('#password').val(hasil.password_encrypted)
+                        $('#angka').val(hasil.angka)
+                        $('#huruf').val(hasil.huruf)
                     }
                 });
             });

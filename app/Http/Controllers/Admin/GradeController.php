@@ -16,7 +16,7 @@ class GradeController extends AppController
         $title      = 'Nilai';
         $teacher    = Teacher::all();
         $grade      = Grade::paginate(20);
-        return view('admin.nilai.nilai', compact('title', 'grade', 'teacher'));
+        return view('admin.grade.grade', compact('title', 'grade', 'teacher'));
     }
 
     public function store(Request $request)

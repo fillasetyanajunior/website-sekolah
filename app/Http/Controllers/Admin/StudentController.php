@@ -16,7 +16,7 @@ class StudentController extends AppController
         $title      = 'Managemen Siswa';
         $student    = Student::paginate(20);
         $siswa      = StudentDetail::all();
-        return view('admin.managemen.siswa', compact('student', 'title', 'siswa'));
+        return view('admin.managemen.student', compact('student', 'title', 'siswa'));
     }
 
     public function store(Request $request)
@@ -33,8 +33,10 @@ class StudentController extends AppController
         $thn        = date('ymd');
         $username   = $thn . $acak;
 
+        $student = StudentDetail::find(Crypt::decrypt($request->name));
+
         Student::create([
-            'name'                  => $request->name,
+            'name'                  => $student->nama,
             'username'              => $username,
             'password'              => Hash::make($password),
             'password_encrypted'    => Crypt::encrypt($password),
@@ -53,9 +55,11 @@ class StudentController extends AppController
 
     public function update(Request $request, Student $student)
     {
+        $student = StudentDetail::find(Crypt::decrypt($request->name));
+
         Student::where('id', $student->id)
             ->update([
-                'name'                  => $request->name,
+                'name'                  => $student->nama,
                 'username'              => $student->username,
                 'password'              => Hash::make($request->password),
                 'password_encrypted'    => Crypt::encrypt($request->password),

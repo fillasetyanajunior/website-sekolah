@@ -12,8 +12,8 @@ class FinalExamController extends Controller
     public function index()
     {
         $title              = 'Ujian Akhir';
-        $practicalexam      = Exam::where('id', Auth::user()->id)->where('tipe_ujian', 'praktikum')->get();
-        $writtenexamination = Exam::where('id', Auth::user()->id)->where('tipe_ujian', 'tertulis')->get();
+        $practicalexam      = Exam::where('id_siswa', Auth::user()->id_siswa)->where('tipe_ujian', 'praktikum')->get();
+        $writtenexamination = Exam::where('id_siswa', Auth::user()->id_siswa)->where('tipe_ujian', 'tertulis')->get();
         return view('student.ujian.ujian', compact('title', 'writtenexamination', 'practicalexam'));
     }
 }

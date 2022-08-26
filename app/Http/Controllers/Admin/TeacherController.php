@@ -16,7 +16,7 @@ class TeacherController extends AppController
         $title      = 'Managemen Guru';
         $teacher    = Teacher::paginate(20);
         $guru       = TeacherDetail::all();
-        return view('admin.managemen.guru',compact('teacher', 'title', 'guru'));
+        return view('admin.managemen.teacher',compact('teacher', 'title', 'guru'));
     }
 
     public function store(Request $request)
@@ -33,8 +33,10 @@ class TeacherController extends AppController
         $thn        = date('ymd');
         $username   = $thn . $acak;
 
+        $teacher = TeacherDetail::find(Crypt::decrypt($request->name));
+
         Teacher::create([
-            'name'                  => $request->name,
+            'name'                  => $teacher->nama,
             'username'              => $username,
             'password'              => Hash::make($password),
             'password_encrypted'    => Crypt::encrypt($password),
@@ -53,9 +55,11 @@ class TeacherController extends AppController
 
     public function update(Request $request, Teacher $teacher)
     {
+        $teacher = TeacherDetail::find(Crypt::decrypt($request->name));
+
         Teacher::where('id', $teacher->id)
             ->update([
-                'name'                  => $request->name,
+                'name'                  => $teacher->nama,
                 'username'              => $teacher->username,
                 'password'              => Hash::make($request->password),
                 'password_encrypted'    => Crypt::encrypt($request->password),

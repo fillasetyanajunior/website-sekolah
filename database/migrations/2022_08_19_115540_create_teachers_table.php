@@ -15,10 +15,12 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_guru');
             $table->string('name');
             $table->string('username')->unique();
             $table->string('password');
             $table->string('password_encrypted');
+            $table->enum('role', ['guru', 'wali kelas'])->default('guru');
             $table->timestamps();
         });
     }

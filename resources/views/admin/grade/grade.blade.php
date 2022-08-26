@@ -80,13 +80,10 @@
                                                 $i=1;
                                             @endphp
                                             @foreach ($grade as $showgrade)
-                                                @php
-                                                    $mapel = App\Models\Subject::find($showgrade->mapel);
-                                                @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{$showgrade->nama}}</td>
-                                                    <td>{{$mapel->matapelajaran}}</td>
+                                                    <td>{{App\Models\StudentDetail::find($showgrade->id_siswa)}}</td>
+                                                    <td>{{App\Models\Subject::find($showgrade->mapel)->matapelajaran}}</td>
                                                     <td>{{$showgrade->angka}}</td>
                                                     <td>{{$showgrade->huruf}}</td>
                                                     <td width="100px">

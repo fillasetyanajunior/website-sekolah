@@ -15,6 +15,7 @@ class CreateExamsTable extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
+            $table->date('id_siswa');
             $table->date('tanggal');
             $table->string('jam');
             $table->integer('ruangan');

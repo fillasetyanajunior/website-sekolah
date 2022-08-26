@@ -81,20 +81,14 @@
                                         <tbody>
                                             <?php $i = 1; ?>
                                             @foreach ($schedule as $showschedule)
-                                                @php
-                                                    $mapel      = App\Models\Subject::find($showschedule->matapelajaran);
-                                                    $tahun      = App\Models\Year::find($showschedule->tahun);
-                                                    $jurusan    = App\Models\Department::find($showschedule->jurusan);
-                                                    $guru       = App\Models\Teacher::find($showschedule->guru);
-                                                @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
                                                     <td class="text-capitalize">{{$showschedule->hari}}</td>
                                                     <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
-                                                    <td>{{$mapel->matapelajaran}}</td>
-                                                    <td>{{$guru->name}}</td>
-                                                    <td>{{$tahun->tahun}}</td>
-                                                    <td>{{$jurusan->jurusan}}</td>
+                                                    <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
+                                                    <td>{{App\Models\TeacherDetail::find($showschedule->guru)->name}}</td>
+                                                    <td>{{App\Models\Year::find($showschedule->tahun)->tahun}}</td>
+                                                    <td>{{App\Models\Department::find($showschedule->jurusan)->jurusan}}</td>
                                                     <td>{{$showschedule->kelas}}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-warning" id="editjadwal" data-bs-toggle="modal" data-bs-target="#JadwalModal" data-id="{{$showschedule->id}}">Ubah</button>

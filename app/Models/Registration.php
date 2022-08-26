@@ -9,7 +9,7 @@ class Registration extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_siswa',
+        'id_registration',
         'kode',
         'pilihan_1',
         'pilihan_2',

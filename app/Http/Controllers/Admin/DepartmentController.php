@@ -12,7 +12,7 @@ class DepartmentController extends AppController
     {
         $title      = 'Jurusan';
         $department = Department::paginate(10);
-        return view('admin.jurusan.jurusan', compact('department', 'title'));
+        return view('admin.department.department', compact('department', 'title'));
     }
 
     public function store(Request $request)

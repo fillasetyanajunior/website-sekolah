@@ -12,7 +12,7 @@ class YearController extends AppController
     {
         $title  = 'Tahun Ajaran';
         $year   = Year::paginate(20);
-        return view('admin.tahun.tahun', compact('year', 'title'));
+        return view('admin.year.year', compact('year', 'title'));
     }
 
     public function store(Request $request)

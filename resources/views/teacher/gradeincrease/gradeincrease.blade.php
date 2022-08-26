@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 <div class="page">
-    <x-sliderbar-admin></x-sliderbar-admin>
+    <x-sliderbar-teacher></x-sliderbar-teacher>
     <div class="page-wrapper">
         <div class="page-wrapper">
             <div class="container-xl">
@@ -10,7 +10,7 @@
                     <div class="row g-2 align-items-center">
                         <div class="col">
                             <div class="page-pretitle">
-                                Management User
+                                Wali Kelas
                             </div>
                             <h2 class="page-title">
                                 {{$title}}
@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#SiswaModal" id="tambahsiswa">
+                                    data-bs-target="#GradeIncreaseModal" id="tambahgradeincrease">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -27,10 +27,10 @@
                                         <line x1="12" y1="5" x2="12" y2="19" />
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
-                                    Tambah Siswa
+                                    Edit Semua
                                 </a>
                                 <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#SiswaModal" id="tambahsiswa" aria-label="Tambah Siswa">
+                                    data-bs-target="#GradeIncreaseModal" id="tambahgradeincrease" aria-label="Edit Semua">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -68,8 +68,8 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>NISN</th>
                                                 <th>Nama</th>
-                                                <th>Username</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -78,17 +78,15 @@
                                                 $i = 1;
                                             @endphp
                                             @foreach ($student as $showstudent)
+                                                @php
+                                                    $path = explode('/', $showstudent->path);
+                                                @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{$showstudent->name}}</td>
-                                                    <td>{{$showstudent->username}}</td>
-                                                    <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editsiswa" data-bs-toggle="modal" data-bs-target="#SiswaModal" data-id="{{$showstudent->id}}">Ubah</button>
-                                                        <form action="{{route('admin.student.destroy', $showstudent->id)}}" method="post" class="d-inline">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
-                                                        </form>
+                                                    <td>{{$showstudent->nisn}}</td>
+                                                    <td>{{$showstudent->nama}}</td>
+                                                    <td width="100">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editgradeincrease" data-bs-toggle="modal" data-bs-target="#GradeIncreaseModal" data-id="{{$showstudent->id}}">Ubah</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -107,33 +105,25 @@
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="SiswaModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="GradeIncreaseModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Large modal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="body_siswa">
-                <form action="" method="POST" class="needs-validation" novalidate>
+            <div class="body_gradeincrease">
+                <form action="" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="name">Name Siswa</label>
-                            <select class="form-control" id="name" name="name">
+                            <label class="form-label" for="kelas">Kelas</label>
+                            <select class="form-control" id="kelas" name="kelas">
                                 <option value="">-- Pilih --</option>
-                                @foreach ($siswa as $siswa)
-                                    <option value="{{$siswa->nama}}">{{$siswa->nama}}</option>
-                                @endforeach
+                                <option value="1">10</option>
+                                <option value="2">11</option>
+                                <option value="3">12</option>
                             </select>
-                        </div>
-                         <div class="mb-3 username">
-                            <label class="form-label" for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username">
-                        </div>
-                        <div class="mb-3 password">
-                            <label class="form-label" for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -149,45 +139,21 @@
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#tambahsiswa').on('click', function () {
-                $('.body_siswa button[type=submit]').text('Add');
-                $('.modal-title').text('Tambah User Siswa');
-                $('.body_siswa form').attr('action', '{{route("admin.student.store")}}');
-                $('.body_siswa form').attr('method', 'post');
-
-                $('.username').hide()
-                $('.password').hide()
-
-                $('#name').val('')
-                $('#username').val('')
-                $('#password').val('')
+        $(document).ready(function(){
+            $('#tambahgradeincrease').on('click', function () {
+                $('.body_gradeincrease button[type=submit]').text('Edit All');
+                $('.modal-title').text('Semua Naik Kelas');
+                $('.body_gradeincrease form').attr('action', '{{route("teacher.gradeincrease.update_all")}}');
+                $('.body_gradeincrease form').attr('method', 'post');
             });
-            $('#editsiswa*').on('click', function () {
+
+            $('#editgradeincrease*').on('click', function () {
                 const id = $(this).data('id');
-                let _url = '{{route("admin.student.edit",":id")}}'.replace(':id', id);
 
-                $('.body_siswa button[type=submit]').text('Edit');
-                $('.modal-title').text('Edit User Siswa');
-                $('.body_siswa form').attr('action', '{{route("admin.student.update",":id")}}'.replace(':id', id));
-                $('.body_siswa form').attr('method', 'post');
-
-                $('.username').show()
-                $('.password').show()
-
-
-                $.ajax({
-                    type: 'POST',
-                    url: _url,
-                    data: {
-                        _token: '{{csrf_token()}}',
-                    },
-                    success: function (hasil) {
-                        $('#name').val(hasil.student.name)
-                        $('#username').val(hasil.student.username)
-                        $('#password').val(hasil.password_encrypted)
-                    }
-                });
+                $('.body_gradeincrease button[type=submit]').text('Edit');
+                $('.modal-title').text('Naik Kelas');
+                $('.body_gradeincrease form').attr('action', '{{route("teacher.gradeincrease.update",":id")}}'.replace(':id', id));
+                $('.body_gradeincrease form').attr('method', 'post');
             });
         });
     </script>

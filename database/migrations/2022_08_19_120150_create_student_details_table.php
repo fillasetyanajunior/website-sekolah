@@ -15,7 +15,6 @@ class CreateStudentDetailsTable extends Migration
     {
         Schema::create('student_details', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
             $table->string('nama');
             $table->string('nisn');
             $table->string('tempat_lahir');
@@ -34,7 +33,15 @@ class CreateStudentDetailsTable extends Migration
             $table->integer('penghasilan_bapak');
             $table->integer('pendidikan');
             $table->string('nama_sekolah');
+            $table->string('provinsi_id');
+            $table->string('kabupaten_id');
+            $table->string('kecamatan_id');
+            $table->string('desa_id');
+            $table->string('dusun');
+            $table->string('rw');
+            $table->string('rt');
             $table->string('alamat');
+            $table->string('kode_pos');
             $table->integer('jurusan');
             $table->enum('kelas', ['X', 'XI', 'XII'])->default('X');
             $table->string('foto')->nullable();

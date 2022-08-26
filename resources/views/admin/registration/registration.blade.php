@@ -56,7 +56,7 @@
                                             @endphp
                                             @foreach ($registration as $showregistration)
                                                 @php
-                                                    $detail = App\Models\RegistrationDetail::find($showregistration->id_siswa);
+                                                    $detail = App\Models\RegistrationDetail::find($showregistration->id_registration);
                                                 @endphp
                                                 <tr>
                                                     <th>{{$i++}}</th>
@@ -100,29 +100,35 @@
                 <form action="" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="name">Nama</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Nama</label>
                             <input type="text" class="form-control" id="name" name="name">
                         </div>
-                        <div class="form-group">
-                            <label for="nisn">NISN</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="nisn">NISN</label>
                             <input type="text" class="form-control" id="nisn" name="nisn">
                         </div>
-                        <div class="form-group">
-                            <label for="kode">Kode Pendaftaran</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="kode">Kode Pendaftaran</label>
                             <input type="text" class="form-control" id="kode" name="kode">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="jurusan">Jurusan</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="jurusan">Jurusan</label>
                             <select class="form-control" id="jurusan" name="jurusan">
                                 <option value="">-- Pilih --</option>
+                                {{-- <option value="1">A</option>
+                                <option value="2">B</option>
+                                <option value="3">C</option>
+                                <option value="4">D</option>
+                                <option value="5">E</option>
+                                <option value="6">F</option> --}}
                                 @foreach ($department as $department)
                                     <option value="{{$department->kode}}">{{$department->jurusan}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="active">Status</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="active">Status</label>
                             <select class="form-control" id="active" name="active">
                                 <option value="">-- Pilih --</option>
                                 <option value="1">Belum Test</option>

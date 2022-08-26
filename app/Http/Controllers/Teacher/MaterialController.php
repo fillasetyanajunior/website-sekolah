@@ -15,7 +15,7 @@ class MaterialController extends AppController
         $title      = 'Materi';
         $subject    = Subject::all();
         $material   = Material::paginate(20);
-        return view('teacher.materi.materi', compact('title', 'subject', 'material'));
+        return view('teacher.material.material', compact('title', 'subject', 'material'));
     }
 
     public function store(Request $request)

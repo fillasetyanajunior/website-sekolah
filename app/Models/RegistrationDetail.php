@@ -27,6 +27,14 @@ class RegistrationDetail extends Model
         'penghasilan_bapak',
         'pendidikan',
         'nama_sekolah',
+        'provinsi_id',
+        'kabupaten_id',
+        'kecamatan_id',
+        'desa_id',
+        'dusun',
+        'rw',
+        'rt',
         'alamat',
+        'kode_pos',
     ];
 }

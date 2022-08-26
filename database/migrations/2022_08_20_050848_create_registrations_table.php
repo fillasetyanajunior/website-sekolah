@@ -15,7 +15,7 @@ class CreateRegistrationsTable extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_siswa');
+            $table->integer('id_registration');
             $table->string('kode');
             $table->integer('pilihan_1');
             $table->integer('pilihan_2');

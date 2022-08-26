@@ -19,7 +19,7 @@ class DeuteronomiController extends AppController
         $subject        = Subject::all();
         $year           = Year::all();
         $department     = Department::all();
-        return view('admin.ulangan.ulangan', compact('subject', 'year', 'department', 'deuteronomi', 'title'));
+        return view('admin.deuteronomi.deuteronomi', compact('subject', 'year', 'department', 'deuteronomi', 'title'));
     }
 
     public function store(Request $request)

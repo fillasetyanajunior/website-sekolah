@@ -55,10 +55,6 @@ class RegistrationController extends Controller
             'info'                  => ['required'],
         ]);
 
-        $alamat =   $request->provinsi . '/' . $request->kabupaten . '/' . $request->kecamatan
-            . '/' . $request->desa . '/' . $request->dusun . '/' . $request->rw
-            . '/' . $request->rt . '/' . $request->nama_jalan . '/' . $request->kode_pos;
-
         if ($request->jenis_kelamin == 1) {
             $jenis_kelamin = 'Laki-laki';
         } else {
@@ -98,7 +94,15 @@ class RegistrationController extends Controller
             'penghasilan_bapak'     => $request->penghasilan_bapak,
             'pendidikan'            => $request->pendidikan,
             'nama_sekolah'          => $request->nama_sekolah,
-            'alamat'                => $alamat,
+            'provinsi_id'           => $request->provinsi,
+            'kabupaten_id'          => $request->kabupaten,
+            'kecamatan_id'          => $request->kecamatan,
+            'desa_id'               => $request->desa,
+            'dusun'                 => $request->dusun,
+            'rw'                    => $request->rw,
+            'rt'                    => $request->rt,
+            'alamat'                => $request->nama_jalan,
+            'kode_pos'              => $request->kode_pos,
         ]);
 
         $permitted_chars    = '0123456789';
@@ -107,13 +111,13 @@ class RegistrationController extends Controller
         $password           = substr(str_shuffle($int), 0, 6);
 
         Registration::create([
-            'id_siswa'              => $siswa->id,
-            'kode'                  => $kode,
-            'pilihan_1'             => $request->pilihan_1,
-            'pilihan_2'             => $request->pilihan_2,
-            'info'                  => $request->info,
-            'password'              => $password,
-            'is_active'             => 'belum test',
+            'id_registration'   => $siswa->id,
+            'kode'              => $kode,
+            'pilihan_1'         => $request->pilihan_1,
+            'pilihan_2'         => $request->pilihan_2,
+            'info'              => $request->info,
+            'password'          => $password,
+            'is_active'         => 'belum test',
         ]);
 
         return redirect(route('regisration'))->with('success','Pendaftaran Berhasil  silahkan cek email anda');
