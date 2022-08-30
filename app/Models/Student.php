@@ -10,8 +10,6 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Student extends Authenticatable
 {
-    use HasFactory;
-
     use HasApiTokens, HasFactory, Notifiable;
 
     /**

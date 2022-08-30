@@ -8,8 +8,10 @@ use App\Models\Registration;
 use App\Models\RegistrationDetail;
 use App\Models\StudentDetail;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\TeacherDetail;
 use App\Models\Teacher;
+use App\Models\Teaching;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -32,15 +34,19 @@ class DatabaseSeeder extends Seeder
 
         for ($i=1; $i <= 10; $i++) {
 
-            $jenis = array('Laki-laki', 'Perempuan');
-            $jenis_kelamin = array_rand($jenis,2);
+            $jenis          = array('Laki-laki', 'Perempuan');
+            $jenis_kelamin  = array_rand($jenis,1);
+            $int            = '0123456789';
+            $nis            =  substr(str_shuffle($int), 0, 8);
+            $kelas          = array('X', 'XI', 'XII');
+            $k              = array_rand($kelas, 1);
 
             $id_siswa = StudentDetail::create([
                 'nama'                  => 'Student ' . $i,
                 'nisn'                  => '123456789012',
                 'tempat_lahir'          => 'Jl. Kebon Kacang',
                 'tanggal_lahir'         => '2000-01-01',
-                'jenis_kelamin'         => $jenis[$jenis_kelamin[0]],
+                'jenis_kelamin'         => $jenis[$jenis_kelamin],
                 'agama'                 => 'Islam',
                 'nomer_hp'              => '08123456789',
                 'email'                 => 'students@students.com',
@@ -63,13 +69,14 @@ class DatabaseSeeder extends Seeder
                 'rt'                    => '00',
                 'alamat'                => 'Jl. Tugu Pahlawan',
                 'kode_pos'              => '81155',
-                'jurusan'               => 1,
+                'kelas'                 => $kelas[$k],
+                'jurusan'               => rand(1, 2),
             ]);
 
             Student::create([
                 'id_siswa'              => $id_siswa->id,
                 'name'                  => 'Student ' . $i,
-                'username'              => 'student' . $i,
+                'username'              => $nis,
                 'password'              => Hash::make('students'),
                 'password_encrypted'    => Crypt::encrypt('students'),
             ]);
@@ -84,13 +91,22 @@ class DatabaseSeeder extends Seeder
                 'nomer'                 => '08123456789',
                 'email'                 => 'teacher@teacher.com',
                 'lulusan'               => 'S1',
-                'mapel'                 => 1,
-                'kelas_mengajar'        => 'X/XI',
-                'jurusan_mengajar'      => 'IPA/IPS',
                 'wali_kelas'            => 'X',
                 'wali_jurusan'          => 1,
                 'status'                => 'PNS',
             ]);
+
+            for ($l=0; $l < 3; $l++) {
+                $kelas = array('X', 'XI', 'XII');
+                $k = array_rand($kelas, 1);
+
+                Teaching::create([
+                    'id_guru'       => $id_guru->id,
+                    'kelas'         => $kelas[$k],
+                    'jurusan'       => rand(1,2),
+                    'matapelajaran' => rand(1,4),
+                ]);
+            }
 
             Teacher::create([
                 'id_guru'               => $id_guru->id,
@@ -106,7 +122,7 @@ class DatabaseSeeder extends Seeder
             'nisn'                  => '123456789012',
             'tempat_lahir'          => 'Batam',
             'tanggal_lahir'         => '2001-07-31',
-            'jenis_kelamin'         => $jenis[$jenis_kelamin[0]],
+            'jenis_kelamin'         => 'Laki-laki',
             'agama'                 => 'Islam',
             'nomer_hp'              => '08123456789',
             'email'                 => 'aqmarnadhiframdan@gmail.com',
@@ -149,6 +165,22 @@ class DatabaseSeeder extends Seeder
         Department::create([
             'kode'      => 1,
             'jurusan'   => 'IPS',
+        ]);
+
+        Subject::create([
+            'matapelajaran' => 'Fisika'
+        ]);
+
+        Subject::create([
+            'matapelajaran' => 'Bahasa Indonesia'
+        ]);
+
+        Subject::create([
+            'matapelajaran' => 'Matematika'
+        ]);
+
+        Subject::create([
+            'matapelajaran' => 'Geografi'
         ]);
 
         $this->call([

@@ -21,9 +21,6 @@ class CreateTeacherDetailsTable extends Migration
             $table->string('nomer');
             $table->string('email');
             $table->string('lulusan');
-            $table->integer('mapel');
-            $table->string('kelas_mengajar');
-            $table->string('jurusan_mengajar');
             $table->enum('wali_kelas', ['X', 'XI', 'XII']);
             $table->integer('wali_jurusan');
             $table->enum('status', ['PNS', 'Non PNS']);
