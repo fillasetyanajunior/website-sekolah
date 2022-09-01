@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attendance;
 use App\Models\Extracurricular;
 use App\Models\Grade;
 use App\Models\StudentDetail;
@@ -28,6 +29,9 @@ class FinalReportController extends AppController
         $grade      = Grade::where('id_siswa',$id)->get();
         $student    = StudentDetail::find($id);
         $extra      = Extracurricular::where('id_siswa', $id)->get();
-        return view('teacher.finalreport.print_finalreport',compact('grade', 'student', 'extra'));
+        $hadir      = Attendance::where('keterangan','Hadir')->where('id_siswa',$id)->count();
+        $izin       = Attendance::where('keterangan','Izin')->where('id_siswa',$id)->count();
+        $tanpaket   = Attendance::where('keterangan','Tanpa Keterangan')->where('id_siswa',$id)->count();
+        return view('teacher.finalreport.print_finalreport',compact('grade', 'student', 'extra', 'hadir', 'izin', 'tanpaket'));
     }
 }

@@ -32,7 +32,7 @@ class CodeQrApiController extends Controller
         $kode   =  substr(str_shuffle($int), 0, 6);
         $qr     = QrCode::create([
                                 'kode'          => $kode,
-                                'matapelajaran'         => $matapelajaran->id,
+                                'matapelajaran' => $matapelajaran->id,
                                 'jurusan'       => $jurusan->id,
                                 'kelas'         => $kelas,
                             ]);

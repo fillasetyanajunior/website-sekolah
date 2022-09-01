@@ -123,7 +123,7 @@
                             <select class="form-control" id="name" name="name">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($guru as $guru)
-                                    <option value="{{Crypt::encrypt($guru->id)}}">{{$guru->nama}}</option>
+                                    <option value="{{$guru->id}}">{{$guru->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -183,7 +183,7 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#name').val(hasil.teacher.name)
+                        $('#name').val(hasil.teacher.id_guru)
                         $('#username').val(hasil.teacher.username)
                         $('#password').val(hasil.password_encrypted)
                     }

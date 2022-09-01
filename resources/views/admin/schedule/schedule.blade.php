@@ -86,7 +86,7 @@
                                                     <td class="text-capitalize">{{$showschedule->hari}}</td>
                                                     <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
                                                     <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{App\Models\TeacherDetail::find($showschedule->guru)->name}}</td>
+                                                    <td>{{App\Models\TeacherDetail::find($showschedule->guru)->nama}}</td>
                                                     <td>{{App\Models\Year::find($showschedule->tahun)->tahun}}</td>
                                                     <td>{{App\Models\Department::find($showschedule->jurusan)->jurusan}}</td>
                                                     <td>{{$showschedule->kelas}}</td>

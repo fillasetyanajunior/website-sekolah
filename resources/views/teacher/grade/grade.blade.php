@@ -82,13 +82,13 @@
                                             @foreach ($grade as $showgrade)
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{App\Models\StudentDetail::find($showgrade->id_siswa)}}</td>
-                                                    <td>{{App\Models\Subject::find($showgrade->mapel)->matapelajaran}}</td>
+                                                    <td>{{App\Models\StudentDetail::find($showgrade->id_siswa)->nama}}</td>
+                                                    <td>{{App\Models\Subject::find($showgrade->matapelajaran)->matapelajaran}}</td>
                                                     <td>{{$showgrade->angka}}</td>
                                                     <td>{{$showgrade->huruf}}</td>
-                                                    <td>
+                                                    <td width="100">
                                                         <button type="button" class="btn btn-sm btn-warning" id="editnilai" data-bs-toggle="modal" data-bs-target="#NilaiModal" data-id="{{$showgrade->id}}">Ubah</button>
-                                                        <form action="{{route('teacher.grade.destroy', $showgrade->id)}}" method="post" >
+                                                        <form action="{{route('teacher.grade.destroy', $showgrade->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

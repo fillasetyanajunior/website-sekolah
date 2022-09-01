@@ -11,10 +11,8 @@ class Exam extends Model
     protected $fillable = [
         'tanggal',
         'jam',
-        'ruangan',
-        'mapel',
+        'matapelajaran',
         'jurusan',
-        'kursi',
         'tipe_ujian',
     ];
 }

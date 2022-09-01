@@ -62,7 +62,7 @@
                 @foreach ($grade as $showgrade)
                     <tr>
                         <td class="text-center" rowspan="2">{{$i++}}</td>
-                        <td class="text-center" rowspan="2">{{App\Models\Subject::find($showgrade->mapel)}}</td>
+                        <td class="text-center" rowspan="2">{{App\Models\Subject::find($showgrade->matapelajaran)->matapelajaran}}</td>
                         <td class="text-center align-middle" rowspan="2">{{$showgrade->angka}}</td>
                         <td>Menunjukkan pemahaman terhadap Pancasila dan mampu menerapkan dalam kehidupan sehari-hari.</td>
                     </tr>
@@ -105,15 +105,15 @@
                     <tbody>
                         <tr>
                             <td width="150px">Sakit</td>
-                            <td width="100px">10 Hari</td>
+                            <td width="100px">{{$hadir}} Hari</td>
                         </tr>
                         <tr>
                             <td>Izin</td>
-                            <td>10 Hari</td>
+                            <td>{{$izin}} Hari</td>
                         </tr>
                         <tr>
                             <td>Tanpa Keterangan</td>
-                            <td>10 Hari</td>
+                            <td>{{$tanpaket}} Hari</td>
                         </tr>
                     </tbody>
                 </table>

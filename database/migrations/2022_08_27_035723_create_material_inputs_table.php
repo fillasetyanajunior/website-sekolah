@@ -19,7 +19,7 @@ class CreateMaterialInputsTable extends Migration
             $table->text('pembahasan');
             $table->enum('kelas', ['X', 'XI', 'XII']);
             $table->integer('jurusan');
-            $table->integer('mapel');
+            $table->integer('matapelajaran');
             $table->integer('guru');
             $table->timestamps();
         });

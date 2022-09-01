@@ -17,10 +17,10 @@ class MaterialApiController extends Controller
             return response()->json(['status_code' => 400]);
         }
 
-        $mapel = Subject::where('matapelajaran', $request->mapel)->first();
+        $mapel = Subject::where('matapelajaran', $request->matapelajaran)->first();
 
         $data = MaterialInput::where('guru', Auth::user()->id)
-                                ->where('mapel', $mapel->id)
+                                ->where('matapelajaran', $mapel->id)
                                 ->where('kelas', $request->kelas)
                                 ->get();
 
@@ -33,14 +33,14 @@ class MaterialApiController extends Controller
             return response()->json(['status_code' => 400]);
         }
 
-        $mapel      = Subject::where('matapelajaran', $request->mapel)->first();
+        $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
         $jurusan    = Department::where('jurusan', $request->jurusan)->first();
 
         MaterialInput::create([
             'judul'         => $request->judul,
             'pembahasan'    => $request->pembahasan,
             'kelas'         => $request->kelas,
-            'mapel'         => $mapel->id,
+            'matapelajaran' => $mapel->id,
             'jurusan'       => $jurusan->id,
             'guru'          => Auth::user()->id,
         ]);

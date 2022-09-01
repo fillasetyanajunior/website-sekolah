@@ -9,8 +9,8 @@ class Material extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_user',
-        'mapel',
+        'id_guru',
+        'matapelajaran',
         'judul',
         'kelas',
         'path',

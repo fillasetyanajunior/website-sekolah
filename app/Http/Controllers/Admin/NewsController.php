@@ -25,7 +25,7 @@ class NewsController extends AppController
         ]);
 
         $file = $request->file('thumnail');
-        $path = Storage::putFileAs('news', $file, $request->judul . rand(1, 100) . $file->extension());
+        $path = Storage::putFileAs('news', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
 
         News::create([
             'title'         => $request->title,
@@ -44,7 +44,7 @@ class NewsController extends AppController
     {
         if ($request->hasfile('thumnail')) {
             $file = $request->file('thumnail');
-            $path = Storage::putFileAs('news', $file, $request->judul . rand(1, 100) . $file->extension());
+            $path = Storage::putFileAs('news', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
         } else {
             $path = $news->thumnail;
         }

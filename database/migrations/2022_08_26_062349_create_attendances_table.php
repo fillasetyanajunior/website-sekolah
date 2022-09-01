@@ -18,7 +18,8 @@ class CreateAttendancesTable extends Migration
             $table->integer('id_siswa');
             $table->string('nis');
             $table->enum('kelas',['X','XI','XII']);
-            $table->integer('mapel');
+            $table->enum('keterangan', ['Hadir', 'Izin', 'Tanpa Keterangan']);
+            $table->integer('matapelajaran');
             $table->integer('jurusan');
             $table->integer('guru');
             $table->string('tahun');

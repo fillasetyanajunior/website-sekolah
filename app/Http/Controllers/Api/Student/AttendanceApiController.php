@@ -33,14 +33,14 @@ class AttendanceApiController extends Controller
             if ($kode->jurusan == $student->jurusan && $kode->kelas == $student->kelas && $kode->matapelajaran == $schedule->matapelajaran) {
                 if ($attendance == null) {
                     Attendance::create([
-                        'id_siswa'  => $student->id,
-                        'nis'       => Auth::user()->username,
-                        'mapel'     => $schedule->matapelajaran,
-                        'guru'      => $schedule->guru,
-                        'tahun'     => $schedule->matapelajaran,
-                        'kelas'     => $student->kelas,
-                        'tanggal'   => Carbon::now()->isoFormat('Y:m:d'),
-                        'jam'       => date('H:i:s'),
+                        'id_siswa'      => $student->id,
+                        'nis'           => Auth::user()->username,
+                        'matapelajaran' => $schedule->matapelajaran,
+                        'guru'          => $schedule->guru,
+                        'tahun'         => $schedule->matapelajaran,
+                        'kelas'         => $student->kelas,
+                        'tanggal'       => Carbon::now()->isoFormat('Y:m:d'),
+                        'jam'           => date('H:i:s'),
                     ]);
 
                     return response()->json(['status' => 'Absen Berhasil']);

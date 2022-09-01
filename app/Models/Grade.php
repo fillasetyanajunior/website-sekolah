@@ -10,9 +10,10 @@ class Grade extends Model
     use HasFactory;
     protected $fillable = [
         'id_siswa',
-        'mapel',
+        'matapelajaran',
         'guru',
         'tahun',
+        'kelas',
         'semester',
         'angka',
         'huruf',

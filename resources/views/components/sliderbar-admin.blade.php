@@ -101,6 +101,9 @@
                                 <a class="dropdown-item" href="{{route('admin.deuteronomi')}}">
                                     Jadwal Ulangan
                                 </a>
+                                <a class="dropdown-item" href="{{route('admin.exam')}}">
+                                    Jadwal Ujian Akhir
+                                </a>
                                 <a class="dropdown-item" href="{{route('admin.department')}}">
                                     Jurusan
                                 </a>

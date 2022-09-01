@@ -85,7 +85,7 @@
                                                         <form action="{{route('admin.department.destroy', $showdepartment->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
-                                                            <button type="submit" class="btn btn-sm btn-[rimary">Hapus</button>
+                                                            <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
                                                         </form>
                                                     </td>
                                                 </tr>

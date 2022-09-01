@@ -15,10 +15,11 @@ class CreateGradesTable extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->string('id_siswa');
-            $table->integer('mapel');
+            $table->integer('id_siswa');
+            $table->integer('matapelajaran');
             $table->integer('guru');
-            $table->string('tahun');
+            $table->integer('tahun');
+            $table->enum('kelas', ['X', 'XI', 'XII']);
             $table->enum('semester',['Ganjil', 'Genap']);
             $table->integer('angka');
             $table->char('huruf', 1);

@@ -12,7 +12,7 @@ class GradeController extends AppController
     public function index()
     {
         $title = 'Nilai';
-        $grade = Grade::where('nama', Auth::user()->name)->get();
+        $grade = Grade::where('id_siswa', Auth::user()->id_siswa)->get();
         return view('student.nilai.nilai', compact('title', 'grade'));
     }
 

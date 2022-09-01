@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#NilaiModal" id="tambahnilai">
+                                    data-bs-target="#ExtraModal" id="tambahextra">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -27,10 +27,10 @@
                                         <line x1="12" y1="5" x2="12" y2="19" />
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
-                                    Mengunggah Nilai
+                                    Mengunggah Nilai Extra
                                 </a>
                                 <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#NilaiModal" id="tambahnilai" aria-label="Mengunggah Nilai">
+                                    data-bs-target="#ExtraModal" id="tambahextra" aria-label="Mengunggah Nilai Extra">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -69,7 +69,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama</th>
-                                                <th>Mata Pelajaran</th>
+                                                <th>Ektrakulikuler</th>
                                                 <th>Angka</th>
                                                 <th>Huruf</th>
                                                 <th>Action</th>
@@ -83,12 +83,12 @@
                                                 <tr>
                                                     <td>{{$i++}}</td>
                                                     <td>{{App\Models\StudentDetail::find($showextra->id_siswa)}}</td>
-                                                    <td>{{App\Models\Subject::find($showextra->mapel)->matapelajaran}}</td>
+                                                    <td>{{$showextra->extra}}</td>
                                                     <td>{{$showextra->angka}}</td>
                                                     <td>{{$showextra->huruf}}</td>
-                                                    <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editnilai" data-bs-toggle="modal" data-bs-target="#NilaiModal" data-id="{{$showextra->id}}">Ubah</button>
-                                                        <form action="{{route('admin.extracurricular.destroy', $showextra->id)}}" method="post" class="d-inline">
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editextra" data-bs-toggle="modal" data-bs-target="#ExtraModal" data-id="{{$showextra->id}}">Ubah</button>
+                                                        <form action="{{route('admin.extracurricular.destroy', $showextra->id)}}" method="post" >
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -111,14 +111,14 @@
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="NilaiModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="ExtraModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Large modal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="body_nilai">
+            <div class="body_extra">
                 <form action="" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
@@ -129,15 +129,6 @@
                         <div class="mb-3 huruf">
                             <label class="form-label" for="huruf">Nilai Huruf</label>
                             <input type="text" class="form-control" id="huruf" name="huruf">
-                        </div>
-                        <div class="mb-3 guru">
-                            <label class="form-label" for="guru">Guru Pengampu</label>
-                            <select class="form-control" id="guru" name="guru">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($teacher as $showteacher)
-                                    <option value="{{$showteacher->id}}">{{$showteacher->name}}</option>
-                                @endforeach
-                            </select>
                         </div>
                         <div class="mb-3 import_excel">
                             <label class="form-label" for="import_excel">Import File Nilai Excel</label>
@@ -158,30 +149,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahnilai').on('click', function () {
-                $('.body_nilai button[type=submit]').text('Add');
-                $('.modal-title').text('Tambah Nilai');
-                $('.body_nilai form').attr('action', '{{route("admin.extracurricular.store")}}');
-                $('.body_nilai form').attr('method', 'post');
+            $('#tambahextra').on('click', function () {
+                $('.body_extra button[type=submit]').text('Add');
+                $('.modal-title').text('Tambah Extra');
+                $('.body_extra form').attr('action', '{{route("admin.extracurricular.store")}}');
+                $('.body_extra form').attr('method', 'post');
 
                 $('.angka').hide()
                 $('.huruf').hide()
                 $('.import_excel').show()
-                $('.guru').show()
             });
-            $('#editnilai*').on('click', function () {
+            $('#editextra*').on('click', function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.extracurricular.edit",":id")}}'.replace(':id', id);
 
-                $('.body_nilai button[type=submit]').text('Edit');
-                $('.modal-title').text('Edit Nilai');
-                $('.body_nilai form').attr('action', '{{route("admin.extracurricular.update",":id")}}'.replace(':id', id));
-                $('.body_nilai form').attr('method', 'post');
+                $('.body_extra button[type=submit]').text('Edit');
+                $('.modal-title').text('Edit Extra');
+                $('.body_extra form').attr('action', '{{route("admin.extracurricular.update",":id")}}'.replace(':id', id));
+                $('.body_extra form').attr('method', 'post');
 
                 $('.angka').show()
                 $('.huruf').show()
                 $('.import_excel').hide()
-                $('.guru').hide()
 
                 $.ajax({
                     type: 'POST',

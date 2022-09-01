@@ -31,20 +31,30 @@ class AttendanceApiController extends Controller
         $user       = Student::where('username', $request->nis)->first();
         $student    = StudentDetail::find($user->id_siswa);
         $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->first();
-        $mapel      = Subject::where('matapelajaran', $request->mapel)->first();
+        $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
         $jurusan    = Department::where('jurusan', $request->jurusan)->first();
         $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $mapel->id)->where('jurusan', $jurusan->id)->first();
+
+        if ($request->keterangan == 'Izin') {
+            $keterangan = 'Izin';
+        }elseif ($request->keterangan == 'Tanpa Keterangan') {
+            $keterangan = 'Tanpa Keterangan';
+        }else{
+            $keterangan = 'Hadir';
+        }
+
         if ($attendance == null) {
             Attendance::create([
-                'id_siswa'  => $student->id,
-                'nis'       => $request->nis,
-                'mapel'     => $schedule->matapelajaran,
-                'guru'      => $schedule->guru,
-                'tahun'     => $schedule->tahun,
-                'jurusan'   => $schedule->jurusan,
-                'kelas'     => $student->kelas,
-                'tanggal'   => date('Y-m-d'),
-                'jam'       => date('H:i:s'),
+                'id_siswa'      => $student->id,
+                'nis'           => $request->nis,
+                'matapelajaran' => $schedule->matapelajaran,
+                'guru'          => $schedule->guru,
+                'tahun'         => $schedule->tahun,
+                'jurusan'       => $schedule->jurusan,
+                'kelas'         => $student->kelas,
+                'tanggal'       => date('Y-m-d'),
+                'jam'           => date('H:i:s'),
+                'keterangan'    => $keterangan
             ]);
 
             return response()->json(['status_code' => 200, 'nis' => $request->nis]);
@@ -55,10 +65,10 @@ class AttendanceApiController extends Controller
 
     public function show(Request $request)
     {
-        $mapel      = Subject::where('matapelajaran', $request->mapel)->first();
+        $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
         $jurusan    = Department::where('jurusan', $request->jurusan)->first();
         $attendance = Attendance::join('student_details', 'student_details.id','=','attendances.id_siswa')
-                                ->where('mapel', $mapel->id)
+                                ->where('matapelajaran', $mapel->id)
                                 ->where('attendances.jurusan',$jurusan->id)
                                 ->where('attendances.kelas',$request->kelas)
                                 ->where('guru', Auth::user()->id)

@@ -85,13 +85,13 @@
                                                 @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{$showmaterial->mapel}}</td>
+                                                    <td>{{App\Models\Subject::find($showmaterial->matapelajaran)->matapelajaran}}</td>
                                                     <td>{{$showmaterial->judul}}</td>
                                                     <td>{{$showmaterial->kelas}}</td>
                                                     <td>{{$path[1]}}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-warning" id="editmateri" data-bs-toggle="modal" data-bs-target="#MateriModal" data-id="{{$showmaterial->id}}">Ubah</button>
-                                                        <form action="{{route('teacher.meterial.destroy', $showmaterial->id)}}" method="post" class="d-inline">
+                                                        <form action="{{route('teacher.material.destroy', $showmaterial->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

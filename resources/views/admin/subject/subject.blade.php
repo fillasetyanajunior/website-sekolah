@@ -145,11 +145,11 @@
             });
             $('#editmatapelajaran*').on('click', function () {
                 const id = $(this).data('id');
-                let _url = '{{route("admin.subject.edit", ":id")}}'.reaplace(':id', id);
+                let _url = '{{route("admin.subject.edit",":id")}}'.replace(':id', id);
 
                 $('.body_matapelajaran button[type=submit]').html('Edit');
                 $('.modal-title').html('Edit Matapelajaran');
-                $('.body_matapelajaran form').attr('action', '{{route("admin.subject.update",":id")}}'.reaplace(':id', id));
+                $('.body_matapelajaran form').attr('action', '{{route("admin.subject.update",":id")}}'.replace(':id', id));
                 $('.body_matapelajaran form').attr('method', 'post');
 
                 $.ajax({

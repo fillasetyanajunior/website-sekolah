@@ -71,6 +71,7 @@
                                                 <th>Mata Pelajaran</th>
                                                 <th>Judul Materi</th>
                                                 <th>Kelas</th>
+                                                <th>Guru</th>
                                                 <th>File Materi</th>
                                                 <th>Action</th>
                                             </tr>
@@ -85,13 +86,14 @@
                                                 @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{$showmaterial->mapel}}</td>
+                                                    <td>{{App\Models\Subject::find($showmaterial->matapelajaran)->matapelajaran}}</td>
                                                     <td>{{$showmaterial->judul}}</td>
                                                     <td>{{$showmaterial->kelas}}</td>
+                                                    <td>{{App\Models\TeacherDetail::find($showmaterial->id_guru)->nama}}</td>
                                                     <td>{{$path[1]}}</td>
                                                     <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-warning" id="editmateri" data-bs-toggle="modal" data-bs-target="#MateriModal" data-id="{{$showmaterial->id}}">Ubah</button>
-                                                        <form action="{{route('admin.meterial.destroy', $showmaterial->id)}}" method="post" class="d-inline">
+                                                        <form action="{{route('admin.material.destroy', $showmaterial->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -131,6 +133,15 @@
                                 <option value="">-- Pilih --</option>
                                 @foreach ($subject as $showsubject)
                                     <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="guru">Guru</label>
+                            <select class="form-control" id="guru" name="guru">
+                                <option value="">-- Pilih --</option>
+                                @foreach ($teacher as $showteacher)
+                                    <option value="{{$showteacher->id}}">{{$showteacher->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -192,7 +203,7 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#mapel').val(hasil.mapel)
+                        $('#mapel').val(hasil.matapelajaran)
                         $('#judul').val(hasil.judul)
                         $('#kelas').val(hasil.kelas)
                     }

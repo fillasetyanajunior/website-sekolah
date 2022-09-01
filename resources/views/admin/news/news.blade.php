@@ -84,7 +84,7 @@
                                                     <td>{{$shownews->title}}</td>
                                                     <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-primary" id="editinformasi" data-bs-toggle="modal" data-bs-target="#InformasiModal" data-id="{{$shownews->id}}">Ubah</button>
-                                                        <form action="{{route('admin.news.destory', $shownews->id)}}" method="post" class="d-inline">
+                                                        <form action="{{route('admin.news.destroy', $shownews->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

@@ -47,8 +47,14 @@ class DeuteronomiController extends AppController
 
         $students_kelas_pertama         = StudentDetail::where('kelas', $kelas_pertama)->where('jurusan', $request->jurusan)->get();
         $students_kelas_pertamavalidasi = StudentDetail::where('kelas', $kelas_pertama)->where('jurusan', $request->jurusan)->first();
-        $kursi_kelas_pertama            = round($request->kursi / 2);
+        $cek_kursi_kelas_pertama        = round($request->kursi / 2);
         $cekkelas_pertama               = Deuteronomi::orderBy('id_siswa','DESC')->where('kelas', $kelas_pertama)->where('jurusan', $request->jurusan)->first();
+
+        if ((count($students_kelas_pertama)/2) < $cek_kursi_kelas_pertama) {
+            $kursi_kelas_pertama = count($students_kelas_pertama);
+        }else {
+            $kursi_kelas_pertama = round($request->kursi / 2);
+        }
 
         if ($cekkelas_pertama == null) {
             $id_siswa_kelas_pertama = 0;
@@ -68,8 +74,14 @@ class DeuteronomiController extends AppController
 
         $students_kelas_kedua           = StudentDetail::where('kelas', $kelas_kedua)->where('jurusan', $request->jurusan)->get();
         $students_kelas_keduavalidasi   = StudentDetail::where('kelas', $kelas_kedua)->where('jurusan', $request->jurusan)->first();
-        $kursi_kelas_kedua              = $request->kursi - $kursi_kelas_pertama;
+        $cek_kursi_kelas_kedua          = $request->kursi - $kursi_kelas_pertama;
         $cekkelas_kedua                 = Deuteronomi::orderBy('id_siswa', 'DESC')->where('kelas', $kelas_kedua)->where('jurusan', $request->jurusan)->first();
+
+        if ((count($students_kelas_kedua) / 2) < $cek_kursi_kelas_kedua) {
+            $kursi_kelas_kedua = count($students_kelas_kedua);
+        } else {
+            $kursi_kelas_kedua = $request->kursi - $kursi_kelas_pertama;
+        }
 
         if ($cekkelas_kedua == null) {
             $id_siswa_kelas_kedua = 0;

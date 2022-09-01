@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController as Dashboard;
 use App\Http\Controllers\Admin\DepartmentController as Department;
 use App\Http\Controllers\Admin\DeuteronomiController as Deuteronomi;
+use App\Http\Controllers\Admin\ExamController as Exam;
 use App\Http\Controllers\Admin\ExtracurricularController as Extracurricular;
 use App\Http\Controllers\Admin\GradeController as Grade;
 use App\Http\Controllers\Admin\MaterialController as Material;
@@ -29,6 +30,12 @@ Route::group([
     Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
+
+    Route::get('ujian', [Exam::class, 'index'])->name('admin.exam');
+    Route::post('ujian/store', [Exam::class, 'store'])->name('admin.exam.store');
+    Route::post('ujian/edit/{exam}', [Exam::class, 'edit'])->name('admin.exam.edit');
+    Route::post('ujian/update/{exam}', [Exam::class, 'update'])->name('admin.exam.update');
+    Route::delete('ujian/destroy/{exam}', [Exam::class, 'destroy'])->name('admin.exam.destroy');
 
     Route::get('informasi', [News::class, 'index'])->name('admin.news');
     Route::post('informasi/store', [News::class, 'store'])->name('admin.news.store');

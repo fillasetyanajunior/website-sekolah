@@ -67,7 +67,7 @@
                                             @foreach ($grade as $showgrade)
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{App\Models\Subject::find($showgrade->mapel)->matapelajaran}}</td>
+                                                    <td>{{App\Models\Subject::find($showgrade->matapelajaran)->matapelajaran}}</td>
                                                     <td>{{$showgrade->angka}}</td>
                                                     <td>{{$showgrade->huruf}}</td>
                                                 </tr>

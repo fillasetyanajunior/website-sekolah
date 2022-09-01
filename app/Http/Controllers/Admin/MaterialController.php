@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Material;
 use App\Models\Subject;
+use App\Models\TeacherDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,8 +15,9 @@ class MaterialController extends AppController
     {
         $title      = 'Materi';
         $subject    = Subject::all();
+        $teacher    = TeacherDetail::all();
         $material   = Material::paginate(20);
-        return view('admin.material.material', compact('title', 'subject', 'material'));
+        return view('admin.material.material', compact('title', 'subject', 'material','teacher'));
     }
 
     public function store(Request $request)
@@ -28,7 +30,7 @@ class MaterialController extends AppController
         ]);
 
         $file = $request->file('file');
-        $path = Storage::putFileAs('materi', $file, $request->judul . rand(1,100) . $file->extension());
+        $path = Storage::putFileAs('materi', $file, $request->judul . rand(1,100) . '.' . $file->extension());
 
         if ($request->kelas == 1) {
             $kelas = 'X';
@@ -39,10 +41,11 @@ class MaterialController extends AppController
         }
 
         Material::create([
-            'mapel' => $request->mapel,
-            'judul' => $request->judul,
-            'kelas' => $kelas,
-            'path'  => $path,
+            'id_guru'       => $request->guru,
+            'matapelajaran' => $request->mapel,
+            'judul'         => $request->judul,
+            'kelas'         => $kelas,
+            'path'          => $path,
         ]);
 
         return redirect(route('admin.material'))->with('success', 'Data Berhasil Ditambahkan');
@@ -68,7 +71,7 @@ class MaterialController extends AppController
             Storage::delete($material->path);
 
             $file = $request->file('file');
-            $path = Storage::putFileAs('materi', $file, $request->judul . rand(1, 100) . $file->extension());
+            $path = Storage::putFileAs('materi', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
 
         } else {
             $path = $material->path;
@@ -76,10 +79,11 @@ class MaterialController extends AppController
 
         Material::where('id', $material->id)
             ->update([
-                'mapel' => $request->mapel,
-                'judul' => $request->judul,
-                'kelas' => $kelas,
-                'path'  => $path,
+                'id_guru'       => $request->guru,
+                'matapelajaran' => $request->mapel,
+                'judul'         => $request->judul,
+                'kelas'         => $kelas,
+                'path'          => $path,
             ]);
 
         return redirect(route('admin.meterial'))->with('success', 'Data Berhasil Update');

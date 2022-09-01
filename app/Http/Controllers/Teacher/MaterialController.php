@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Material;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends AppController
@@ -28,7 +29,7 @@ class MaterialController extends AppController
         ]);
 
         $file = $request->file('file');
-        $path = Storage::putFileAs('materi', $file, $request->judul . rand(1, 100) . $file->extension());
+        $path = Storage::putFileAs('materi', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
 
         if ($request->kelas == 1) {
             $kelas = 'X';
@@ -39,10 +40,11 @@ class MaterialController extends AppController
         }
 
         Material::create([
-            'mapel' => $request->mapel,
-            'judul' => $request->judul,
-            'kelas' => $kelas,
-            'path'  => $path,
+            'id_guru'       => Auth::user()->id,
+            'matapelajaran' => $request->mapel,
+            'judul'         => $request->judul,
+            'kelas'         => $kelas,
+            'path'          => $path,
         ]);
 
         return redirect(route('teacher.material'))->with('success', 'Data Berhasil Ditambahkan');
@@ -66,19 +68,19 @@ class MaterialController extends AppController
         if ($request->hasFile('file')) {
 
             Storage::delete($material->path);
-
             $file = $request->file('file');
-            $path = Storage::putFileAs('materi', $file, $request->judul . rand(1, 100) . $file->extension());
+            $path = Storage::putFileAs('materi', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
         } else {
             $path = $material->path;
         }
 
         Material::where('id', $material->id)
             ->update([
-                'mapel' => $request->mapel,
-                'judul' => $request->judul,
-                'kelas' => $kelas,
-                'path'  => $path,
+                'id_guru'       => Auth::user()->id,
+                'matapelajaran' => $request->mapel,
+                'judul'         => $request->judul,
+                'kelas'         => $kelas,
+                'path'          => $path,
             ]);
 
         return redirect(route('teacher.meterial'))->with('success', 'Data Berhasil Update');

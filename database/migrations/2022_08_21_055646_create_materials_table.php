@@ -15,8 +15,8 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user');
-            $table->integer('mapel');
+            $table->integer('id_guru');
+            $table->integer('matapelajaran');
             $table->string('judul');
             $table->enum('kelas',['X','XI','XII']);
             $table->string('path');

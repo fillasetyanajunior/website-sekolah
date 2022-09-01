@@ -33,7 +33,7 @@ class TeacherController extends AppController
         $thn        = date('ymd');
         $username   = $thn . $acak;
 
-        $teacher = TeacherDetail::find(Crypt::decrypt($request->name));
+        $teacher = TeacherDetail::find($request->name);
 
         Teacher::create([
             'name'                  => $teacher->nama,

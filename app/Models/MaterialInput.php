@@ -12,7 +12,7 @@ class MaterialInput extends Model
         'judul',
         'pembahasan',
         'kelas',
-        'mapel',
+        'matapelajaran',
         'jurusan',
         'guru',
     ];

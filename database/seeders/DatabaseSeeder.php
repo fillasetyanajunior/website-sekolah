@@ -12,6 +12,7 @@ use App\Models\Subject;
 use App\Models\TeacherDetail;
 use App\Models\Teacher;
 use App\Models\Teaching;
+use App\Models\Year;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -159,12 +160,22 @@ class DatabaseSeeder extends Seeder
 
         Department::create([
             'kode'      => 98,
-            'jurusan'   => 'IPA',
+            'jurusan'   => 'IPA 1',
+        ]);
+
+        Department::create([
+            'kode'      => 99,
+            'jurusan'   => 'IPA 2',
         ]);
 
         Department::create([
             'kode'      => 1,
-            'jurusan'   => 'IPS',
+            'jurusan'   => 'IPS 1',
+        ]);
+
+        Department::create([
+            'kode'      => 2,
+            'jurusan'   => 'IPS 2',
         ]);
 
         Subject::create([
@@ -181,6 +192,14 @@ class DatabaseSeeder extends Seeder
 
         Subject::create([
             'matapelajaran' => 'Geografi'
+        ]);
+
+        Year::create([
+            'tahun' => '2021/2022'
+        ]);
+
+        Year::create([
+            'tahun' => '2022/2023'
         ]);
 
         $this->call([

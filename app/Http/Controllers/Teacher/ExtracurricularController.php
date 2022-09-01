@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ExtracurricularController extends Controller
+class ExtracurricularController extends AppController
 {
     public function index()
     {

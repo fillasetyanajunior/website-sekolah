@@ -5,7 +5,7 @@ namespace App\Imports;
 use App\Models\Grade;
 use App\Models\StudentDetail;
 use App\Models\Subject;
-use App\Models\Teacher;
+use App\Models\Year;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -25,17 +25,19 @@ class GradeImport implements ToModel, WithHeadingRow
             $semester = 'Genap';
         }
 
-        $subject = Subject::where('matapelajaran', $row['matapelajaran'])->first();
+        $subject = Subject::where('matapelajaran', $row['mata_pelajaran'])->first();
         $student = StudentDetail::where('nama', $row['nama'])->first();
+        $year    = Year::where('tahun', $row['tahun'])->first();
 
         return new Grade([
-            'id_siswa'  => $student->id,
-            'angka'     => $row['angka'],
-            'huruf'     => $row['huruf'],
-            'mapel'     => $subject->id,
-            'tahun'     => $row['tahun'],
-            'semester'  => $semester,
-            'guru'      => $this->teacher,
+            'id_siswa'      => $student->id,
+            'angka'         => $row['angka'],
+            'huruf'         => $row['huruf'],
+            'matapelajaran' => $subject->id,
+            'tahun'         => $year->id,
+            'kelas'         => $student->kelas,
+            'semester'      => $semester,
+            'guru'          => $this->teacher,
         ]);
     }
 }

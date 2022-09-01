@@ -11,12 +11,13 @@ class Attendance extends Model
     protected $fillable = [
         'id_siswa',
         'nis',
-        'mapel',
+        'matapelajaran',
         'jurusan',
         'guru',
         'tahun',
         'kelas',
         'tanggal',
         'jam',
+        'keterangan',
     ];
 }

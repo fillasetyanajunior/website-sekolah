@@ -49,7 +49,7 @@
                                                     <td>{{$showwrittenexamination->tanggal_ujian}}</td>
                                                     <td>{{$showwrittenexamination->jam}}</td>
                                                     <td>{{$showwrittenexamination->ruangan}}</td>
-                                                    <td>{{App\Models\Subject::find($showwrittenexamination->mapel)}}</td>
+                                                    <td>{{App\Models\Subject::find($showwrittenexamination->matapelajaran)}}</td>
                                                     <td>{{$showwrittenexamination->kursi}}</td>
                                                 </tr>
                                             @endforeach
@@ -84,7 +84,7 @@
                                                     <td>{{$showpracticalexam->tanggal_ujian}}</td>
                                                     <td>{{$showpracticalexam->jam}}</td>
                                                     <td>{{$showpracticalexam->ruangan}}</td>
-                                                    <td>{{App\Models\Subject::find($showpracticalexam->mapel)}}</td>
+                                                    <td>{{App\Models\Subject::find($showpracticalexam->matapelajaran)}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

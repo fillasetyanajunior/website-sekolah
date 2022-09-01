@@ -10,7 +10,7 @@
                     <div class="row g-2 align-items-center">
                         <div class="col">
                             <div class="page-pretitle">
-                                Nilai
+                                Management Sekolah
                             </div>
                             <h2 class="page-title">
                                 {{$title}}
@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#NilaiModal" id="tambahnilai">
+                                    data-bs-target="#UjianModal" id="tambahujian">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -27,10 +27,10 @@
                                         <line x1="12" y1="5" x2="12" y2="19" />
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
-                                    Mengunggah Nilai
+                                    Tambah Jadwal Ujian
                                 </a>
                                 <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#NilaiModal" id="tambahnilai" aria-label="Mengunggah Nilai">
+                                    data-bs-target="#UjianModal" id="tambahujian" aria-label="Tambah Jadwal Ujian">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -68,27 +68,27 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nama</th>
+                                                <th>Tanggal</th>
+                                                <th>Jam</th>
                                                 <th>Mata Pelajaran</th>
-                                                <th>Angka</th>
-                                                <th>Huruf</th>
+                                                <th>Jurusan</th>
+                                                <th>Ujian</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php
-                                                $i=1;
-                                            @endphp
-                                            @foreach ($grade as $showgrade)
+                                            <?php $i = 1; ?>
+                                            @foreach ($exam as $showexam)
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{App\Models\StudentDetail::find($showgrade->id_siswa)->nama}}</td>
-                                                    <td>{{App\Models\Subject::find($showgrade->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{$showgrade->angka}}</td>
-                                                    <td>{{$showgrade->huruf}}</td>
+                                                    <td>{{$showexam->tanggal}}</td>
+                                                    <td>{{$showexam->jam}}</td>
+                                                    <td>{{App\Models\Subject::find($showexam->matapelajaran)->matapelajaran}}</td>
+                                                    <td>{{App\Models\Department::find($showexam->jurusan)->jurusan}}</td>
+                                                    <td>{{$showexam->tipe_ujian}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editnilai" data-bs-toggle="modal" data-bs-target="#NilaiModal" data-id="{{$showgrade->id}}">Ubah</button>
-                                                        <form action="{{route('admin.grade.destroy', $showgrade->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" href="" id="editujian" data-bs-toggle="modal" data-bs-target="#UjianModal" data-id="{{$showexam->id}}">Ubah</button>
+                                                        <form action="{{route('admin.exam.destroy', $showexam->id)}}" method="post" class="d-inline" >
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -100,7 +100,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer d-flex align-items-center">
-                                    {{$grade->links()}}
+                                    {{$exam->links()}}
                                 </div>
                             </div>
                         </div>
@@ -111,37 +111,50 @@
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="NilaiModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="UjianModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Large modal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="body_nilai">
-                <form action="" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
-                    @csrf
+            <div class="body_ujian">
+                <form action="" method="POST">
                     <div class="modal-body">
-                        <div class="mb-3 angka">
-                            <label class="form-label" for="angka">Nilai Angka</label>
-                            <input type="text" class="form-control" id="angka" name="angka">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label" for="tanggal">Tanggal</label>
+                            <input type="date" class="form-control" id="tanggal" name="tanggal">
                         </div>
-                        <div class="mb-3 huruf">
-                            <label class="form-label" for="huruf">Nilai Huruf</label>
-                            <input type="text" class="form-control" id="huruf" name="huruf">
+                        <div class="mb-3">
+                            <label class="form-label" for="jam">Jam Ulangan</label>
+                            <input type="text" class="form-control" id="jam" name="jam" placeholder="08:00 - 09:00">
                         </div>
-                        <div class="mb-3 guru">
-                            <label class="form-label" for="guru">Guru Pengampu</label>
-                            <select class="form-control" id="guru" name="guru">
+                        <div class="mb-3">
+                            <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
+                            <select class="form-control" id="matapelajaran" name="matapelajaran">
                                 <option value="">-- Pilih --</option>
-                                @foreach ($teacher as $showteacher)
-                                    <option value="{{$showteacher->id}}">{{$showteacher->name}}</option>
+                                @foreach ($subject as $subject)
+                                    <option value="{{$subject->id}}">{{$subject->matapelajaran}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3 import_excel">
-                            <label class="form-label" for="import_excel">Import File Nilai Excel</label>
-                            <input type="file" class="form-control" id="import_excel" name="import_excel">
+                        <div class="mb-3">
+                            <label class="form-label" for="jurusan">Jurusan</label>
+                            <select class="form-control" id="jurusan" name="jurusan">
+                                <option value="">-- Pilih --</option>
+                                @foreach ($department as $department)
+                                    <option value="{{$department->id}}">{{$department->jurusan}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="tipe_ujian">Tipe Ujian</label>
+                            <select class="form-control" id="tipe_ujian" name="tipe_ujian">
+                                <option value="">-- Pilih --</option>
+                                <option value="1">Tertulis</option>
+                                <option value="1">Praktikum</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -157,31 +170,27 @@
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $('#tambahnilai').on('click', function () {
-                $('.body_nilai button[type=submit]').text('Add');
-                $('.modal-title').text('Tambah Nilai');
-                $('.body_nilai form').attr('action', '{{route("admin.grade.store")}}');
-                $('.body_nilai form').attr('method', 'post');
+        $(document).ready(function () {
+            $('#tambahujian').on('click', function () {
+                $('.body_ujian button[type=submit]').html('Add');
+                $('.modal-title').html('Tambah Jadwal Ujian');
+                $('.body_ujian form').attr('action', '{{route("admin.exam.store")}}');
+                $('.body_ujian form').attr('method', 'post');
 
-                $('.angka').hide()
-                $('.huruf').hide()
-                $('.import_excel').show()
-                $('.guru').show()
+                $("#tanggal").val('');
+                $("#jam").val('');
+                $("#matapelajaran").val('');
+                $("#jurusan").val('');
+                $("#tipe_ujian").val('');
             });
-            $('#editnilai*').on('click', function () {
+            $('#editujian*').on('click', function () {
                 const id = $(this).data('id');
-                let _url = '{{route("admin.grade.edit",":id")}}'.replace(':id', id);
+                let _url = '{{route("admin.exam.edit",":id")}}'.replace(':id', id);
 
-                $('.body_nilai button[type=submit]').text('Edit');
-                $('.modal-title').text('Edit Nilai');
-                $('.body_nilai form').attr('action', '{{route("admin.grade.update",":id")}}'.replace(':id', id));
-                $('.body_nilai form').attr('method', 'post');
-
-                $('.angka').show()
-                $('.huruf').show()
-                $('.import_excel').hide()
-                $('.guru').hide()
+                $('.body_ujian button[type=submit]').html('Edit');
+                $('.modal-title').html('Edit Jadwal Ujian');
+                $('.body_ujian form').attr('action', '{{route("admin.exam.update",":id")}}'.replace(':id', id));
+                $('.body_ujian form').attr('method', 'post');
 
                 $.ajax({
                     type: 'POST',
@@ -190,8 +199,15 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#angka').val(hasil.angka)
-                        $('#huruf').val(hasil.huruf)
+                        $('#tanggal').val(hasil.tanggal)
+                        $('#jam').val(hasil.jam)
+                        $('#matapelajaran').val(hasil.matapelajaran)
+                        $('#jurusan').val(hasil.jurusan)
+                        if (hasil.tipe_ujian == 'Tertulis') {
+                            $('#tipe_ujian').val(1)
+                        } else {
+                            $('#tipe_ujian').val(2)
+                        }
                     }
                 });
             });
