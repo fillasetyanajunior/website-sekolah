@@ -14,16 +14,21 @@
     <link href="{{url('assets/dashboard/dist/css/tabler-payments.min.css')}}" rel="stylesheet" />
     <link href="{{url('assets/dashboard/dist/css/tabler-vendors.min.css')}}" rel="stylesheet" />
     <link href="{{url('assets/dashboard/dist/css/demo.min.css')}}" rel="stylesheet" />
-    <script src="./dist/js/demo-theme.min.js?1660132725"></script>
 </head>
+@php
 
-<body>
+if ($layout == 'auth'){
+    $class = 'border-top-wide border-primary d-flex flex-column';
+}else{
+    $class = 'antialiased';
+}
+@endphp
+<body class="{!! $class !!}">
     @yield('content')
     <!-- Libs JS -->
     <!-- Tabler Core -->
     <script src="{{url('assets/dashboard/dist/js/tabler.min.js')}}"></script>
     <script src="{{url('assets/dashboard/dist/js/demo.min.js')}}"></script>
-
     @stack('scripts')
 </body>
 

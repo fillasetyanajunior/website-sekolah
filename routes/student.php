@@ -19,6 +19,7 @@ Route::group([
     Route::post('logout', [Logout::class, 'logout'])->name('student.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('student.dashboard');
+    Route::get('profile', [Dashboard::class, 'profile'])->name('student.profile');
 
     Route::get('nilai', [Grade::class, 'index'])->name('student.grade');
 

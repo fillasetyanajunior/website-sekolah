@@ -1,4 +1,4 @@
-@extends('layouts.base_dashboard')
+@extends('layouts.base_dashboard',['layout' => 'dashboard'])
 @section('title', $title)
 @section('content')
 <div class="page">

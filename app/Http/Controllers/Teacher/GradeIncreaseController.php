@@ -46,7 +46,7 @@ class GradeIncreaseController extends AppController
             $kelas = 'XII';
         }
 
-        $teacher = TeacherDetail::where('user_id', Auth::user()->id)->first();
+        $teacher = TeacherDetail::find(Auth::user()->id_guru);
 
         StudentDetail::where('kelas', $teacher->wali_kelas)->where('jurusan', $teacher->wali_jurusan)
                     ->update([

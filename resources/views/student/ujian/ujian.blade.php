@@ -1,4 +1,4 @@
-@extends('layouts.base_dashboard')
+@extends('layouts.base_dashboard',['layout' => 'dashboard'])
 @section('title', $title)
 @section('content')
 <div class="page">
@@ -36,7 +36,6 @@
                                                 <th>Jam</th>
                                                 <th>Ruangan</th>
                                                 <th>Mata Pelajaran</th>
-                                                <th>Kursi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -46,11 +45,10 @@
                                             @foreach ($writtenexamination as $showwrittenexamination)
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td>{{$showwrittenexamination->tanggal_ujian}}</td>
+                                                    <td>{{$showwrittenexamination->tanggal}}<td>
                                                     <td>{{$showwrittenexamination->jam}}</td>
                                                     <td>{{$showwrittenexamination->ruangan}}</td>
                                                     <td>{{App\Models\Subject::find($showwrittenexamination->matapelajaran)}}</td>
-                                                    <td>{{$showwrittenexamination->kursi}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -81,7 +79,7 @@
                                             @foreach ($practicalexam as $showpracticalexam)
                                                 <tr>
                                                     <td>{{$j++}}</td>
-                                                    <td>{{$showpracticalexam->tanggal_ujian}}</td>
+                                                    <td>{{$showpracticalexam->tanggal}}<td>
                                                     <td>{{$showpracticalexam->jam}}</td>
                                                     <td>{{$showpracticalexam->ruangan}}</td>
                                                     <td>{{App\Models\Subject::find($showpracticalexam->matapelajaran)}}</td>

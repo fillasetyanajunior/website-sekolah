@@ -34,17 +34,14 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                    <span class="avatar avatar-sm" style="background-image: url({{App\Models\StudentDetail::find(Auth::user()->id_siswa)->foto == null ? url('assets/dashboard/dist/img/default.png') : Storage::url(App\Models\StudentDetail::find(Auth::user()->id_siswa)->foto)}})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{Auth::user()->name}}</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Set status</a>
-                    <a href="#" class="dropdown-item">Profile & account</a>
-                    <a href="#" class="dropdown-item">Feedback</a>
+                    <a href="{{route('student.profile')}}" class="dropdown-item">Profile & account</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Settings</a>
                     <form action="{{route('student.logout')}}" method="post">
                         @csrf
                         <button type="submit" class="dropdown-item">Logout</button>
@@ -170,17 +167,14 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                    <span class="avatar avatar-sm" style="background-image: url({{App\Models\StudentDetail::find(Auth::user()->id_siswa)->foto == null ? url('assets/dashboard/dist/img/default.png') : Storage::url(App\Models\StudentDetail::find(Auth::user()->id_siswa)->foto)}})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{Auth::user()->name}}</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Set status</a>
-                    <a href="#" class="dropdown-item">Profile & account</a>
-                    <a href="#" class="dropdown-item">Feedback</a>
+                    <a href="{{route('student.profile')}}" class="dropdown-item">Profile & account</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Settings</a>
                     <form action="{{route('student.logout')}}" method="post">
                         @csrf
                         <button type="submit" class="dropdown-item">Logout</button>

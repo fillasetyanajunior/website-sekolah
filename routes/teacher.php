@@ -22,6 +22,7 @@ Route::group([
     Route::post('logout', [Logout::class, 'logout'])->name('teacher.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('teacher.dashboard');
+    Route::get('profile', [Dashboard::class, 'profile'])->name('teacher.profile');
 
     Route::get('ekstra', [Extracurricular::class, 'index'])->name('teacher.extracurricular');
     Route::post('ekstra/store', [Extracurricular::class, 'store'])->name('teacher.extracurricular.store');
