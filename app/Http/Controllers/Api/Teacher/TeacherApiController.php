@@ -36,7 +36,8 @@ class TeacherApiController extends Controller
 
     public function showjurusan(Request $request)
     {
-        $teaching  = Teaching::join('departments', 'teachings.jurusan','=', 'departments.id')->groupBy('departments.jurusan')->where('id_guru', $request->id)->where('kelas',$request->kelas)->get('departments.jurusan');
+        $teaching  = Teaching::join('departments', 'teachings.jurusan','=', 'departments.id')->groupBy('departments.jurusan')
+                            ->where('id_guru', $request->id)->where('kelas',$request->kelas)->get('departments.jurusan');
         return response()->json($teaching);
     }
 

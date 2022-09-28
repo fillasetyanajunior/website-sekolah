@@ -17,7 +17,7 @@ class CreateAssignmentsTable extends Migration
             $table->id();
             $table->integer('id_content');
             $table->integer('id_siswa');
-            $table->enum('choices', ['submit', 'unsubmit']);
+            $table->enum('choices', ['Submit', 'Unsubmit'])->default('Unsubmit');
             $table->timestamps();
         });
     }

@@ -69,6 +69,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Tahun</th>
+                                                <th>Semester</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -80,6 +81,7 @@
                                             <tr>
                                                 <td>{{$i++}}</td>
                                                 <td>{{$showyear->tahun}}</td>
+                                                <td>{{$showyear->semester}}</td>
                                                 <td width="100px">
                                                     <button type="button" class="btn btn-sm btn-warning" id="edittahun" data-bs-toggle="modal" data-bs-target="#TahunModal" data-id="{{$showyear->id}}">Edit</button>
                                                     <form action="{{route('admin.year.destroy',$showyear->id)}}" method="post" class="d-inline">
@@ -120,6 +122,14 @@
                             <label class="form-label" for="tahun">Tahun Ajaran</label>
                             <input type="text" class="form-control" id="tahun" name="tahun" placeholder="2021/2022">
                         </div>
+                        <div class="mb-3">
+                            <label for="semester" class="form-label">Semester</label>
+                            <select name="semester" id="semester" class="form-control">
+                                <option value="">-- Pilih --</option>
+                                <option value="1">Ganjil</option>
+                                <option value="2">Ganap</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -142,6 +152,7 @@
                 $('.body_tahun form').attr('method', 'post');
 
                 $("#tahun").val('');
+                $("#semester").val('');
             });
             $('#edittahun*').on('click', function () {
                 const id = $(this).data('id');
@@ -160,6 +171,11 @@
                     },
                     success: function (hasil) {
                         $('#tahun').val(hasil.tahun)
+                        if (hasil.semester == 'Ganjil') {
+                            $('#semester').val(1);
+                        } else {
+                            $('#semester').val(2);
+                        }
                     }
                 });
             });

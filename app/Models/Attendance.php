@@ -17,6 +17,7 @@ class Attendance extends Model
         'tahun',
         'kelas',
         'tanggal',
+        'semester',
         'jam',
         'keterangan',
     ];

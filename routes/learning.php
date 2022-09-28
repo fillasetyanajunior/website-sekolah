@@ -36,6 +36,10 @@ Route::group([
         }
 
         Route::get('content/{id}',[ContentStudent::class,'index'])->name('learning.student.content');
+        Route::post('content/store',[ContentStudent::class,'store'])->name('learning.student.content.store');
+        Route::post('content/submit/{id}',[ContentStudent::class,'submit'])->name('learning.student.content.submit');
+        Route::post('content/unsubmit/{id}',[ContentStudent::class,'unsubmit'])->name('learning.student.content.unsubmit');
+        Route::post('content/destroy/{title}',[ContentStudent::class,'destroy'])->name('learning.student.content.destroy');
     });
 
     Route::group(['prefix' => 'teacher'], function (){

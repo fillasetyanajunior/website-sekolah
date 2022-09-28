@@ -57,35 +57,161 @@ class ScheduleController extends AppController
             $kelas = 'XII';
         }
 
-        $schedule = Schedule::orderBy('created_at','DESC')->where('hari', $hari)->where('kelas', $kelas)->where('jurusan', $request->jurusan)->first();
+        for ($i = 0; $i < count($request->matapelajaran); $i++){
 
-        if ($schedule == null) {
-            $start  = date('H:i:s',strtotime('07:00'));
-        } else {
-            $start  = date('H:i:s',strtotime($schedule->jam_end));
+            if ($request->jam[$i] == 1) {
+
+                $schedule = Schedule::orderBy('jam_end', 'DESC')->where('hari', $hari)->where('kelas', $kelas)->where('jurusan', $request->jurusan)->first();
+
+                if ($schedule == null) {
+                    $start  = date('H:i:s', strtotime('07:00'));
+                } else {
+                    $start  = date('H:i:s', strtotime($schedule->jam_end));
+                }
+
+                $end = date('H:i:s', strtotime('+45 minutes', strtotime($start)));
+
+                if ($start > date('H:i:s', strtotime('10:30')) && $start < date('H:i:s', strtotime('11:00'))) {
+                    $ist1 = Subject::where('matapelajaran', 'Istirahat 1')->first();
+                    Schedule::create([
+                        'hari'          => $hari,
+                        'jam_start'     => date('H:i:s', strtotime($start)),
+                        'jam_end'       => date('H:i:s', strtotime('+30 minutes', strtotime($start))),
+                        'matapelajaran' => $ist1->id,
+                        'guru'          => 0,
+                        'tahun'         => $request->tahun,
+                        'jurusan'       => $request->jurusan,
+                        'kelas'         => $kelas,
+                    ]);
+                } elseif ($start > date('H:i:s', strtotime('12:00')) && $start < date('H:i:s', strtotime('13:00'))) {
+                    $ist2 = Subject::where('matapelajaran', 'Istirahat 2')->first();
+                    Schedule::create([
+                        'hari'          => $hari,
+                        'jam_start'     => date('H:i:s', strtotime($start)),
+                        'jam_end'       => date('H:i:s', strtotime('+1 hours', strtotime($start))),
+                        'matapelajaran' => $ist2->id,
+                        'guru'          => 0,
+                        'tahun'         => $request->tahun,
+                        'jurusan'       => $request->jurusan,
+                        'kelas'         => $kelas,
+                    ]);
+                }else{
+                    Schedule::create([
+                        'hari'          => $hari,
+                        'jam_start'     => $start,
+                        'jam_end'       => $end,
+                        'matapelajaran' => $request->matapelajaran[$i],
+                        'guru'          => $request->guru[$i],
+                        'tahun'         => $request->tahun,
+                        'jurusan'       => $request->jurusan,
+                        'kelas'         => $kelas,
+                    ]);
+                }
+
+            } else if ($request->jam[$i] == 2) {
+
+                for ($j = 0; $j < 2; $j) {
+                    $schedule = Schedule::orderBy('jam_end', 'DESC')->where('hari', $hari)->where('kelas', $kelas)->where('jurusan', $request->jurusan)->first();
+
+                    if ($schedule == null) {
+                        $start  = date('H:i:s', strtotime('07:00'));
+                    } else {
+                        $start  = date('H:i:s', strtotime($schedule->jam_end));
+                    }
+
+                    $end = date('H:i:s', strtotime('+45 minutes', strtotime($start)));
+
+                    if ($start > date('H:i:s', strtotime('10:30')) && $start < date('H:i:s', strtotime('11:00'))) {
+                        $ist1 = Subject::where('matapelajaran', 'Istirahat 1')->first();
+                        Schedule::create([
+                            'hari'          => $hari,
+                            'jam_start'     => date('H:i:s', strtotime($start)),
+                            'jam_end'       => date('H:i:s', strtotime('+30 minutes', strtotime($start))),
+                            'matapelajaran' => $ist1->id,
+                            'guru'          => 0,
+                            'tahun'         => $request->tahun,
+                            'jurusan'       => $request->jurusan,
+                            'kelas'         => $kelas,
+                        ]);
+                    } elseif ($start > date('H:i:s', strtotime('12:00')) && $start < date('H:i:s', strtotime('13:00'))) {
+                        $ist2 = Subject::where('matapelajaran', 'Istirahat 2')->first();
+                        Schedule::create([
+                            'hari'          => $hari,
+                            'jam_start'     => date('H:i:s', strtotime($start)),
+                            'jam_end'       => date('H:i:s', strtotime('+1 hours', strtotime($start))),
+                            'matapelajaran' => $ist2->id,
+                            'guru'          => 0,
+                            'tahun'         => $request->tahun,
+                            'jurusan'       => $request->jurusan,
+                            'kelas'         => $kelas,
+                        ]);
+                    }else {
+                        Schedule::create([
+                            'hari'          => $hari,
+                            'jam_start'     => $start,
+                            'jam_end'       => $end,
+                            'matapelajaran' => $request->matapelajaran[$i],
+                            'guru'          => $request->guru[$i],
+                            'tahun'         => $request->tahun,
+                            'jurusan'       => $request->jurusan,
+                            'kelas'         => $kelas,
+                        ]);
+                        $j++;
+                    }
+                }
+            } else {
+
+                for ($k = 0; $k < 3; $k) {
+                    $schedule = Schedule::orderBy('jam_end', 'DESC')->where('hari', $hari)->where('kelas', $kelas)->where('jurusan', $request->jurusan)->first();
+
+                    if ($schedule == null) {
+                        $start  = date('H:i:s', strtotime('07:00'));
+                    } else {
+                        $start  = date('H:i:s', strtotime($schedule->jam_end));
+                    }
+
+                    $end = date('H:i:s', strtotime('+45 minutes', strtotime($start)));
+
+                    if ($start > date('H:i:s', strtotime('10:30')) && $start < date('H:i:s', strtotime('11:00'))) {
+                        $ist1 = Subject::where('matapelajaran', 'Istirahat 1')->first();
+                        Schedule::create([
+                            'hari'          => $hari,
+                            'jam_start'     => date('H:i:s', strtotime($start)),
+                            'jam_end'       => date('H:i:s', strtotime('+30 minutes', strtotime($start))),
+                            'matapelajaran' => $ist1->id,
+                            'guru'          => 0,
+                            'tahun'         => $request->tahun,
+                            'jurusan'       => $request->jurusan,
+                            'kelas'         => $kelas,
+                        ]);
+                    } elseif ($start > date('H:i:s', strtotime('12:00')) && $start < date('H:i:s', strtotime('13:00'))) {
+                        $ist2 = Subject::where('matapelajaran', 'Istirahat 2')->first();
+                        Schedule::create([
+                            'hari'          => $hari,
+                            'jam_start'     => date('H:i:s', strtotime($start)),
+                            'jam_end'       => date('H:i:s', strtotime('+1 hours', strtotime($start))),
+                            'matapelajaran' => $ist2->id,
+                            'guru'          => 0,
+                            'tahun'         => $request->tahun,
+                            'jurusan'       => $request->jurusan,
+                            'kelas'         => $kelas,
+                        ]);
+                    }else {
+                        Schedule::create([
+                            'hari'          => $hari,
+                            'jam_start'     => $start,
+                            'jam_end'       => $end,
+                            'matapelajaran' => $request->matapelajaran[$i],
+                            'guru'          => $request->guru[$i],
+                            'tahun'         => $request->tahun,
+                            'jurusan'       => $request->jurusan,
+                            'kelas'         => $kelas,
+                        ]);
+                        $k++;
+                    }
+                }
+            }
         }
-
-        if ($request->jam == 1) {
-            $jam_start = $start;
-            $jam_end = date('H:i:s', strtotime('+45 minutes', strtotime($start)));
-        } elseif ($request->jam == 2) {
-            $jam_start = $start;
-            $jam_end = date('H:i:s', strtotime('+1 hours 30 minutes', strtotime($start)));
-        } else {
-            $jam_start = $start;
-            $jam_end = date('H:i:s', strtotime('+2 hours 15 minutes', strtotime($start)));
-        }
-
-        Schedule::create([
-            'hari'          => $hari,
-            'jam_start'     => $jam_start,
-            'jam_end'       => $jam_end,
-            'matapelajaran' => $request->matapelajaran,
-            'guru'          => $request->guru,
-            'tahun'         => $request->tahun,
-            'jurusan'       => $request->jurusan,
-            'kelas'         => $kelas,
-        ]);
 
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }

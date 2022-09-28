@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="col-lg-12">
+                            <div class="col-lg-8">
                                 <div class="card">
                                     <div class="card-body">
                                         <p style="text-align: justify">{!!nl2br(str_replace("{}", " \n",$content->description))!!}</p>
@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-4">
                                 <div class="card">
                                     <div class="list-group card-list-group">
                                         @php
@@ -89,16 +89,16 @@
                                         @foreach ($assigment as $showassigment)
                                             <div class="list-group-item">
                                                 <div class="row g-2 align-items-center">
-                                                    <div class="col-auto fs-3">
+                                                    <div class="col-auto ms-3">
                                                         {{$i++}}
                                                     </div>
                                                     <div class="col-auto">
                                                         <img src="{{App\Models\StudentDetail::find($showassigment->id_siswa)->foto == null ? url('assets/dashboard/dist/img/default.png') : Storage::url(App\Models\StudentDetail::find($showassigment->id_siswa)->foto)}}" class="rounded"
                                                             alt="{{App\Models\StudentDetail::find($showassigment->id_siswa)->nama}}" width="40" height="40">
                                                     </div>
-                                                    <div class="col">
+                                                    <div class="col ms-3">
                                                         {{App\Models\StudentDetail::find($showassigment->id_siswa)->nama}}
-                                                        <div class="text-muted">
+                                                        <div class="text-muted mt-2">
                                                             @php
                                                                 $file = App\Models\FileAssigment::where('id_assigment',$showassigment->id)->get();
                                                             @endphp

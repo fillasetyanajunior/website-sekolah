@@ -86,7 +86,7 @@
                                                     <td class="text-capitalize">{{$showschedule->hari}}</td>
                                                     <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
                                                     <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{App\Models\TeacherDetail::find($showschedule->guru)->nama}}</td>
+                                                    <td>{{$showschedule->guru == 0 ? '' :App\Models\TeacherDetail::find($showschedule->guru)->nama}}</td>
                                                     <td>{{App\Models\Year::find($showschedule->tahun)->tahun}}</td>
                                                     <td>{{App\Models\Department::find($showschedule->jurusan)->jurusan}}</td>
                                                     <td>{{$showschedule->kelas}}</td>
@@ -138,39 +138,54 @@
                                 <option value="6">Sabtu</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="jam">Jam Pelajaran</label>
-                            <select class="form-select @error('jam') is-invalid @enderror" id="jam" name="jam">
-                                <option value="">-- Pilih --</option>
-                                <option value="1">1 Jam Pelajaran</option>
-                                <option value="2">2 Jam Pelajaran</option>
-                                <option value="3">3 Jam Pelajaran</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-lg-3 mb-3">
+                                <label class="form-label" for="jam">Jam Pelajaran</label>
+                                <select class="form-select @error('jam') is-invalid @enderror" id="jam" name="jam[]">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="1">1 Jam Pelajaran</option>
+                                    <option value="2">2 Jam Pelajaran</option>
+                                    <option value="3">3 Jam Pelajaran</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
+                                <select class="form-select @error('matapelajaran') is-invalid @enderror" id="matapelajaran" name="matapelajaran[]">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($subject as $showsubject)
+                                        <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <label class="form-label" for="guru">Guru</label>
+                                <select class="form-select @error('guru') is-invalid @enderror" id="guru" name="guru[]">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($teacher as $showteacher)
+                                        <option value="{{$showteacher->id}}">{{$showteacher->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-1 mb-3">
+                                <label class="form-label" for="">&nbsp;</label>
+                                <button type="button" class="btn btn-icon btn-primary add">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
-                            <select class="form-select @error('matapelajaran') is-invalid @enderror" id="matapelajaran" name="matapelajaran">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($subject as $showsubject)
-                                    <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="guru">Guru</label>
-                            <select class="form-select @error('guru') is-invalid @enderror" id="guru" name="guru">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($teacher as $showteacher)
-                                    <option value="{{$showteacher->id}}">{{$showteacher->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <div class="form2"></div>
                         <div class="mb-3">
                             <label class="form-label" for="tahun">Tahun Pelajaran</label>
                             <select class="form-select @error('tahun') is-invalid @enderror" id="tahun" name="tahun">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($year as $showyear)
-                                    <option value="{{$showyear->id}}">{{$showyear->tahun}}</option>
+                                    <option value="{{$showyear->id}}">{{$showyear->tahun . ' - ' . $showyear->semester}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -246,6 +261,57 @@
                         $('#kelas').val(hasil.kelas)
                     }
                 });
+            });
+
+            var maxField = 10;
+            var addButtonfont = $('.add');
+            var font = $('.form2');
+            var fieldHTMLfont = '<div class="row">' +
+                '<div class="col-lg-3 mb-3">' +
+                    '<label class="form-label" for="jam">Jam Pelajaran</label>' +
+                    '<select class="form-select @error("jam") is-invalid @enderror" id="jam" name="jam[]">' +
+                        '<option value="">-- Pilih --</option>' +
+                        '<option value="1">1 Jam Pelajaran</option>' +
+                        '<option value="2">2 Jam Pelajaran</option>' +
+                        '<option value="3">3 Jam Pelajaran</option>' +
+                    '</select>' +
+                '</div>' +
+                '<div class="col-lg-4 mb-3">' +
+                    '<label class="form-label" for="matapelajaran">Mata Pelajaran</label>' +
+                    '<select class="form-select @error("matapelajaran") is-invalid @enderror" id="matapelajaran" name="matapelajaran[]">' +
+                        '<option value="">-- Pilih --</option>' +
+                        '@foreach ($subject as $showsubject)' +
+                        '<option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>' +
+                        '@endforeach' +
+                    '</select>' +
+                '</div>' +
+                '<div class="col-lg-4 mb-3">' +
+                    '<label class="form-label" for="guru">Guru</label>' +
+                    '<select class="form-select @error("guru") is-invalid @enderror" id="guru" name="guru[]">' +
+                        '<option value="">-- Pilih --</option>' +
+                        '@foreach ($teacher as $showteacher)' +
+                        '<option value="{{$showteacher->id}}">{{$showteacher->name}}</option>' +
+                        '@endforeach' +
+                    '</select>' +
+                '</div>' +
+                '<button type="button" class="btn btn-icon btn-primary remove mb-3 col" style="flex: 0 0 auto; width: 5.4%; height:7%; margin-top:1.7rem; margin-left:0.4rem;">' +
+                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">' +
+                        '<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>' +
+                        '<line x1="5" y1="12" x2="19" y2="12"></line>' +
+                    '</svg>' +
+                '</button>' +
+            '</div>';
+            var x = 1;
+            $(addButtonfont).click(function () {
+                if (x < maxField) {
+                    x++;
+                    $(font).append(fieldHTMLfont);
+                }
+            });
+            $(font).on('click', '.remove' , function (e) {
+                e.preventDefault();
+                $(this).parent('div').remove();
+                x--;
             });
         });
     </script>

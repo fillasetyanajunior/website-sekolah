@@ -10,6 +10,7 @@ use App\Models\Schedule;
 use App\Models\Student;
 use App\Models\StudentDetail;
 use App\Models\Subject;
+use App\Models\Year;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,7 @@ class AttendanceApiController extends Controller
         $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
         $jurusan    = Department::where('jurusan', $request->jurusan)->first();
         $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $mapel->id)->where('jurusan', $jurusan->id)->first();
+        $year       = Year::find($schedule->tahun);
 
         if ($request->keterangan == 'Izin') {
             $keterangan = 'Izin';
@@ -46,15 +48,16 @@ class AttendanceApiController extends Controller
         if ($attendance == null) {
             Attendance::create([
                 'id_siswa'      => $student->id,
-                'nis'           => $request->nis,
+                'nis'           => Auth::user()->username,
                 'matapelajaran' => $schedule->matapelajaran,
+                'jurusan'       => $student->jurusan,
                 'guru'          => $schedule->guru,
                 'tahun'         => $schedule->tahun,
-                'jurusan'       => $schedule->jurusan,
                 'kelas'         => $student->kelas,
-                'tanggal'       => date('Y-m-d'),
+                'tanggal'       => Carbon::now()->isoFormat('Y-M-d'),
+                'semester'      => $year->semester,
                 'jam'           => date('H:i:s'),
-                'keterangan'    => $keterangan
+                'keterangan'    => 'Hadir',
             ]);
 
             return response()->json(['status_code' => 200, 'nis' => $request->nis]);

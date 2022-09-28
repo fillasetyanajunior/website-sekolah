@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Assignment extends Model
 {
     use HasFactory;
-    protected $filleble = [
+    protected $fillable = [
         'id_content',
         'id_siswa',
         'choices',

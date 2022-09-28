@@ -18,37 +18,39 @@ class LoginApiController extends Controller
         ]);
 
         if ($validate->fails()) {
-            $respon = [
-                'status'    => 'error',
-                'msg'       => 'Validator error',
-                'errors'    => $validate->errors(),
-                'content'   => null,
-            ];
-            return response()->json($respon, 200);
+            return response()->json([
+                'status_code' => 400,
+                'name' => '',
+                'access_token' => '',
+                'token_type' => '',
+            ]);
         } else {
             $user = Student::where('username', $request->username)->first();
 
             if ($user == null) {
-                return response()->json(['status' => 'error']);
+                return response()->json([
+                    'status_code' => 400,
+                    'name' => '',
+                    'access_token' => '',
+                    'token_type' => '']);
             }
 
             if (!Hash::check($request->password, $user->password, [])) {
-                return response()->json(['status' => 'error', 'msg' => 'Error in Login',]);
+                return response()->json([
+                    'status_code' => 400,
+                    'name' => '',
+                    'access_token' => '',
+                    'token_type' => '',
+                ]);
             }
 
             $tokenResult = $user->createToken('student');
-            $respon = [
-                'status'    => 'success',
-                'msg'       => 'Login successfully',
-                'errors'    => null,
-                'content'   => [
-                        'status_code' => 200,
-                        'name' => $tokenResult->accessToken->name,
-                        'access_token' => $tokenResult->plainTextToken,
-                        'token_type' => 'Bearer',
-                ]
-            ];
-            return response()->json($respon, 200);
+            return response()->json([
+                'status_code' => 200,
+                'name' => $tokenResult->accessToken->name,
+                'access_token' => $tokenResult->plainTextToken,
+                'token_type' => 'Bearer',
+            ]);
         }
     }
 }

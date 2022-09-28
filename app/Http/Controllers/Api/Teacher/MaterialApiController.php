@@ -20,9 +20,9 @@ class MaterialApiController extends Controller
         $mapel = Subject::where('matapelajaran', $request->matapelajaran)->first();
 
         $data = MaterialInput::where('guru', Auth::user()->id)
-                                ->where('matapelajaran', $mapel->id)
-                                ->where('kelas', $request->kelas)
-                                ->get();
+                             ->where('matapelajaran', $mapel->id)
+                             ->where('kelas', $request->kelas)
+                             ->get();
 
         return response()->json($data);
     }

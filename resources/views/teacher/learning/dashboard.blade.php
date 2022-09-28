@@ -55,7 +55,7 @@
                                 <div class="card">
                                     <div class="card-img-top img-responsive img-responsive-21x9" style="background-image: url(./static/photos/9f36332564ca271d.jpg)"></div>
                                     <div class="card-body">
-                                        <h3 class="card-title">{{$showclass->nama}}</h3>
+                                        <h3 class="card-title"><a href="{{route('learning.teacher.' . Str::lower($showclass->nama),Crypt::encrypt($showclass->id))}}">{{$showclass->nama}}</a></h3>
                                     </div>
                                 </div>
                             </div>

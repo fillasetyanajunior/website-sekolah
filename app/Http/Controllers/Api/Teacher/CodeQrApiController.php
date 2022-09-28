@@ -17,14 +17,6 @@ class CodeQrApiController extends Controller
             return response()->json(['status' => 'error']);
         }
 
-        if ($request->kelas == 1) {
-            $kelas = 'X';
-        } elseif ($request->kelas == 2) {
-            $kelas = 'XI';
-        } else {
-            $kelas = 'XII';
-        }
-
         $jurusan        = Department::where('jurusan',$request->jurusan)->first();
         $matapelajaran  = Subject::where('matapelajaran',$request->matapelajaran)->first();
 
@@ -34,7 +26,7 @@ class CodeQrApiController extends Controller
                                 'kode'          => $kode,
                                 'matapelajaran' => $matapelajaran->id,
                                 'jurusan'       => $jurusan->id,
-                                'kelas'         => $kelas,
+                                'kelas'         => $request->kelas,
                             ]);
 
         return response()->json($qr);
