@@ -18,6 +18,7 @@ class CreateNewsTable extends Migration
             $table->string('title');
             $table->string('thumnail');
             $table->text('description');
+            $table->enum('choices', ['Berita', 'Info']);
             $table->timestamps();
         });
     }

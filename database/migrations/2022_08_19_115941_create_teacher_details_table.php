@@ -24,7 +24,8 @@ class CreateTeacherDetailsTable extends Migration
             $table->enum('wali_kelas', ['X', 'XI', 'XII']);
             $table->integer('wali_jurusan');
             $table->enum('status', ['PNS', 'Non PNS']);
-            $table->string('foto')->nullable();
+            $table->enum('jabatan', ['Kepala Sekolah', 'Waka Humas', 'Waka Kurikulum', 'Waka Sapras', 'Waka Kesiswaan', 'KTU', 'Pramubakti', 'Bendahara', 'Guru']);
+            $table->string('avatar')->default('default.jpg');
             $table->string('sertifikat_pendidikan')->nullable();
             $table->string('izasah')->nullable();
             $table->timestamps();

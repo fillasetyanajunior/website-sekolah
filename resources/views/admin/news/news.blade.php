@@ -130,6 +130,14 @@
                             <label class="form-label" for="thumnail">Thumnail</label>
                             <input type="file" class="form-control" id="thumnail" name="thumnail">
                         </div>
+                        <div class="mb-3">
+                            <label for="choices" class="form-label">Pilihan Berita</label>
+                            <select name="choices" id="choices" class="form-control">
+                                <option value="">-- Pilih --</option>
+                                <option value="1">Berita</option>
+                                <option value="2">Info</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>

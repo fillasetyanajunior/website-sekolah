@@ -18,8 +18,9 @@ class TeacherDetail extends Model
         'wali_kelas',
         'wali_jurusan',
         'status',
-        'foto',
+        'avatar',
         'sertifikat_pendidikan',
         'izasah',
+        'jabatan',
     ];
 }

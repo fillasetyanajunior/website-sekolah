@@ -48,7 +48,7 @@
                                                     <td class="text-capitalize">{{$showschedule->hari}}</td>
                                                     <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
                                                     <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{App\Models\TeacherDetail::find($showschedule->guru)->name}}</td>
+                                                    <td>{{$showschedule->guru == 0 ? '' : App\Models\TeacherDetail::find($showschedule->guru)->nama}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

@@ -20,6 +20,12 @@ class TeacherSeeder extends Seeder
     {
         for ($j = 1; $j <= 10; $j++) {
 
+            $jabatan    = ['Kepala Sekolah', 'Waka Humas', 'Waka Kurikulum', 'Waka Sapras', 'Waka Kesiswaan', 'KTU', 'Pramubakti', 'Bendahara', 'Guru'];
+            $y          = array_rand($jabatan, 1);
+
+            $status     = ['PNS', 'Non PNS'];
+            $i          = array_rand($status, 1);
+
             $id_guru = TeacherDetail::create([
                 'nama'                  => 'Teacher ' . $j,
                 'nuptk'                 => '123456789012',
@@ -29,12 +35,13 @@ class TeacherSeeder extends Seeder
                 'lulusan'               => 'S1',
                 'wali_kelas'            => 'X',
                 'wali_jurusan'          => 1,
-                'status'                => 'PNS',
+                'status'                => $status[$i],
+                'jabatan'               => $jabatan[$y],
             ]);
 
             for ($l = 0; $l < 3; $l++) {
-                $kelas = array('X', 'XI', 'XII');
-                $k = array_rand($kelas, 1);
+                $kelas  = array('X', 'XI', 'XII');
+                $k      = array_rand($kelas, 1);
 
                 Teaching::create([
                     'id_guru'       => $id_guru->id,

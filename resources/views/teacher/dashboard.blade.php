@@ -30,7 +30,6 @@
                                             <div class="row align-items-center">
                                                 <div class="col-auto">
                                                     <span class="bg-blue text-white avatar">
-                                                        <!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                                             height="24" viewBox="0 0 24 24" stroke-width="2"
                                                             stroke="currentColor" fill="none" stroke-linecap="round"
@@ -59,7 +58,6 @@
                                             <div class="row align-items-center">
                                                 <div class="col-auto">
                                                     <span class="bg-green text-white avatar">
-                                                        <!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                                             height="24" viewBox="0 0 24 24" stroke-width="2"
                                                             stroke="currentColor" fill="none" stroke-linecap="round"
@@ -89,7 +87,6 @@
                                             <div class="row align-items-center">
                                                 <div class="col-auto">
                                                     <span class="bg-twitter text-white avatar">
-                                                        <!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                                             height="24" viewBox="0 0 24 24" stroke-width="2"
                                                             stroke="currentColor" fill="none" stroke-linecap="round"
@@ -118,7 +115,6 @@
                                             <div class="row align-items-center">
                                                 <div class="col-auto">
                                                     <span class="bg-facebook text-white avatar">
-                                                        <!-- Download SVG icon from http://tabler-icons.io/i/brand-facebook -->
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                                             height="24" viewBox="0 0 24 24" stroke-width="2"
                                                             stroke="currentColor" fill="none" stroke-linecap="round"
@@ -183,22 +179,30 @@
                                     <table class="table card-table table-vcenter text-nowrap datatable">
                                         <thead>
                                             <tr>
-                                                <th>Hari</th>
-                                                <th>Jam</th>
+                                                <th>#</th>
+                                                <th>Judul</th>
                                                 <th>Mata Pelajaran</th>
                                                 <th>Jurusan</th>
                                                 <th>Kelas</th>
+                                                <th>Dateline</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($schedule as $showschedule)
-                                                <tr>
-                                                    <td class="text-capitalize">{{$showschedule->hari}}</td>
-                                                    <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
-                                                    <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{App\Models\Department::find($showschedule->jurusan)->jurusan}}</td>
-                                                    <td>{{$showschedule->kelas}}</td>
-                                                </tr>
+                                            <?php $i = 1;?>
+                                            @foreach ($classroom as $showclassroom)
+                                                @php
+                                                    $content = App\Models\Content::where('id_classroom', $showclassroom->id)->get();
+                                                @endphp
+                                                @foreach ($content as $showcontent)
+                                                    <tr>
+                                                        <td class="text-capitalize">{{$i++}}</td>
+                                                        <td class="text-capitalize">{{$showcontent->judul}}</td>
+                                                        <td>{{$showclassroom->nama}}</td>
+                                                        <td>{{App\Models\Department::find($showclassroom->jurusan)->jurusan}}</td>
+                                                        <td>{{$showclassroom->kelas}}</td>
+                                                        <td>{{$showcontent->dateline}}</td>
+                                                    </tr>
+                                                @endforeach
                                             @endforeach
                                         </tbody>
                                     </table>

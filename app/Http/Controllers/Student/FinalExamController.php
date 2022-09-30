@@ -8,7 +8,7 @@ use App\Models\StudentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class FinalExamController extends Controller
+class FinalExamController extends AppController
 {
     public function index()
     {

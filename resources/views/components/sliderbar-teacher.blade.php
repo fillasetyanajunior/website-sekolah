@@ -34,7 +34,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url({{App\Models\TeacherDetail::find(Auth::user()->id_guru)->foto == null ? url('assets/dashboard/dist/img/default.png') : Storage::url(App\Models\TeacherDetail::find(Auth::user()->id_guru)->foto)}})"></span>
+                    <span class="avatar avatar-sm" style="background-image: url({{App\Models\TeacherDetail::find(Auth::user()->id_guru)->avatar == 'default.jpg' ? url('assets/dashboard/dist/img/default.png') : Storage::url(App\Models\TeacherDetail::find(Auth::user()->id_guru)->avatar)}})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{Auth::user()->name}}</div>
                     </div>
@@ -192,7 +192,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url({{App\Models\TeacherDetail::find(Auth::user()->id_guru)->foto == null ? url('assets/dashboard/dist/img/default.png') : Storage::url(App\Models\TeacherDetail::find(Auth::user()->id_guru)->foto)}})"></span>
+                    <span class="avatar avatar-sm" style="background-image: url({{App\Models\TeacherDetail::find(Auth::user()->id_guru)->avatar == null ? url('assets/dashboard/dist/img/default.png') : Storage::url(App\Models\TeacherDetail::find(Auth::user()->id_guru)->avatar)}})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{Auth::user()->name}}</div>
                     </div>

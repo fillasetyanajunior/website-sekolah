@@ -22,7 +22,15 @@ class NewsController extends AppController
             'title'         => 'required',
             'description'   => 'required',
             'thumnail'      => 'required',
+            'choices'       => 'required',
         ]);
+
+        if ($request->choices == 1) {
+            $choices = 'Berita';
+        } else {
+            $choices = 'Info';
+        }
+
 
         $file = $request->file('thumnail');
         $path = Storage::putFileAs('news', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
@@ -31,6 +39,7 @@ class NewsController extends AppController
             'title'         => $request->title,
             'description'   => $request->description,
             'thumnail'      => $path,
+            'choices'       => $choices,
         ]);
         return redirect()->back()->with('success', 'Data Berhasil Di Posting');
     }
@@ -42,7 +51,14 @@ class NewsController extends AppController
 
     public function update(News $news, Request $request)
     {
+        if ($request->choices == 1) {
+            $choices = 'Berita';
+        } else {
+            $choices = 'Info';
+        }
+
         if ($request->hasfile('thumnail')) {
+            Storage::delete(Storage::path($news->thumnail));
             $file = $request->file('thumnail');
             $path = Storage::putFileAs('news', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
         } else {
@@ -53,7 +69,8 @@ class NewsController extends AppController
             ->update([
                 'title'         => $request->title,
                 'description'   => $request->description,
-                'thumnail'      => $path
+                'thumnail'      => $path,
+                'choices'       => $choices,
             ]);
         return redirect()->back()->with('success', 'Data Berhasil Update');
     }

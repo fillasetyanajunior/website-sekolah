@@ -8,7 +8,7 @@ use App\Models\Extracurricular;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ExtracurricularController extends Controller
+class ExtracurricularController extends AppController
 {
     public function index()
     {

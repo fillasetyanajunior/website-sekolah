@@ -38,6 +38,6 @@ class StudentDetail extends Model
         'kode_pos',
         'jurusan',
         'kelas',
-        'foto',
+        'avatar',
     ];
 }

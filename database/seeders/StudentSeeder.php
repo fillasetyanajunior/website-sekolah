@@ -55,7 +55,7 @@ class StudentSeeder extends Seeder
                 'alamat'                => 'Jl. Tugu Pahlawan',
                 'kode_pos'              => '81155',
                 'kelas'                 => $kelas[$k],
-                'jurusan'               => rand(1, 2),
+                'jurusan'               => rand(1, 4),
             ]);
 
             Student::create([

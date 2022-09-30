@@ -17,7 +17,7 @@ class DashboardController extends AppController
     {
         $title          = 'Dashboard';
         $student        = StudentDetail::find(Auth::user()->id_siswa);
-        $schedule       = Schedule::where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->get();
+        $schedule       = Schedule::orderBy('hari')->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->get();
         $deuteronomi    = Deuteronomi::where('id_siswa', Auth::user()->id_siswa)->get();
         return view('student.dashboard', compact('title', 'deuteronomi', 'schedule'));
     }

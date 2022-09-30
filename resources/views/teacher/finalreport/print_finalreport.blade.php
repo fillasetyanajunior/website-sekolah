@@ -18,7 +18,15 @@
                     <td>{{$student->nama}}</td>
                     <td width="160px">Kelas</td>
                     <td>:</td>
-                    <td>{{$student->kelas}}({{$student->kelas == 'X' ? 'Sepuluh' : $student->kelas == 'XI' ? 'Sebelas' : 'Dua Belas'}})</td>
+                    <td>{{$student->kelas}}
+                        @if ($student->kelas == 'X')
+                            (Sepuluh)
+                        @elseif ($student->kelas == 'XI')
+                            (Sebelas)
+                        @else
+                            (Dua Belas)
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <td>NISN</td>
@@ -188,7 +196,7 @@
         </div>
 
         <script>
-            // window.print();
+            window.print();
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
