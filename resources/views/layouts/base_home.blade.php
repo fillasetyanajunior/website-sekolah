@@ -55,7 +55,7 @@
                         <li class="nav-item {{$title == 'Profile' ? 'active' : ''}}"><a class="nav-link" href="about.html">Profile Sekolah</a></li>
                         <li class="nav-item {{$title == 'Guru dan Pegawai' ? 'active' : ''}}"><a class="nav-link" href="{{route('home.teacher')}}">Guru dan Pegawai</a></li>
                         <li class="nav-item {{$title == 'Siswa' ? 'active' : ''}}"><a class="nav-link" href="{{route('home.student')}}">Siswa</a></li>
-                        <li class="nav-item {{$title == 'Prestasi' ? 'active' : ''}}"><a class="nav-link" href="about.html">Presntasi Siswa</a></li>
+                        <li class="nav-item {{$title == 'Prestasi' ? 'active' : ''}}"><a class="nav-link" href="{{route('home.achievement')}}">Prestasi Siswa</a></li>
                         <li class="nav-item {{$title == 'Majalah' ? 'active' : ''}}"><a class="nav-link" href="about.html">Majalah MADANI</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('regisration')}}">PSM</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('student.login.form')}}">Login</a></li>
@@ -75,10 +75,13 @@
                         </div>
                         <ul class="footer-links">
                             <li><a href="{{route('home')}}">Home</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Pricing</a></li>
-							<li><a href="#">About</a></li>
-							<li><a href="#">Contact</a></li>
+                            <li><a href="about.html">Profile Sekolah</a></li>
+                            <li><a href="{{route('home.teacher')}}">Guru dan Pegawai</a></li>
+                            <li><a href="{{route('home.student')}}">Siswa</a></li>
+                            <li><a href="{{route('home.achievement')}}">Prestasi Siswa</a></li>
+                            <li><a href="about.html">Majalah MADANI</a></li>
+                            <li><a href="{{route('regisration')}}">PSM</a></li>
+                            <li><a href="{{route('student.login.form')}}">Login</a></li>
                         </ul>
                     </div>
                 </div>

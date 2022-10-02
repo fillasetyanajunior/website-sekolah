@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Achievement;
 use App\Models\News;
 use App\Models\StudentDetail;
 use App\Models\TeacherDetail;
@@ -46,5 +47,13 @@ class HomeController extends Controller
         $news   = News::find(Crypt::decrypt($request->id));
         $title  = $news->title;
         return view('home.newsdetail',compact('news','title'));
+    }
+
+    public function achievement()
+    {
+        $title  = 'Prestasi';
+        $akademik = Achievement::groupBy('tingkatan')->where('prestasi','Akademik')->get('tingkatan');
+        $non_akademik = Achievement::groupBy('tingkatan')->where('prestasi','Non-Akademik')->get('tingkatan');
+        return view('home.achievement', compact('title','akademik','non_akademik'));
     }
 }

@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#InformasiModal" id="tambahinformasi">
+                                    data-bs-target="#MagazineModal" id="tambahmagazine">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -27,10 +27,10 @@
                                         <line x1="12" y1="5" x2="12" y2="19" />
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
-                                    Mengunggah Berita
+                                    Tambah Majalah
                                 </a>
                                 <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#InformasiModal" id="tambahinformasi" aria-label="Mengunggah Berita">
+                                    data-bs-target="#MagazineModal" id="tambahmagazine" aria-label="Tambah Majalah">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -70,21 +70,22 @@
                                                 <th>#</th>
                                                 <th>Thumnail</th>
                                                 <th>Title</th>
-                                                <th>Action</th>
+                                                <th>file</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @php
                                                 $i = 1;
                                             @endphp
-                                            @foreach ($news as $shownews)
+                                            @foreach ($magazine as $showmagazine)
                                                 <tr>
-                                                    <th>{{$i++}}</th>
-                                                    <td><img src="{{Storage::url($shownews->thumnail)}}" alt="" width="100px"></td>
-                                                    <td>{{$shownews->title}}</td>
+                                                    <td>{{$i++}}</td>
+                                                    <td><img src="{{Storage::url($showmagazine->thumnail)}}" width="100px"></td>
+                                                    <td>{{$showmagazine->title}}</td>
+                                                    <td>{{$showmagazine->file}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editinformasi" data-bs-toggle="modal" data-bs-target="#InformasiModal" data-id="{{$shownews->id}}">Ubah</button>
-                                                        <form action="{{route('admin.news.destroy', $shownews->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editmagazine" data-bs-toggle="modal" data-bs-target="#MagazineModal" data-id="{{$showmagazine->id}}">Ubah</button>
+                                                        <form action="{{route('admin.magazine.destroy', $showmagazine->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -96,7 +97,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer d-flex align-items-center">
-                                    {{$news->links()}}
+                                    {{$magazine->links()}}
                                 </div>
                             </div>
                         </div>
@@ -107,7 +108,7 @@
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="InformasiModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="MagazineModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -115,28 +116,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="body_informasi">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="title">Title</label>
+                            <label class="form-label" for="title">Judul</label>
                             <input type="text" class="form-control" id="title" name="title">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="description">Isi Berita</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                        </div>
-                        <div class="mb-3">
+                       <div class="mb-3">
                             <label class="form-label" for="thumnail">Thumnail</label>
                             <input type="file" class="form-control" id="thumnail" name="thumnail">
                         </div>
-                        <div class="mb-3">
-                            <label for="choices" class="form-label">Pilihan Berita</label>
-                            <select name="choices" id="choices" class="form-control">
-                                <option value="">-- Pilih --</option>
-                                <option value="1">Berita</option>
-                                <option value="2">Info</option>
-                            </select>
+                       <div class="mb-3">
+                            <label class="form-label" for="file">File</label>
+                            <input type="file" class="form-control" id="file" name="file">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -153,23 +146,23 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahinformasi').on('click', function () {
-                $('.body_informasi button[type=submit]').html('Upload');
-                $('.modal-title').html('Upload Berita');
-                $('.body_informasi form').attr('action', '{{route("admin.news.store")}}');
+            $('#tambahmagazine').on('click', function () {
+                $('.body_informasi button[type=submit]').html('Add');
+                $('.modal-title').html('Tambah Magazine');
+                $('.body_informasi form').attr('action', '{{route("admin.magazine.store")}}');
                 $('.body_informasi form').attr('method', 'post');
 
                 $('#title').val('')
-                $('#description').val('')
                 $('#thumnail').val('')
+                $('#file').val('')
             });
-            $('#editinformasi*').on('click', function () {
+            $('#editmagazine*').on('click', function () {
                 const id = $(this).data('id');
-                let _url = '{{route("admin.news.edit",":id")}}'.replace(':id', id);
+                let _url = '{{route("admin.magazine.edit",":id")}}'.replace(':id', id);
 
                 $('.body_informasi button[type=submit]').html('Edit');
-                $('.modal-title').html('Edit Berita');
-                $('.body_informasi form').attr('action', '{{route("admin.news.update",":id")}}'.replace(':id', id));
+                $('.modal-title').html('Edit Magazine');
+                $('.body_informasi form').attr('action', '{{route("admin.magazine.update",":id")}}'.replace(':id', id));
                 $('.body_informasi form').attr('method', 'post');
 
                 $.ajax({
@@ -180,7 +173,6 @@
                     },
                     success: function (hasil) {
                         $('#title').val(hasil.title)
-                        $('#description').val(hasil.description)
                     }
                 });
             });

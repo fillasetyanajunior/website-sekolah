@@ -19,7 +19,8 @@ Route::get('/', [Home::class,'index'])->name('home');
 Route::get('/guru-dan-pegawai',[Home::class,'teacher'])->name('home.teacher');
 Route::get('/siswa',[Home::class,'student'])->name('home.student');
 Route::get('/news-utama/{id}',[Home::class,'news'])->name('home.newsmain');
-Route::get('/info/{id}',[Home::class,'news'])->name('home.info');
+Route::get('/info/{id}',[Home::class,'info'])->name('home.info');
+Route::get('/prestasi-siswa',[Home::class, 'achievement'])->name('home.achievement');
 
 Route::get('/pendaftaran', [Registration::class,'index'])->name('regisration');
 Route::post('/pendaftaran', [Registration::class,'store'])->name('regisration.store');

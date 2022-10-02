@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#InformasiModal" id="tambahinformasi">
+                                    data-bs-target="#PrestasiModal" id="tambahprestasi">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -27,10 +27,10 @@
                                         <line x1="12" y1="5" x2="12" y2="19" />
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
-                                    Mengunggah Berita
+                                    Tambah Prestasi
                                 </a>
                                 <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#InformasiModal" id="tambahinformasi" aria-label="Mengunggah Berita">
+                                    data-bs-target="#PrestasiModal" id="tambahprestasi" aria-label="Tambah Prestasi">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -68,8 +68,13 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Thumnail</th>
-                                                <th>Title</th>
+                                                <th>Kegiatan</th>
+                                                <th>Penyelenggara</th>
+                                                <th>Juara</th>
+                                                <th>Keterangan</th>
+                                                <th>Tahun</th>
+                                                <th>Tingkatan</th>
+                                                <th>Prestasi</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -77,14 +82,19 @@
                                             @php
                                                 $i = 1;
                                             @endphp
-                                            @foreach ($news as $shownews)
+                                            @foreach ($achievement as $showachievement)
                                                 <tr>
-                                                    <th>{{$i++}}</th>
-                                                    <td><img src="{{Storage::url($shownews->thumnail)}}" alt="" width="100px"></td>
-                                                    <td>{{$shownews->title}}</td>
+                                                    <td>{{$i++}}</td>
+                                                    <td>{{$showachievement->kegiatan}}</td>
+                                                    <td>{{$showachievement->penyelenggara}}</td>
+                                                    <td>{{$showachievement->juara}}</td>
+                                                    <td>{{$showachievement->keterangan}}</td>
+                                                    <td>{{$showachievement->tahun}}</td>
+                                                    <td>{{$showachievement->tingkatan}}</td>
+                                                    <td>{{$showachievement->prestasi}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editinformasi" data-bs-toggle="modal" data-bs-target="#InformasiModal" data-id="{{$shownews->id}}">Ubah</button>
-                                                        <form action="{{route('admin.news.destroy', $shownews->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editprestasi" data-bs-toggle="modal" data-bs-target="#PrestasiModal" data-id="{{$showachievement->id}}">Ubah</button>
+                                                        <form action="{{route('admin.achievement.destroy', $showachievement->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -96,7 +106,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer d-flex align-items-center">
-                                    {{$news->links()}}
+                                    {{$achievement->links()}}
                                 </div>
                             </div>
                         </div>
@@ -107,7 +117,7 @@
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="InformasiModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="PrestasiModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -115,27 +125,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="body_informasi">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="title">Title</label>
-                            <input type="text" class="form-control" id="title" name="title">
+                            <label class="form-label" for="kegiatan">Kegiatan</label>
+                            <input type="text" class="form-control" id="kegiatan" name="kegiatan">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="description">Isi Berita</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            <label class="form-label" for="penyelenggara">Penyelenggara</label>
+                            <input type="text" class="form-control" id="penyelenggara" name="penyelenggara">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="thumnail">Thumnail</label>
-                            <input type="file" class="form-control" id="thumnail" name="thumnail">
+                            <label class="form-label" for="juara">Juara</label>
+                            <input type="text" class="form-control" id="juara" name="juara">
                         </div>
                         <div class="mb-3">
-                            <label for="choices" class="form-label">Pilihan Berita</label>
-                            <select name="choices" id="choices" class="form-control">
+                            <label class="form-label" for="keterangan">Nama Perwakilan</label>
+                            <input type="text" class="form-control" id="keterangan" name="keterangan">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="tahun">Tahun</label>
+                            <input type="text" class="form-control" id="tahun" name="tahun">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="tingkatan">Tingkatan</label>
+                            <input type="text" class="form-control" id="tingkatan" name="tingkatan">
+                        </div>
+                        <div class="mb-3">
+                            <label for="prestasi" class="form-label">Prestasi</label>
+                            <select name="prestasi" id="prestasi" class="form-control">
                                 <option value="">-- Pilih --</option>
-                                <option value="1">Berita</option>
-                                <option value="2">Info</option>
+                                <option value="1">Akademik</option>
+                                <option value="2">Non-Akademik</option>
                             </select>
                         </div>
                     </div>
@@ -153,23 +175,23 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahinformasi').on('click', function () {
-                $('.body_informasi button[type=submit]').html('Upload');
-                $('.modal-title').html('Upload Berita');
-                $('.body_informasi form').attr('action', '{{route("admin.news.store")}}');
+            $('#tambahprestasi').on('click', function () {
+                $('.body_informasi button[type=submit]').html('Add');
+                $('.modal-title').html('Tambah Prestasi');
+                $('.body_informasi form').attr('action', '{{route("admin.achievement.store")}}');
                 $('.body_informasi form').attr('method', 'post');
 
                 $('#title').val('')
                 $('#description').val('')
                 $('#thumnail').val('')
             });
-            $('#editinformasi*').on('click', function () {
+            $('#editprestasi*').on('click', function () {
                 const id = $(this).data('id');
-                let _url = '{{route("admin.news.edit",":id")}}'.replace(':id', id);
+                let _url = '{{route("admin.achievement.edit",":id")}}'.replace(':id', id);
 
                 $('.body_informasi button[type=submit]').html('Edit');
-                $('.modal-title').html('Edit Berita');
-                $('.body_informasi form').attr('action', '{{route("admin.news.update",":id")}}'.replace(':id', id));
+                $('.modal-title').html('Edit Prestasi');
+                $('.body_informasi form').attr('action', '{{route("admin.achievement.update",":id")}}'.replace(':id', id));
                 $('.body_informasi form').attr('method', 'post');
 
                 $.ajax({
@@ -179,8 +201,17 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#title').val(hasil.title)
-                        $('#description').val(hasil.description)
+                        $('#kegiatan').val(hasil.kegiatan)
+                        $('#penyelenggara').val(hasil.penyelenggara)
+                        $('#juara').val(hasil.juara)
+                        $('#keterangan').val(hasil.keterangan)
+                        $('#tahun').val(hasil.tahun)
+                        $('#tingkatan').val(hasil.tingkatan)
+                        if (hasil.prestasi == 'Akademik') {
+                            $('#prestasi').val(1)
+                        } else {
+                            $('#prestasi').val(2)
+                        }
                     }
                 });
             });

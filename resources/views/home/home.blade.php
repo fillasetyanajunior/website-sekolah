@@ -1,8 +1,7 @@
 @extends('layouts.base_home',['siswa' => $title])
 @section('title',$title)
 @section('content')
-<div id="carouselExampleControls" class="carousel slide bs-slider box-slider" data-ride="carousel" data-pause="hover"
-    data-interval="false">
+<div id="carouselExampleControls" class="carousel slide bs-slider box-slider" data-ride="carousel" data-pause="hover" data-interval="false">
     <ol class="carousel-indicators">
         @for ($i = 0; $i < count($berita); $i++)
             <li data-target="#carouselExampleControls" data-slide-to="{{$i}}"></li>
@@ -54,51 +53,29 @@
 </div>
 <div id="overviews" class="section wb">
     <div class="container">
-        <div class="section-title row text-center">
+        {{-- <div class="section-title row text-center">
             <div class="col-md-8 offset-md-2">
                 <h3>About</h3>
                 <p class="lead">Lorem Ipsum dolroin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem
                     quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem!</p>
             </div>
-        </div>
+        </div> --}}
         <div class="row align-items-center">
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="message-box">
-                    <h4>2018 BEST SmartEDU education school</h4>
-                    <h2>Welcome to SmartEDU education school</h2>
-                    <p>Quisque eget nisl id nulla sagittis auctor quis id. Aliquam quis vehicula enim, non aliquam
-                        risus. Sed a tellus quis mi rhoncus dignissim.</p>
+                    <h4>SAMBUTAN KEPALA MAN</h4>
+                    <h2>Markhaban, S.Pd., M.Pd.I</h2>
+                    <p><b>Assalamualaikum Warahmatullahi Wabarokaatuh.</b></p>
 
-                    <p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus
-                        bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis
-                        montes, nascetur ridiculus mus. Sed vitae rutrum neque. </p>
-
-                    <a href="#" class="hover-btn-new orange"><span>Learn More</span></a>
+                    <p>Puji syukur kami panjatkan kehadirat Allah SWT. atas karunia-Nya kami berhasil menyusun website resmi sekolah sebagai
+                    gambaran kegiatan dalam berbagai bidang yang mudah-mudahan dapat bermanfaat bagi kita semua.</p>
+                    <p>Kepala Madrasah</p>
+                    <p><b>Markhaban, S.Pd., M.Pd.I</b></p>
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="post-media wow fadeIn">
-                    <img src="{{url('assets/home/images/about_02.jpg')}}" alt="" class="img-fluid img-rounded">
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                <div class="post-media wow fadeIn">
-                    <img src="{{url('assets/home/images/about_03.jpg')}}" alt="" class="img-fluid img-rounded">
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                <div class="message-box">
-                    <h2>The standard Lorem Ipsum passage, used since the 1500s</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus
-                        bibendum.</p>
-                    <a href="#" class="hover-btn-new orange"><span>Learn More</span></a>
+                    <img src="{{url('assets/home/images/kepala-man-patas.jpg')}}" alt="" class="img-fluid img-rounded">
                 </div>
             </div>
         </div>
@@ -255,7 +232,7 @@
         <hr class="invis">
         <div class="row">
             @foreach ($info as $showinfo)
-                <a href="{{route('home.info',$showinfo->id)}}">
+                <a href="{{route('home.info',Crypt::encrypt($showinfo->id))}}">
                     <div class="col-lg-3 col-md-6 col-12 my-3">
                         <div class="course-item">
                             <div class="course-br">
@@ -263,7 +240,7 @@
                                     <h2>{{$showinfo->title}}</h2>
                                 </div>
                                 <div class="course-desc">
-                                    <p>{{Str::limit($showinfo->description,200,'....')}}</p>
+                                    <p>{{Str::limit($showinfo->description, 200 ,'....')}}</p>
                                 </div>
                             </div>
                         </div>

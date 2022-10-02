@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AchievementController as Achievement;
 use App\Http\Controllers\Admin\DashboardController as Dashboard;
 use App\Http\Controllers\Admin\DepartmentController as Department;
 use App\Http\Controllers\Admin\DeuteronomiController as Deuteronomi;
 use App\Http\Controllers\Admin\ExamController as Exam;
 use App\Http\Controllers\Admin\ExtracurricularController as Extracurricular;
 use App\Http\Controllers\Admin\GradeController as Grade;
+use App\Http\Controllers\Admin\MagazineController as Magazine;
 use App\Http\Controllers\Admin\MaterialController as Material;
 use App\Http\Controllers\Admin\NewsController as News;
 use App\Http\Controllers\Admin\RegistrationController as Registration;
@@ -30,6 +32,18 @@ Route::group([
     Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
+
+   Route::get('majalah', [Magazine::class, 'index'])->name('admin.magazine');
+    Route::post('majalah/store', [Magazine::class, 'store'])->name('admin.magazine.store');
+    Route::post('majalah/edit/{magazine}', [Magazine::class, 'edit'])->name('admin.magazine.edit');
+    Route::post('majalah/update/{magazine}', [Magazine::class, 'update'])->name('admin.magazine.update');
+    Route::delete('majalah/destroy/{magazine}', [Magazine::class, 'destroy'])->name('admin.magazine.destroy');
+
+   Route::get('prestasi', [Achievement::class, 'index'])->name('admin.achievement');
+    Route::post('prestasi/store', [Achievement::class, 'store'])->name('admin.achievement.store');
+    Route::post('prestasi/edit/{achievement}', [Achievement::class, 'edit'])->name('admin.achievement.edit');
+    Route::post('prestasi/update/{achievement}', [Achievement::class, 'update'])->name('admin.achievement.update');
+    Route::delete('prestasi/destroy/{achievement}', [Achievement::class, 'destroy'])->name('admin.achievement.destroy');
 
     Route::get('ujian', [Exam::class, 'index'])->name('admin.exam');
     Route::post('ujian/store', [Exam::class, 'store'])->name('admin.exam.store');
