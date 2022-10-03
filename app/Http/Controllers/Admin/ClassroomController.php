@@ -13,7 +13,7 @@ class ClassroomController extends AppController
     {
         $title      = 'Ruang Kelas';
         $classroom  = Classroom::orderBy('jurusan')->paginate(20);
-        return view('admin.classroom.classroom',compact('title', 'classroom'));
+        return view('admin.classroom.classroom', compact('title', 'classroom'));
     }
 
     public function store(Request $request)
@@ -26,7 +26,7 @@ class ClassroomController extends AppController
             $kelas = 'XII';
         }
 
-        $teaching = Teaching::where('kelas',$kelas)->get();
+        $teaching = Teaching::where('kelas', $kelas)->get();
         foreach ($teaching as $showteaching) {
             Classroom::create([
                 'id_guru'   => $showteaching->id_guru,

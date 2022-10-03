@@ -41,36 +41,36 @@ Route::prefix('student')->middleware(['auth:sanctum'])->group(function (){
     Route::post('jadwal', [ScheduleStudent::class, 'jadwal']);
     Route::post('jadwal/show', [ScheduleStudent::class, 'show']);
 
-    Route::post('ulangan',[DeuteronomiStudent::class,'ulangan']);
-    Route::post('ulangan/show',[DeuteronomiStudent::class,'show']);
-    Route::post('ulangan/day',[DeuteronomiStudent::class,'day']);
+    Route::post('ulangan',[DeuteronomiStudent::class, 'ulangan']);
+    Route::post('ulangan/show',[DeuteronomiStudent::class, 'show']);
+    Route::post('ulangan/day',[DeuteronomiStudent::class, 'day']);
 
-    Route::post('nilai',[GradeStudent::class,'nilai']);
+    Route::post('nilai',[GradeStudent::class, 'nilai']);
 
     Route::post('absen',[AttendanceStudent::class,'show']);
     Route::post('absen/create',[AttendanceStudent::class, 'absen']);
 
-    Route::post('tugas',[AssignmentStudent::class,'assignment']);
+    Route::post('tugas',[AssignmentStudent::class, 'assignment']);
 });
 
 Route::prefix('teacher')->middleware(['auth:sanctum'])->group(function (){
     Route::post('logout/teacher', [LogoutTeacher::class, 'logout']);
 
-    Route::post('qr', [CodeQr::class,'create']);
-    Route::put('qr/update', [CodeQr::class,'update']);
-    Route::delete('qr/delete', [CodeQr::class,'destroy']);
+    Route::post('qr', [CodeQr::class, 'create']);
+    Route::put('qr/update', [CodeQr::class, 'update']);
+    Route::delete('qr/delete', [CodeQr::class, 'destroy']);
 
     Route::post('materi/show', [Material::class, 'index']);
     Route::post('materi', [Material::class, 'store']);
 
-    Route::get('teacher', [Teacher::class,'index']);
-    Route::post('teacher/showkelas', [Teacher::class,'showkelas']);
+    Route::get('teacher', [Teacher::class, 'index']);
+    Route::post('teacher/showkelas', [Teacher::class, 'showkelas']);
     Route::post('teacher/showjurusan', [Teacher::class, 'showjurusan']);
     Route::post('teacher/showmapel', [Teacher::class, 'showmapel']);
 
-    Route::post('jadwal',[ScheduleTeacher::class,'index']);
+    Route::post('jadwal',[ScheduleTeacher::class, 'index']);
 
-    Route::post('absen',[AttendanceTeacher::class,'show']);
+    Route::post('absen',[AttendanceTeacher::class, 'show']);
     Route::post('absen/store', [AttendanceTeacher::class, 'absendekstop']);
     Route::post('absen/destroy/{attendance}', [AttendanceTeacher::class, 'destroy']);
 });

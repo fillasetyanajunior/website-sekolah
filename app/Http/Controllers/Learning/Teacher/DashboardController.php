@@ -12,7 +12,7 @@ class DashboardController extends AppController
     public function index()
     {
         $title = 'Dashboard';
-        $class = Classroom::where('id_guru',Auth::user()->id_guru)->get();
-        return view('teacher.learning.dashboard',compact('title','class'));
+        $class = Classroom::where('id_guru', Auth::user()->id_guru)->get();
+        return view('teacher.learning.dashboard', compact('title', 'class'));
     }
 }

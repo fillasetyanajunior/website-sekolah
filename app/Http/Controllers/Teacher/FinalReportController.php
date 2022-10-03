@@ -26,12 +26,12 @@ class FinalReportController extends AppController
     {
         $request->only('id');
         $id         = Crypt::decrypt($request->id);
-        $grade      = Grade::where('id_siswa',$id)->get();
+        $grade      = Grade::where('id_siswa', $id)->get();
         $student    = StudentDetail::find($id);
         $extra      = Extracurricular::where('id_siswa', $id)->get();
-        $hadir      = Attendance::where('keterangan','Hadir')->where('id_siswa',$id)->count();
-        $izin       = Attendance::where('keterangan','Izin')->where('id_siswa',$id)->count();
-        $tanpaket   = Attendance::where('keterangan','Tanpa Keterangan')->where('id_siswa',$id)->count();
-        return view('teacher.finalreport.print_finalreport',compact('grade', 'student', 'extra', 'hadir', 'izin', 'tanpaket'));
+        $hadir      = Attendance::where('keterangan', 'Hadir')->where('id_siswa', $id)->count();
+        $izin       = Attendance::where('keterangan', 'Izin')->where('id_siswa', $id)->count();
+        $tanpaket   = Attendance::where('keterangan', 'Tanpa Keterangan')->where('id_siswa', $id)->count();
+        return view('teacher.finalreport.print_finalreport', compact('grade', 'student', 'extra', 'hadir', 'izin', 'tanpaket'));
     }
 }

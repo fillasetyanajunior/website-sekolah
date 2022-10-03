@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Home;
 
+use App\Http\Controllers\Controller;
 use App\Models\Achievement;
 use App\Models\Magazine;
 use App\Models\News;
@@ -15,23 +16,23 @@ class HomeController extends Controller
     public function index()
     {
         $title  = 'Man Buleleng';
-        $berita = News::orderBy('created_at', 'DESC')->where('choices','Berita')->limit(8)->get();
-        $info   = News::orderBy('created_at', 'DESC')->where('choices','Info')->limit(8)->get();
-        return view('home.home',compact('berita','info','title'));
+        $berita = News::orderBy('created_at', 'DESC')->where('choices', 'Berita')->limit(8)->get();
+        $info   = News::orderBy('created_at', 'DESC')->where('choices', 'Info')->limit(8)->get();
+        return view('home.home', compact('berita', 'info', 'title'));
     }
 
     public function teacher()
     {
         $title  = 'Guru dan Pegawai';
         $guru   = TeacherDetail::orderBy('nama')->get();
-        return view('home.teacher',compact('title','guru'));
+        return view('home.teacher', compact('title', 'guru'));
     }
 
     public function student()
     {
         $title = 'Siswa';
         $siswa = StudentDetail::groupBy('kelas')->get('kelas');
-        return view('home.student',compact('title','siswa'));
+        return view('home.student', compact('title', 'siswa'));
     }
 
     public function news(Request $request)
@@ -39,7 +40,7 @@ class HomeController extends Controller
         $request->only('id');
         $news   = News::find(Crypt::decrypt($request->id));
         $title  = $news->title;
-        return view('home.newsdetail',compact('news','title'));
+        return view('home.newsdetail', compact('news', 'title'));
     }
 
     public function info(Request $request)
@@ -47,21 +48,21 @@ class HomeController extends Controller
         $request->only('id');
         $news   = News::find(Crypt::decrypt($request->id));
         $title  = $news->title;
-        return view('home.newsdetail',compact('news','title'));
+        return view('home.newsdetail', compact('news', 'title'));
     }
 
     public function achievement()
     {
         $title          = 'Prestasi';
-        $akademik       = Achievement::groupBy('tingkatan')->where('prestasi','Akademik')->get('tingkatan');
-        $non_akademik   = Achievement::groupBy('tingkatan')->where('prestasi','Non-Akademik')->get('tingkatan');
-        return view('home.achievement', compact('title','akademik','non_akademik'));
+        $akademik       = Achievement::groupBy('tingkatan')->where('prestasi', 'Akademik')->get('tingkatan');
+        $non_akademik   = Achievement::groupBy('tingkatan')->where('prestasi', 'Non-Akademik')->get('tingkatan');
+        return view('home.achievement', compact('title', 'akademik', 'non_akademik'));
     }
 
     public function magazine()
     {
         $title      = "Majalah Madani";
         $magazine   = Magazine::limit('10')->get();
-        return view('home.magazine',compact('title', 'magazine'));
+        return view('home.magazine', compact('title', 'magazine'));
     }
 }

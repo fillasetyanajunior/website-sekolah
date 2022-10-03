@@ -18,8 +18,8 @@ class ContentController extends AppController
         $content    = Content::find(Crypt::decrypt($request->id));
         $class      = Classroom::find($content->id_classroom)->nama;
         $title      = $content->judul;
-        $assigment  = Assignment::where('id_content',$content->id)->get();
-        return view('teacher.learning.content.content',compact('title','class','content','assigment'));
+        $assigment  = Assignment::where('id_content', $content->id)->get();
+        return view('teacher.learning.content.content', compact('title', 'class', 'content', 'assigment'));
     }
 
     public function store(Request $request)
@@ -66,8 +66,8 @@ class ContentController extends AppController
 
     public function show(Request $request)
     {
-        $file = FileContent::where('id_content',Crypt::decrypt($request->id))->first();
-        return view('teacher.learning.pdf.index',compact('file'));
+        $file = FileContent::where('id_content', Crypt::decrypt($request->id))->first();
+        return view('teacher.learning.pdf.index', compact('file'));
     }
 
     public function edit(Content $content)
@@ -111,12 +111,12 @@ class ContentController extends AppController
                 'dateline'      => $dateline,
             ]);
 
-        return redirect()->back()->with('success','Data Berhasil Diubah');
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
     public function destroy(Content $content)
     {
         Content::destroy($content->id);
-        return redirect()->back()->with('success','Data Berhasil Dihapus');
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

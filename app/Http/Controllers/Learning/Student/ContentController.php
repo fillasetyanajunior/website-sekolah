@@ -19,7 +19,7 @@ class ContentController extends AppController
         $content    = Content::find(Crypt::decrypt($request->id));
         $class      = Classroom::find($content->id_classroom)->nama;
         $title      = $content->judul;
-        $assigment  = Assignment::where('id_content', $content->id)->where('id_siswa',Auth::user()->id_siswa)->first();
+        $assigment  = Assignment::where('id_content', $content->id)->where('id_siswa', Auth::user()->id_siswa)->first();
         return view('student.learning.content.content', compact('title', 'class', 'content', 'assigment'));
     }
 
@@ -50,31 +50,31 @@ class ContentController extends AppController
     public function submit(Request $request)
     {
         $request->only('id');
-        Assignment::where('id_content',Crypt::decrypt($request->id))
-                  ->where('id_siswa',Auth::user()->id_siswa)
+        Assignment::where('id_content', Crypt::decrypt($request->id))
+                  ->where('id_siswa', Auth::user()->id_siswa)
                  ->update([
                     'choices' => 'Submit'
                 ]);
 
-        return redirect()->back()->with('success','Data Berhasil Diubah');
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
     public function unsubmit(Request $request)
     {
         $request->only('id');
-        Assignment::where('id_content',Crypt::decrypt($request->id))
-                  ->where('id_siswa',Auth::user()->id_siswa)
+        Assignment::where('id_content', Crypt::decrypt($request->id))
+                  ->where('id_siswa', Auth::user()->id_siswa)
                  ->update([
                     'choices' => 'Unsubmit'
                 ]);
 
-        return redirect()->back()->with('success','Data Berhasil Diubah');
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
     public function destroy(Request $request)
     {
         $request->only('title');
-        FileAssigment::where('path','assigment/' . Crypt::decrypt($request->title))->delete();
+        FileAssigment::where('path', 'assigment/' . Crypt::decrypt($request->title))->delete();
 
-        return redirect()->back()->with('success','Data Berhasil Diubah');
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 }

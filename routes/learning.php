@@ -35,31 +35,31 @@ Route::group([
             Route::get(Str::lower($showclass->nama) . '/{id}', [ClassroomStudent::class,'index'])->name('learning.student.' . Str::lower($showclass->nama));
         }
 
-        Route::get('content/{id}',[ContentStudent::class,'index'])->name('learning.student.content');
-        Route::post('content/store',[ContentStudent::class,'store'])->name('learning.student.content.store');
-        Route::post('content/submit/{id}',[ContentStudent::class,'submit'])->name('learning.student.content.submit');
-        Route::post('content/unsubmit/{id}',[ContentStudent::class,'unsubmit'])->name('learning.student.content.unsubmit');
-        Route::post('content/destroy/{title}',[ContentStudent::class,'destroy'])->name('learning.student.content.destroy');
+        Route::get('content/{id}',[ContentStudent::class, 'index'])->name('learning.student.content');
+        Route::post('content/store',[ContentStudent::class, 'store'])->name('learning.student.content.store');
+        Route::post('content/submit/{id}',[ContentStudent::class, 'submit'])->name('learning.student.content.submit');
+        Route::post('content/unsubmit/{id}',[ContentStudent::class, 'unsubmit'])->name('learning.student.content.unsubmit');
+        Route::post('content/destroy/{title}',[ContentStudent::class, 'destroy'])->name('learning.student.content.destroy');
     });
 
     Route::group(['prefix' => 'teacher'], function (){
-        Route::get('login', [LoginTeacher::class,'form'])->name('learning.teacher.login.form');
-        Route::post('login',[LoginTeacher::class,'login'])->name('learning.teacher.login.post');
-        Route::post('logout',[LogoutTeacher::class,'logout'])->name('learning.teacher.logout');
+        Route::get('login', [LoginTeacher::class, 'form'])->name('learning.teacher.login.form');
+        Route::post('login',[LoginTeacher::class, 'login'])->name('learning.teacher.login.post');
+        Route::post('logout',[LogoutTeacher::class, 'logout'])->name('learning.teacher.logout');
 
-        Route::get('/',[DashboardTeacher::class,'index'])->name('learning.teacher.dashboard');
+        Route::get('/',[DashboardTeacher::class, 'index'])->name('learning.teacher.dashboard');
 
         $class = Classroom::all();
         foreach ($class as $showclass) {
-            Route::get(Str::lower($showclass->nama) . '/{id}', [ClassroomTeacher::class,'index'])->name('learning.teacher.' . Str::lower($showclass->nama));
+            Route::get(Str::lower($showclass->nama) . '/{id}', [ClassroomTeacher::class, 'index'])->name('learning.teacher.' . Str::lower($showclass->nama));
         }
 
-        Route::get('content/{id}', [ContentTeacher::class,'index'])->name('learning.teacher.content');
-        Route::post('content/store', [ContentTeacher::class,'store'])->name('learning.teacher.content.store');
-        Route::get('content/show/{id}', [ContentTeacher::class,'show'])->name('learning.teacher.content.show');
-        Route::post('content/edit/{content}', [ContentTeacher::class,'edit'])->name('learning.teacher.content.edit');
-        Route::post('content/update/{content}', [ContentTeacher::class,'update'])->name('learning.teacher.content.update');
-        Route::delete('content/destroy/{content}', [ContentTeacher::class,'destroy'])->name('learning.teacher.content.destroy');
+        Route::get('content/{id}', [ContentTeacher::class, 'index'])->name('learning.teacher.content');
+        Route::post('content/store', [ContentTeacher::class, 'store'])->name('learning.teacher.content.store');
+        Route::get('content/show/{id}', [ContentTeacher::class, 'show'])->name('learning.teacher.content.show');
+        Route::post('content/edit/{content}', [ContentTeacher::class, 'edit'])->name('learning.teacher.content.edit');
+        Route::post('content/update/{content}', [ContentTeacher::class, 'update'])->name('learning.teacher.content.update');
+        Route::delete('content/destroy/{content}', [ContentTeacher::class, 'destroy'])->name('learning.teacher.content.destroy');
     });
 });
 

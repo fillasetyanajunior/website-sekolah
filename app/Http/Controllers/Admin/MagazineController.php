@@ -13,7 +13,7 @@ class MagazineController extends AppController
     {
         $title      = 'Majalah Madani';
         $magazine   = Magazine::paginate(20);
-        return view('admin.magazine.magazine',compact('title', 'magazine'));
+        return view('admin.magazine.magazine', compact('title', 'magazine'));
     }
 
     public function store(Request $request)
@@ -25,10 +25,10 @@ class MagazineController extends AppController
         ]);
 
         $thumnails  = $request->file('thumnail');
-        $thumnail   = Storage::putFileAs('magazine-thumnail',$thumnails,time() . rand(1,100) . $thumnails->getClientOriginalExtension());
+        $thumnail   = Storage::putFileAs('magazine-thumnail', $thumnails, time() . rand(1,100) . $thumnails->getClientOriginalExtension());
 
         $file = $request->file('file');
-        $path = Storage::putFileAs('magazine',$file,time() . rand(1,100) . $file->getClientOriginalExtension());
+        $path = Storage::putFileAs('magazine', $file, time() . rand(1,100) . $file->getClientOriginalExtension());
 
         Magazine::create([
             'title'     => $request->title,

@@ -16,7 +16,7 @@ class TeacherController extends AppController
         $title      = 'Managemen Guru';
         $teacher    = Teacher::paginate(20);
         $guru       = TeacherDetail::all();
-        return view('admin.managemen.teacher',compact('teacher', 'title', 'guru'));
+        return view('admin.managemen.teacher', compact('teacher', 'title', 'guru'));
     }
 
     public function store(Request $request)

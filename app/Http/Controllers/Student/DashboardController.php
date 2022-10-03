@@ -28,6 +28,6 @@ class DashboardController extends AppController
         $student    = StudentDetail::find(Auth::user()->id_siswa);
         $province   = Province::all();
         $job        = Employment::all();
-        return view('student.profile',compact('title','student','province','job'));
+        return view('student.profile', compact('title', 'student', 'province', 'job'));
     }
 }

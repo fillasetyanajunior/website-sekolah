@@ -22,10 +22,10 @@ class ScheduleApiController extends Controller
             'Sabtu',
             'Minggu'
         );
-        $mapel      = Subject::where('matapelajaran',$request->matapelajaran)->first();
+        $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
         $jurusan    = Department::where('jurusan', $request->jurusan)->first();
-        $jadwal     = Schedule::where('guru', Auth::user()->id_guru)->where('kelas',$request->kelas)->where('matapelajaran',$mapel->id)
-                              ->where('jurusan',$jurusan->id)->where('hari', $hari[date('N')])->first();
+        $jadwal     = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $request->kelas)->where('matapelajaran', $mapel->id)
+                              ->where('jurusan', $jurusan->id)->where('hari', $hari[date('N')])->first();
         if ($jadwal == null) {
             return response()->json([
                 'jam'       => null,

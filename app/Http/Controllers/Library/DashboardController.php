@@ -10,6 +10,6 @@ class DashboardController extends AppController
     public function index()
     {
         $title = "Dashboard";
-        return view('library.dashboard',compact('title'));
+        return view('library.dashboard', compact('title'));
     }
 }

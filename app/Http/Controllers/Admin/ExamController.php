@@ -18,7 +18,7 @@ class ExamController extends AppController
         $exam       = Exam::paginate(20);
         $subject    = Subject::all();
         $department = Department::all();
-        return view('admin.exam.exam',compact('title','exam','subject','department'));
+        return view('admin.exam.exam', compact('title','exam','subject','department'));
     }
 
     public function store(Request $request)

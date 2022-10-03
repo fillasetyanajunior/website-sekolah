@@ -57,7 +57,7 @@ class AttendanceApiController extends Controller
                 'tanggal'       => Carbon::now()->isoFormat('Y-M-d'),
                 'semester'      => $year->semester,
                 'jam'           => date('H:i:s'),
-                'keterangan'    => 'Hadir',
+                'keterangan'    => $keterangan,
             ]);
 
             return response()->json(['status_code' => 200, 'nis' => $request->nis]);
@@ -70,14 +70,14 @@ class AttendanceApiController extends Controller
     {
         $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
         $jurusan    = Department::where('jurusan', $request->jurusan)->first();
-        $attendance = Attendance::join('student_details', 'student_details.id','=','attendances.id_siswa')
-                                ->where('matapelajaran', $mapel->id)
-                                ->where('attendances.jurusan',$jurusan->id)
-                                ->where('attendances.kelas',$request->kelas)
-                                ->where('guru', Auth::user()->id)
-                                ->where('tanggal',date('Y-m-d'))
-                                ->select('attendances.*', 'student_details.nama')
-                                ->get();
+        $attendance = Attendance::join('student_details', 'student_details.id', '=', 'attendances.id_siswa')
+                               ->where('matapelajaran', $mapel->id)
+                               ->where('attendances.jurusan', $jurusan->id)
+                               ->where('attendances.kelas', $request->kelas)
+                               ->where('guru', Auth::user()->id)
+                               ->where('tanggal',date('Y-m-d'))
+                              ->select('attendances.*', 'student_details.nama')
+                                 ->get();
         return response()->json($attendance);
     }
 

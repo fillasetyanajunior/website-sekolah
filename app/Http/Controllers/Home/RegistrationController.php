@@ -17,7 +17,7 @@ class RegistrationController extends Controller
         $province           = Province::all();
         $department_first   = Department::all();
         $department_second  = Department::all();
-        return view('home.pendaftaran', compact('department_first','department_second','title','province'));
+        return view('home.pendaftaran', compact('department_first', 'department_second', 'title', 'province'));
     }
 
     public function store(Request $request)
@@ -120,6 +120,6 @@ class RegistrationController extends Controller
             'is_active'         => 'belum test',
         ]);
 
-        return redirect(route('regisration'))->with('success','Pendaftaran Berhasil  silahkan cek email anda');
+        return redirect(route('regisration'))->with('success', 'Pendaftaran Berhasil  silahkan cek email anda');
     }
 }

@@ -17,8 +17,8 @@ class CodeQrApiController extends Controller
             return response()->json(['status' => 'error']);
         }
 
-        $jurusan        = Department::where('jurusan',$request->jurusan)->first();
-        $matapelajaran  = Subject::where('matapelajaran',$request->matapelajaran)->first();
+        $jurusan        = Department::where('jurusan', $request->jurusan)->first();
+        $matapelajaran  = Subject::where('matapelajaran', $request->matapelajaran)->first();
 
         $int    = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $kode   =  substr(str_shuffle($int), 0, 6);

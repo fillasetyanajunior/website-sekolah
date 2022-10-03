@@ -33,7 +33,6 @@ class AttendanceApiController extends Controller
         );
         $kode       = QrCode::where('kode', $request->kodeqr)->first();
         $student    = StudentDetail::find(Auth::user()->id_siswa);
-        // $schedule   = Schedule::where('jam_start', '07:45:00')->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
         $schedule   = Schedule::where('hari', $hari[date('N')])->where('jam_start', date('H:i:s'))->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
         $year       = Year::find($schedule->tahun);
         $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', Carbon::now()->isoFormat('Y-M-d'))->first();
@@ -79,10 +78,10 @@ class AttendanceApiController extends Controller
             $response = [];
         } else {
             foreach ($subject as $showsubject) {
-                $sakit      = Attendance::where('matapelajaran', $showsubject->matapelajaran)->where('keterangan','Sakit')->where('id_siswa',Auth::user()->id_siswa)->where('kelas', $request->kelas)->where('semester', $request->semester)->count();
-                $hadir      = Attendance::where('matapelajaran', $showsubject->matapelajaran)->where('keterangan','Hadir')->where('id_siswa',Auth::user()->id_siswa)->where('kelas', $request->kelas)->where('semester', $request->semester)->count();
-                $izin       = Attendance::where('matapelajaran', $showsubject->matapelajaran)->where('keterangan','Izin')->where('id_siswa',Auth::user()->id_siswa)->where('kelas', $request->kelas)->where('semester', $request->semester)->count();
-                $alfa       = Attendance::where('matapelajaran', $showsubject->matapelajaran)->where('keterangan','Tanpa Keterangan')->where('id_siswa',Auth::user()->id_siswa)->where('kelas', $request->kelas)->where('semester', $request->semester)->count();
+                $sakit      = Attendance::where('matapelajaran', $showsubject->matapelajaran)->where('keterangan', 'Sakit')->where('id_siswa', Auth::user()->id_siswa)->where('kelas', $request->kelas)->where('semester', $request->semester)->count();
+                $hadir      = Attendance::where('matapelajaran', $showsubject->matapelajaran)->where('keterangan', 'Hadir')->where('id_siswa', Auth::user()->id_siswa)->where('kelas', $request->kelas)->where('semester', $request->semester)->count();
+                $izin       = Attendance::where('matapelajaran', $showsubject->matapelajaran)->where('keterangan', 'Izin')->where('id_siswa', Auth::user()->id_siswa)->where('kelas', $request->kelas)->where('semester', $request->semester)->count();
+                $alfa       = Attendance::where('matapelajaran', $showsubject->matapelajaran)->where('keterangan', 'Tanpa Keterangan')->where('id_siswa', Auth::user()->id_siswa)->where('kelas', $request->kelas)->where('semester', $request->semester)->count();
                 $response[] = [
                     'matapelajran'  => Subject::find($showsubject->matapelajaran)->matapelajaran,
                     'sakit'         => $sakit,

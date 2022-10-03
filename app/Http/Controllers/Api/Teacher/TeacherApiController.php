@@ -30,14 +30,14 @@ class TeacherApiController extends Controller
     public function showkelas(Request $request)
     {
         $request->only('id');
-        $teaching = Teaching::groupBy('kelas')->where('id_guru',$request->id)->get('kelas');
+        $teaching = Teaching::groupBy('kelas')->where('id_guru', $request->id)->get('kelas');
         return response()->json($teaching);
     }
 
     public function showjurusan(Request $request)
     {
         $teaching  = Teaching::join('departments', 'teachings.jurusan','=', 'departments.id')->groupBy('departments.jurusan')
-                            ->where('id_guru', $request->id)->where('kelas',$request->kelas)->get('departments.jurusan');
+                            ->where('id_guru', $request->id)->where('kelas', $request->kelas)->get('departments.jurusan');
         return response()->json($teaching);
     }
 

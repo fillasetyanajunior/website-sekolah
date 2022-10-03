@@ -13,9 +13,9 @@ class ClassController extends AppController
     public function index(Request $request)
     {
         $request->only('id');
-        $class = Classroom::find(Crypt::decrypt($request->id));
-        $title = $class->nama;
-        $content = Content::where('id_classroom', Crypt::decrypt($request->id))->get();
-        return view('student.learning.class.class', compact('title','content'));
+        $class      = Classroom::find(Crypt::decrypt($request->id));
+        $title      = $class->nama;
+        $content    = Content::where('id_classroom', Crypt::decrypt($request->id))->get();
+        return view('student.learning.class.class', compact('title', 'content'));
     }
 }

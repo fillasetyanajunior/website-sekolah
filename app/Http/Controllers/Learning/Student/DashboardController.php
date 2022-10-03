@@ -12,9 +12,9 @@ class DashboardController extends AppController
 {
     public function index()
     {
-        $title = 'Dashboard';
-        $student = StudentDetail::find(Auth::user()->id_siswa);
-        $class = Classroom::where('jurusan',$student->jurusan)->where('kelas',$student->kelas)->get();
-        return view('student.learning.dashboard',compact('title','class'));
+        $title      = 'Dashboard';
+        $student    = StudentDetail::find(Auth::user()->id_siswa);
+        $class      = Classroom::where('jurusan', $student->jurusan)->where('kelas', $student->kelas)->get();
+        return view('student.learning.dashboard' ,compact('title', 'class'));
     }
 }

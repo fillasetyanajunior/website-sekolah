@@ -12,7 +12,7 @@ class AchievementController extends AppController
     {
         $title          = 'Prestasi Siswa';
         $achievement    = Achievement::paginate(20);
-        return view('admin.achievement.achievement',compact('title', 'achievement'));
+        return view('admin.achievement.achievement', compact('title', 'achievement'));
     }
 
     public function store(Request $request)

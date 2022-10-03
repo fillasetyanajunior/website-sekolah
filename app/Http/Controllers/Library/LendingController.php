@@ -11,10 +11,10 @@ class LendingController extends AppController
 {
     public function index()
     {
-        $title = 'Peminjaman Buku';
-        $lending = Lending::paginate(20);
-        $student = Student::all();
-        return view('library.lending.lending',compact('title','lending','student'));
+        $title      = 'Peminjaman Buku';
+        $lending    = Lending::paginate(20);
+        $student    = Student::all();
+        return view('library.lending.lending', compact('title', 'lending', 'student'));
     }
 
     public function store(Request $request)
@@ -57,6 +57,6 @@ class LendingController extends AppController
     public function destroy(Lending $lending)
     {
         Lending::destroy($lending->id);
-        return redirect()->back()->with('success','Data Berhasil Dihapus');
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }
