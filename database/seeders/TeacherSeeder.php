@@ -27,28 +27,33 @@ class TeacherSeeder extends Seeder
             $i          = array_rand($status, 1);
 
             $id_guru = TeacherDetail::create([
-                'nama'                  => 'Teacher ' . $j,
-                'nuptk'                 => '123456789012',
-                'alamat'                => 'Jl. Kebon Kacang',
-                'nomer'                 => '08123456789',
-                'email'                 => 'teacher@teacher.com',
-                'lulusan'               => 'S1',
-                'wali_kelas'            => 'X',
-                'wali_jurusan'          => 1,
-                'status'                => $status[$i],
-                'jabatan'               => $jabatan[$y],
+                'nama'          => 'Teacher ' . $j,
+                'nuptk'         => '123456789012',
+                'alamat'        => 'Jl. Kebon Kacang',
+                'nomer'         => '08123456789',
+                'email'         => 'teacher@teacher.com',
+                'lulusan'       => 'S1',
+                'wali_kelas'    => 'X',
+                'wali_jurusan'  => 1,
+                'status'        => $status[$i],
+                'jabatan'       => $jabatan[$y],
             ]);
 
-            for ($l = 0; $l < 3; $l++) {
-                $kelas  = array('X', 'XI', 'XII');
-                $k      = array_rand($kelas, 1);
+            for ($l = 0; $l < 8; $l++) {
+                $kelas          = array('X', 'XI', 'XII');
+                $k              = array_rand($kelas, 1);
+                $jurusan        = rand(1,4);
+                $matapelajaran  = rand(1,4);
+                $data2          = Teaching::where('kelas', $kelas[$k])->where('jurusan', $jurusan)->where('matapelajaran', $matapelajaran)->first();
 
-                Teaching::create([
-                    'id_guru'       => $id_guru->id,
-                    'kelas'         => $kelas[$k],
-                    'jurusan'       => rand(1, 2),
-                    'matapelajaran' => rand(1, 4),
-                ]);
+                if ($data2 == null) {
+                    Teaching::create([
+                        'id_guru'       => $id_guru->id,
+                        'kelas'         => $kelas[$k],
+                        'jurusan'       => $jurusan,
+                        'matapelajaran' => $matapelajaran,
+                    ]);
+                }
             }
 
             Teacher::create([

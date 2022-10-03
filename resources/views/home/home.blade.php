@@ -1,4 +1,4 @@
-@extends('layouts.base_home',['siswa' => $title])
+@extends('layouts.base_home', ['title' => $title])
 @section('title',$title)
 @section('content')
 <div id="carouselExampleControls" class="carousel slide bs-slider box-slider" data-ride="carousel" data-pause="hover" data-interval="false">
@@ -19,13 +19,13 @@
                                 <div class="big-tagline">
                                     @php
                                         $titlecount = Str::wordCount($showberita->title);
-                                        $title      = explode(' ', $showberita->title);
+                                        $titles      = explode(' ', $showberita->title);
                                     @endphp
                                     @if ($titlecount > 2)
                                         <h2>
-                                            <strong>{{$title[0] . ' ' . $title[1]}} </strong>
-                                            @for ($i = 2; $i < count($title); $i++)
-                                                {{$title[$i]}}&nbsp;
+                                            <strong>{{$titles[0] . ' ' . $titles[1]}} </strong>
+                                            @for ($i = 2; $i < count($titles); $i++)
+                                                {{$titles[$i]}}&nbsp;
                                             @endfor
                                         </h2>
                                     @else

@@ -124,7 +124,7 @@
                 <h5 class="modal-title">Large modal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="body_informasi">
+            <div class="body_prestasi">
                 <form action="" method="POST">
                     @csrf
                     <div class="modal-body">
@@ -176,10 +176,10 @@
     <script>
         $(document).ready(function(){
             $('#tambahprestasi').on('click', function () {
-                $('.body_informasi button[type=submit]').html('Add');
+                $('.body_prestasi button[type=submit]').html('Add');
                 $('.modal-title').html('Tambah Prestasi');
-                $('.body_informasi form').attr('action', '{{route("admin.achievement.store")}}');
-                $('.body_informasi form').attr('method', 'post');
+                $('.body_prestasi form').attr('action', '{{route("admin.achievement.store")}}');
+                $('.body_prestasi form').attr('method', 'post');
 
                 $('#title').val('')
                 $('#description').val('')
@@ -189,10 +189,10 @@
                 const id = $(this).data('id');
                 let _url = '{{route("admin.achievement.edit",":id")}}'.replace(':id', id);
 
-                $('.body_informasi button[type=submit]').html('Edit');
+                $('.body_prestasi button[type=submit]').html('Edit');
                 $('.modal-title').html('Edit Prestasi');
-                $('.body_informasi form').attr('action', '{{route("admin.achievement.update",":id")}}'.replace(':id', id));
-                $('.body_informasi form').attr('method', 'post');
+                $('.body_prestasi form').attr('action', '{{route("admin.achievement.update",":id")}}'.replace(':id', id));
+                $('.body_prestasi form').attr('method', 'post');
 
                 $.ajax({
                     type: 'POST',

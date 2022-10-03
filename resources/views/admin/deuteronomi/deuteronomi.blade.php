@@ -187,7 +187,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="kelas_kedua">Kelas KEdua</label>
+                            <label class="form-label" for="kelas_kedua">Kelas Kedua</label>
                             <select class="form-control" id="kelas_kedua" name="kelas_kedua">
                                 <option value="">-- Pilih --</option>
                                 <option value="1">10</option>

@@ -19,7 +19,7 @@
                         <div class="col-12 col-md-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#MagazineModal" id="tambahmagazine">
+                                    data-bs-target="#ClassroomModal" id="tambahclassroom">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -27,10 +27,10 @@
                                         <line x1="12" y1="5" x2="12" y2="19" />
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
-                                    Tambah Majalah
+                                    Tambah Ruang Kelas
                                 </a>
                                 <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#MagazineModal" id="tambahmagazine" aria-label="Tambah Majalah">
+                                    data-bs-target="#ClassroomModal" id="tambahclassroom" aria-label="Tambah Ruang Kelas">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -68,7 +68,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Thumnail</th>
+                                                <th>Guru</th>
                                                 <th>Title</th>
                                                 <th>file</th>
                                             </tr>
@@ -77,15 +77,15 @@
                                             @php
                                                 $i = 1;
                                             @endphp
-                                            @foreach ($magazine as $showmagazine)
+                                            @foreach ($classroom as $showclassroom)
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td><img src="{{Storage::url($showmagazine->thumnail)}}" width="100px"></td>
-                                                    <td>{{$showmagazine->title}}</td>
-                                                    <td>{{$showmagazine->file}}</td>
+                                                    <td>{{App\Models\TeacherDetail::find($showclassroom->id_guru)->nama}}</td>
+                                                    <td>{{$showclassroom->kelas . ' ' . App\Models\Department::find($showclassroom->jurusan)->jurusan}}</td>
+                                                    <td>{{App\Models\Subject::find($showclassroom->nama)->matapelajaran}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editmagazine" data-bs-toggle="modal" data-bs-target="#MagazineModal" data-id="{{$showmagazine->id}}">Ubah</button>
-                                                        <form action="{{route('admin.magazine.destroy', $showmagazine->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editclassroom" data-bs-toggle="modal" data-bs-target="#ClassroomModal" data-id="{{$showclassroom->id}}">Ubah</button>
+                                                        <form action="{{route('admin.classroom.destroy', $showclassroom->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -97,7 +97,7 @@
                                     </table>
                                 </div>
                                 <div class="card-footer d-flex align-items-center">
-                                    {{$magazine->links()}}
+                                    {{$classroom->links()}}
                                 </div>
                             </div>
                         </div>
@@ -108,28 +108,25 @@
         </div>
     </div>
 </div>
-<div class="modal modal-blur fade" id="MagazineModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="ClassroomModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Large modal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="body_majalah">
+            <div class="body_ruangkelas">
                 <form action="" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="title">Judul</label>
-                            <input type="text" class="form-control" id="title" name="title">
-                        </div>
-                       <div class="mb-3">
-                            <label class="form-label" for="thumnail">Thumnail</label>
-                            <input type="file" class="form-control" id="thumnail" name="thumnail">
-                        </div>
-                       <div class="mb-3">
-                            <label class="form-label" for="file">File</label>
-                            <input type="file" class="form-control" id="file" name="file">
+                            <label class="form-label" for="kelas">Kelas</label>
+                            <select class="form-control" id="kelas" name="kelas">
+                                <option value="">-- Pilih --</option>
+                                <option value="1">10</option>
+                                <option value="2">11</option>
+                                <option value="3">12</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -146,24 +143,24 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahmagazine').on('click', function () {
-                $('.body_majalah button[type=submit]').html('Add');
-                $('.modal-title').html('Tambah Magazine');
-                $('.body_majalah form').attr('action', '{{route("admin.magazine.store")}}');
-                $('.body_majalah form').attr('method', 'post');
+            $('#tambahclassroom').on('click', function () {
+                $('.body_ruangkelas button[type=submit]').html('Add');
+                $('.modal-title').html('Tambah Ruang Kelas');
+                $('.body_ruangkelas form').attr('action', '{{route("admin.classroom.store")}}');
+                $('.body_ruangkelas form').attr('method', 'post');
 
                 $('#title').val('')
                 $('#thumnail').val('')
                 $('#file').val('')
             });
-            $('#editmagazine*').on('click', function () {
+            $('#editclassroom*').on('click', function () {
                 const id = $(this).data('id');
-                let _url = '{{route("admin.magazine.edit",":id")}}'.replace(':id', id);
+                let _url = '{{route("admin.classroom.edit",":id")}}'.replace(':id', id);
 
-                $('.body_majalah button[type=submit]').html('Edit');
-                $('.modal-title').html('Edit Magazine');
-                $('.body_majalah form').attr('action', '{{route("admin.magazine.update",":id")}}'.replace(':id', id));
-                $('.body_majalah form').attr('method', 'post');
+                $('.body_ruangkelas button[type=submit]').html('Edit');
+                $('.modal-title').html('Edit Ruang Kelas');
+                $('.body_ruangkelas form').attr('action', '{{route("admin.classroom.update",":id")}}'.replace(':id', id));
+                $('.body_ruangkelas form').attr('method', 'post');
 
                 $.ajax({
                     type: 'POST',

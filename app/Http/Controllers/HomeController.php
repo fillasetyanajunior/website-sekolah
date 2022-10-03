@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Achievement;
+use App\Models\Magazine;
 use App\Models\News;
 use App\Models\StudentDetail;
 use App\Models\TeacherDetail;
@@ -13,7 +14,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $title  = "Man Buleleng";
+        $title  = 'Man Buleleng';
         $berita = News::orderBy('created_at', 'DESC')->where('choices','Berita')->limit(8)->get();
         $info   = News::orderBy('created_at', 'DESC')->where('choices','Info')->limit(8)->get();
         return view('home.home',compact('berita','info','title'));
@@ -21,14 +22,14 @@ class HomeController extends Controller
 
     public function teacher()
     {
-        $title  = "Guru dan Pegawai";
+        $title  = 'Guru dan Pegawai';
         $guru   = TeacherDetail::orderBy('nama')->get();
         return view('home.teacher',compact('title','guru'));
     }
 
     public function student()
     {
-        $title = "Siswa";
+        $title = 'Siswa';
         $siswa = StudentDetail::groupBy('kelas')->get('kelas');
         return view('home.student',compact('title','siswa'));
     }
@@ -51,9 +52,16 @@ class HomeController extends Controller
 
     public function achievement()
     {
-        $title  = 'Prestasi';
-        $akademik = Achievement::groupBy('tingkatan')->where('prestasi','Akademik')->get('tingkatan');
-        $non_akademik = Achievement::groupBy('tingkatan')->where('prestasi','Non-Akademik')->get('tingkatan');
+        $title          = 'Prestasi';
+        $akademik       = Achievement::groupBy('tingkatan')->where('prestasi','Akademik')->get('tingkatan');
+        $non_akademik   = Achievement::groupBy('tingkatan')->where('prestasi','Non-Akademik')->get('tingkatan');
         return view('home.achievement', compact('title','akademik','non_akademik'));
+    }
+
+    public function magazine()
+    {
+        $title      = "Majalah Madani";
+        $magazine   = Magazine::limit('10')->get();
+        return view('home.magazine',compact('title', 'magazine'));
     }
 }

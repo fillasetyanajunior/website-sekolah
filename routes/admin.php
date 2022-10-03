@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AchievementController as Achievement;
+use App\Http\Controllers\Admin\ClassroomController as Classroom;
 use App\Http\Controllers\Admin\DashboardController as Dashboard;
 use App\Http\Controllers\Admin\DepartmentController as Department;
 use App\Http\Controllers\Admin\DeuteronomiController as Deuteronomi;
@@ -33,13 +34,19 @@ Route::group([
 
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
 
-   Route::get('majalah', [Magazine::class, 'index'])->name('admin.magazine');
+    Route::get('ruangkelas', [Classroom::class, 'index'])->name('admin.classroom');
+    Route::post('ruangkelas/store', [Classroom::class, 'store'])->name('admin.classroom.store');
+    Route::post('ruangkelas/edit/{classroom}', [Classroom::class, 'edit'])->name('admin.classroom.edit');
+    Route::post('ruangkelas/update/{classroom}', [Classroom::class, 'update'])->name('admin.classroom.update');
+    Route::delete('ruangkelas/destroy/{classroom}', [Classroom::class, 'destroy'])->name('admin.classroom.destroy');
+
+    Route::get('majalah', [Magazine::class, 'index'])->name('admin.magazine');
     Route::post('majalah/store', [Magazine::class, 'store'])->name('admin.magazine.store');
     Route::post('majalah/edit/{magazine}', [Magazine::class, 'edit'])->name('admin.magazine.edit');
     Route::post('majalah/update/{magazine}', [Magazine::class, 'update'])->name('admin.magazine.update');
     Route::delete('majalah/destroy/{magazine}', [Magazine::class, 'destroy'])->name('admin.magazine.destroy');
 
-   Route::get('prestasi', [Achievement::class, 'index'])->name('admin.achievement');
+    Route::get('prestasi', [Achievement::class, 'index'])->name('admin.achievement');
     Route::post('prestasi/store', [Achievement::class, 'store'])->name('admin.achievement.store');
     Route::post('prestasi/edit/{achievement}', [Achievement::class, 'edit'])->name('admin.achievement.edit');
     Route::post('prestasi/update/{achievement}', [Achievement::class, 'update'])->name('admin.achievement.update');
