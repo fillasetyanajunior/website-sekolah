@@ -16,6 +16,7 @@ class Schedule extends Model
         'guru',
         'tahun',
         'jurusan',
+        'no_kelas',
         'kelas',
     ];
 }

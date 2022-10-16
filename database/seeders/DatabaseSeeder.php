@@ -58,8 +58,8 @@ class DatabaseSeeder extends Seeder
         Registration::create([
             'id_registration'   => $registrationDetail->id,
             'kode'              => '19874205',
-            'pilihan_1'         => 98,
-            'pilihan_2'         => 1,
+            // 'pilihan_1'         => 98,
+            // 'pilihan_2'         => 1,
             'info'              => 2,
             'password'          => '087926',
             'is_active'         => 'belum test',

@@ -37,6 +37,7 @@ class StudentDetail extends Model
         'alamat',
         'kode_pos',
         'jurusan',
+        'no_kelas',
         'kelas',
         'avatar',
     ];

@@ -21,7 +21,8 @@ class CreateSchedulesTable extends Migration
             $table->integer('matapelajaran');
             $table->integer('guru');
             $table->integer('tahun');
-            $table->integer('jurusan');
+            $table->integer('jurusan')->nullable();
+            $table->char('no_kelas')->nullable();
             $table->enum('kelas', ['X', 'XI', 'XII']);
             $table->timestamps();
         });

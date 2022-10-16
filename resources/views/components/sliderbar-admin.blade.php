@@ -265,6 +265,9 @@
                                 <a class="dropdown-item" href="{{route('admin.magazine')}}">
                                     Majalah Madani
                                 </a>
+                                <a class="dropdown-item" href="{{route('admin.classroom')}}">
+                                    Ruang Kelas
+                                </a>
                             </div>
                         </div>
                     </div>

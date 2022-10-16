@@ -11,8 +11,8 @@ class Registration extends Model
     protected $fillable = [
         'id_registration',
         'kode',
-        'pilihan_1',
-        'pilihan_2',
+        // 'pilihan_1',
+        // 'pilihan_2',
         'info',
         'password',
         'is_active',

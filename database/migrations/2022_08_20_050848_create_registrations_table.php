@@ -17,8 +17,8 @@ class CreateRegistrationsTable extends Migration
             $table->id();
             $table->integer('id_registration');
             $table->string('kode');
-            $table->integer('pilihan_1');
-            $table->integer('pilihan_2');
+            // $table->integer('pilihan_1');
+            // $table->integer('pilihan_2');
             $table->integer('info');
             $table->string('password');
             $table->enum('is_active',['belum test', 'sudah test', 'lulus', 'ditolak']);

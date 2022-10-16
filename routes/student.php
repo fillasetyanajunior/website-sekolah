@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\Student\LogoutController as Logout;
 use App\Http\Controllers\Student\DashboardController as Dashboard;
 use App\Http\Controllers\Student\FinalExamController as FinalExam;
 use App\Http\Controllers\Student\GradeController as Grade;
+use App\Http\Controllers\Student\LibraryController as Library;
 use Illuminate\Support\Facades\Route;
 
 $root = getDomain(config('app.url'));
@@ -24,4 +25,6 @@ Route::group([
     Route::get('nilai', [Grade::class, 'index'])->name('student.grade');
 
     Route::get('ujian', [FinalExam::class, 'index'])->name('student.finalexam');
+
+    Route::get('perpustakaan', [Library::class, 'index'])->name('student.lending');
 });

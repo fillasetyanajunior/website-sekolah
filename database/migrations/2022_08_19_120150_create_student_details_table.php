@@ -42,10 +42,10 @@ class CreateStudentDetailsTable extends Migration
             $table->string('rt');
             $table->string('alamat');
             $table->string('kode_pos');
-            $table->integer('jurusan');
-            // $table->integer('jurusan')->nullable();
+            // $table->integer('jurusan');
+            $table->integer('jurusan')->nullable();
             $table->enum('kelas', ['X', 'XI', 'XII'])->default('X');
-            // $table->integer('no_kelas')->nullable();
+            $table->char('no_kelas')->nullable();
             $table->string('avatar')->default('default.jpg');
             $table->timestamps();
         });

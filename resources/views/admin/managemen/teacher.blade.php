@@ -120,7 +120,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label" for="name">Name Guru</label>
-                            <select class="form-control" id="name" name="name">
+                            <select class="form-select" id="name" name="name">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($guru as $guru)
                                     <option value="{{$guru->id}}">{{$guru->nama}}</option>

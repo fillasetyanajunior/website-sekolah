@@ -73,8 +73,9 @@
                                                 <th>Mata Pelajaran</th>
                                                 <th>Guru</th>
                                                 <th>Tahun</th>
-                                                <th>Jurusan</th>
                                                 <th>Kelas</th>
+                                                <th>Jurusan</th>
+                                                <th>Bagian Kelas</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -88,8 +89,9 @@
                                                     <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
                                                     <td>{{$showschedule->guru == 0 ? '' : App\Models\TeacherDetail::find($showschedule->guru)->nama}}</td>
                                                     <td>{{App\Models\Year::find($showschedule->tahun)->tahun}}</td>
-                                                    <td>{{App\Models\Department::find($showschedule->jurusan)->jurusan}}</td>
                                                     <td>{{$showschedule->kelas}}</td>
+                                                    <td>{{$showschedule->jurusan != null ? App\Models\Department::find($showschedule->jurusan)->jurusan : ''}}</td>
+                                                    <td>{{$showschedule->no_kelas}}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-warning" id="editjadwal" data-bs-toggle="modal" data-bs-target="#JadwalModal" data-id="{{$showschedule->id}}">Ubah</button>
                                                         <form action="{{route('admin.schedule.destroy', $showschedule->id)}}" method="post" class="d-inline">
@@ -181,6 +183,15 @@
                         </div>
                         <div class="form2"></div>
                         <div class="mb-3">
+                            <label class="form-label" for="kelas">Kelas</label>
+                            <select class="form-select @error('kelas') is-invalid @enderror" id="kelas" name="kelas">
+                                <option value="">-- Pilih --</option>
+                                <option value="1">10</option>
+                                <option value="2">11</option>
+                                <option value="3">12</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label" for="tahun">Tahun Pelajaran</label>
                             <select class="form-select @error('tahun') is-invalid @enderror" id="tahun" name="tahun">
                                 <option value="">-- Pilih --</option>
@@ -189,7 +200,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 jurusan">
                             <label class="form-label" for="jurusan">Jurusan</label>
                             <select class="form-select @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan">
                                 <option value="">-- Pilih --</option>
@@ -198,13 +209,15 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="kelas">Kelas</label>
-                            <select class="form-select @error('kelas') is-invalid @enderror" id="kelas" name="kelas">
+                        <div class="mb-3 bagian_kelas">
+                            <label class="form-label" for="no_kelas">Bagian Kelas</label>
+                            <select class="form-select @error('no_kelas') is-invalid @enderror" id="no_kelas" name="no_kelas">
                                 <option value="">-- Pilih --</option>
-                                <option value="1">10</option>
-                                <option value="2">11</option>
-                                <option value="3">12</option>
+                                @foreach ($class as $showclass)
+                                    @if ($showclass->no_kelas != null)
+                                        <option value="{{$showclass->no_kelas}}">{{$showclass->no_kelas}}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -222,6 +235,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('.jurusan').hide()
+            $('.bagian_kelas').hide()
+
             $('#tambahjadwal').on('click', function () {
                 $('.body_jadwal button[type=submit]').text('Add');
                 $('.modal-title').text('Tambah Jadwal Pelajaran');
@@ -236,6 +252,18 @@
                 $("#jurusan").val('');
                 $("#kelas").val('');
             });
+
+            $('#kelas').change(function (){
+                let id = $(this).val();
+                if (id == 1) {
+                    $('.jurusan').hide();
+                    $('.bagian_kelas').show();
+                }else{
+                    $('.jurusan').show();
+                    $('.bagian_kelas').hide();
+                }
+            });
+
             $('#editjadwal*').on('click', function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.schedule.edit",":id")}}'.replace(':id', id);
