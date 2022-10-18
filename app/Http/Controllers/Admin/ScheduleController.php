@@ -16,7 +16,7 @@ class ScheduleController extends AppController
     public function index()
     {
         $title      = 'Jadwal Pelajaran';
-        $schedule   = Schedule::paginate(20);
+        $schedule   = Schedule::groupBy('matapelajaran')->select('matapelajaran')->paginate(20);
         $subject    = Subject::all();
         $teacher    = Teacher::all();
         $year       = Year::all();
@@ -201,13 +201,8 @@ class ScheduleController extends AppController
             $hari = 6;
         }
 
-        if ($schedule->jam == '1 Jam') {
-            $jam = 1;
-        } elseif ($schedule->jam == '2 Jam') {
-            $jam = 2;
-        } else {
-            $jam = 3;
-        }
+        $jam = Schedule::where('matapelajaran', $schedule->matapelajaran)->where('hari', $schedule->hari)->where('kelas', $schedule->kelas)->count();
+
 
         if ($schedule->kelas == 'X') {
             $kelas = 1;
@@ -221,7 +216,7 @@ class ScheduleController extends AppController
             'hari'      => $hari,
             'jam'       => $jam,
             'kelas'     => $kelas,
-            'schedule'  => $schedule
+            'schedule'  => $schedule,
         ]);
     }
 
@@ -249,33 +244,79 @@ class ScheduleController extends AppController
             $kelas = 'XII';
         }
 
-        if ($request->kelas == 1) {
-            $schedule = Schedule::orderBy('jam_end', 'DESC')->where('hari', $hari)->where('kelas', $kelas)->where('no_kelas', $request->no_kelas)->first();
-        } else {
-            $schedule = Schedule::orderBy('jam_end', 'DESC')->where('hari', $hari)->where('kelas', $kelas)->where('jurusan', $request->jurusan)->first();
-        }
+        if ($request->jam_edit == 1) {
+            if ($request->kelas == 1) {
+                $schedules = Schedule::orderBy('jam_start')->where('hari', $hari)->where('no_kelas', $schedule->no_kelas)->where('matapelajaran', $schedule->matapelajaran)->get();
+            }else{
+                $schedules = Schedule::orderBy('jam_start')->where('hari', $hari)->where('jurusan', $schedule->jurusan)->where('matapelajaran', $schedule->matapelajaran)->get();
+            }
 
-        if ($schedule == null) {
-            $start  = date('H:i:s', strtotime('07:00'));
-        } else {
-            $start  = date('H:i:s', strtotime($schedule->jam_end));
-        }
+            $jam_start  = $schedules[0]->jam_start;
+            $jam_end    = date('H:i:s', strtotime('+45 minutes', strtotime($jam_start)));
+            foreach ($schedules as $showschedules) {
+                if ($request->kelas == 1) {
+                    $this->updatekelas($showschedules->id, $hari, $jam_start, $jam_end, $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->no_kelas, $kelas);
+                } else {
+                    $this->updatejurusan($showschedules->id, $hari, $jam_start, $jam_end, $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->jurusan, $kelas);
+                }
+            }
 
-        if ($request->jam == 1) {
-            $jam_start = $start;
-            $jam_end = date('H:i:s', strtotime('+45 minutes', strtotime($start)));
-        } elseif ($request->jam == 2) {
-            $jam_start = $start;
-            $jam_end = date('H:i:s', strtotime('+1 hours 30 minutes', strtotime($start)));
-        } else {
-            $jam_start = $start;
-            $jam_end = date('H:i:s', strtotime('+2 hours 15 minutes', strtotime($start)));
-        }
+            if (count($schedules) > 1) {
+                Schedule::destroy($schedules[1]->id);
+            }
 
-        if ($request->kelas == 1) {
-            $this->addkelas($hari, $jam_start, $jam_end, $request->matapelajaran, $request->guru, $request->tahun, $request->no_kelas, $kelas);
-        } else {
-            $this->addjurusan($hari, $jam_start, $jam_end, $request->matapelajaran, $request->guru, $request->tahun, $request->jurusan, $kelas);
+        }elseif ($request->jam_edit == 2) {
+            if ($request->kelas == 1) {
+                $schedules = Schedule::orderBy('jam_start')->where('hari', $hari)->where('no_kelas', $schedule->no_kelas)->where('matapelajaran', $schedule->matapelajaran)->get();
+            } else {
+                $schedules = Schedule::orderBy('jam_start')->where('hari', $hari)->where('jurusan', $schedule->jurusan)->where('matapelajaran', $schedule->matapelajaran)->get();
+            }
+
+            foreach ($schedules as $showschedules) {
+                $jam_start  = $showschedules->jam_start;
+                $jam_end    = date('H:i:s', strtotime('+45 minutes', strtotime($jam_start)));
+                if ($request->kelas == 1) {
+                    $this->updatekelas($showschedules->id, $hari, $jam_start, $jam_end, $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->no_kelas, $kelas);
+                } else {
+                    $this->updatejurusan($showschedules->id, $hari, $jam_start, $jam_end, $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->jurusan, $kelas);
+                }
+            }
+
+            if (count($schedules) == 1) {
+                if ($request->kelas == 1) {
+                    $this->addkelas($hari, $jam_end, date('H:i:s',(strtotime('+45 minutes',strtotime($jam_end)))), $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->no_kelas, $kelas);
+                } else {
+                    $this->addjurusan($hari, $jam_end, date('H:i:s', (strtotime('+45 minutes', strtotime($jam_end)))), $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->jurusan, $kelas);
+                }
+            }
+
+            if (count($schedules) > 2) {
+                Schedule::destroy($schedules[2]->id);
+            }
+        }else {
+            if ($request->kelas == 1) {
+                $schedules = Schedule::orderBy('jam_start')->where('hari', $hari)->where('no_kelas', $schedule->no_kelas)->where('matapelajaran', $schedule->matapelajaran)->get();
+            } else {
+                $schedules = Schedule::orderBy('jam_start')->where('hari', $hari)->where('jurusan', $schedule->jurusan)->where('matapelajaran', $schedule->matapelajaran)->get();
+            }
+
+            foreach ($schedules as $showschedules) {
+                $jam_start  = $showschedules->jam_start;
+                $jam_end    = date('H:i:s', strtotime('+45 minutes', strtotime($jam_start)));
+                if ($request->kelas == 1) {
+                    $this->updatekelas($showschedules->id, $hari, $jam_start, $jam_end, $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->no_kelas, $kelas);
+                } else {
+                    $this->updatejurusan($showschedules->id, $hari, $jam_start, $jam_end, $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->jurusan, $kelas);
+                }
+            }
+
+            if (count($schedules) == 2) {
+                if ($request->kelas == 1) {
+                    $this->addkelas($hari, $jam_end, date('H:i:s',(strtotime('+45 minutes',strtotime($jam_end)))), $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->no_kelas, $kelas);
+                } else {
+                    $this->addjurusan($hari, $jam_end, date('H:i:s', (strtotime('+45 minutes', strtotime($jam_end)))), $request->matapelajaran_edit, $request->guru_edit, $request->tahun, $request->jurusan, $kelas);
+                }
+            }
         }
 
         return redirect()->back()->with('success', 'Data Berhasil Update');
@@ -304,6 +345,35 @@ class ScheduleController extends AppController
     public function addkelas($hari, $jam_start, $jam_end, $istirahat, $guru, $tahun, $no_kelas, $kelas)
     {
         Schedule::create([
+            'hari'          => $hari,
+            'jam_start'     => $jam_start,
+            'jam_end'       => $jam_end,
+            'matapelajaran' => $istirahat,
+            'guru'          => $guru,
+            'tahun'         => $tahun,
+            'no_kelas'      => $no_kelas,
+            'kelas'         => $kelas,
+        ]);
+    }
+    public function updatejurusan($id, $hari, $jam_start, $jam_end, $istirahat, $guru, $tahun, $jurusan, $kelas)
+    {
+        Schedule::where('id', $id)
+            ->update([
+            'hari'          => $hari,
+            'jam_start'     => $jam_start,
+            'jam_end'       => $jam_end,
+            'matapelajaran' => $istirahat,
+            'guru'          => $guru,
+            'tahun'         => $tahun,
+            'jurusan'       => $jurusan,
+            'kelas'         => $kelas,
+        ]);
+    }
+
+    public function updatekelas($id, $hari, $jam_start, $jam_end, $istirahat, $guru, $tahun, $no_kelas, $kelas)
+    {
+        Schedule::where('id', $id)
+            ->update([
             'hari'          => $hari,
             'jam_start'     => $jam_start,
             'jam_end'       => $jam_end,

@@ -45,7 +45,7 @@ class CreateStudentDetailsTable extends Migration
             // $table->integer('jurusan');
             $table->integer('jurusan')->nullable();
             $table->enum('kelas', ['X', 'XI', 'XII'])->default('X');
-            $table->char('no_kelas')->nullable();
+            $table->char('no_kelas', 1)->nullable();
             $table->string('avatar')->default('default.jpg');
             $table->timestamps();
         });

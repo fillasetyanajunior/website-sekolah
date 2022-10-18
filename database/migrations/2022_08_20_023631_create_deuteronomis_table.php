@@ -20,7 +20,8 @@ class CreateDeuteronomisTable extends Migration
             $table->string('jam');
             $table->integer('matapelajaran');
             $table->integer('tahun');
-            $table->integer('jurusan');
+            $table->integer('jurusan')->nullable();
+            $table->char('no_kelas', 1)->nullable();
             $table->integer('kursi');
             $table->integer('ruangan');
             $table->enum('kelas', ['X', 'XI', 'XII']);

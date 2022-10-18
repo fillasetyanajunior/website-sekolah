@@ -22,7 +22,7 @@ class CreateSchedulesTable extends Migration
             $table->integer('guru');
             $table->integer('tahun');
             $table->integer('jurusan')->nullable();
-            $table->char('no_kelas')->nullable();
+            $table->char('no_kelas', 1)->nullable();
             $table->enum('kelas', ['X', 'XI', 'XII']);
             $table->timestamps();
         });

@@ -15,6 +15,7 @@ class Deuteronomi extends Model
         'matapelajaran',
         'tahun',
         'jurusan',
+        'no_kelas',
         'kursi',
         'ruangan',
         'kelas',

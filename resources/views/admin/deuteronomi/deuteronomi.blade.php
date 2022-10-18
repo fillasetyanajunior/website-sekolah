@@ -72,8 +72,9 @@
                                                 <th>Jam</th>
                                                 <th>Mata Pelajaran</th>
                                                 <th>Tahun</th>
-                                                <th>Jurusan</th>
                                                 <th>Kelas</th>
+                                                <th>Jurusan</th>
+                                                <th>Bagian Kelas</th>
                                                 <th>Ruangan</th>
                                                 <th>Action</th>
                                             </tr>
@@ -89,9 +90,10 @@
                                                     <td>{{$detail->tanggal}}</td>
                                                     <td>{{$detail->jam}}</td>
                                                     <td>{{App\Models\Subject::find($detail->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{App\Models\Year::find($detail->tahun)->tahun}}</td>
-                                                    <td>{{App\Models\Department::find($detail->jurusan)->jurusan}}</td>
+                                                    <td>{{App\Models\Year::find($detail->tahun)->tahun . ' - ' . App\Models\Year::find($detail->tahun)->semester}}</td>
                                                     <td>{{$detail->kelas}}</td>
+                                                    <td>{{$detail->jurusan != null ? App\Models\Department::find($detail->jurusan)->jurusan : ''}}</td>
+                                                    <td>{{$detail->no_kelas}}</td>
                                                     <td>Ruangan {{$detail->ruangan}}</td>
                                                     <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-warning" href="" id="editulangan" data-bs-toggle="modal" data-bs-target="#UlanganModal" data-id="{{$detail->id}}">Ubah</button>
@@ -131,46 +133,19 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="tanggal">Tanggal</label>
-                            <input type="date" class="form-control" id="tanggal" name="tanggal">
+                            <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="jam">Jam Ulangan</label>
-                            <input type="text" class="form-control" id="jam" name="jam" placeholder="08:00 - 09:00">
+                            <input type="text" class="form-control @error('jam') is-invalid @enderror" id="jam" name="jam" placeholder="08:00 - 09:00">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
-                            <select class="form-control" id="matapelajaran" name="matapelajaran">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($subject as $subject)
-                                    <option value="{{$subject->id}}">{{$subject->matapelajaran}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="tahun">Tahun Pelajaran</label>
-                            <select class="form-control" id="tahun" name="tahun">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($year as $year)
-                                    <option value="{{$year->id}}">{{$year->tahun}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="jurusan">Jurusan</label>
-                            <select class="form-control" id="jurusan" name="jurusan">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($department as $department)
-                                    <option value="{{$department->id}}">{{$department->jurusan}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
+                        <div class="mb-3 kursi">
                             <label class="form-label" for="kursi">Jumlah Kursi</label>
-                            <input type="text" class="form-control" id="kursi" name="kursi" placeholder="40">
+                            <input type="text" class="form-control @error('kursi') is-invalid @enderror" id="kursi" name="kursi" placeholder="40">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="ruangan">Ruangan</label>
-                            <select class="form-control" id="ruangan" name="ruangan">
+                            <select class="form-control @error('ruangan') is-invalid @enderror" id="ruangan" name="ruangan">
                                 <option value="">-- Pilih --</option>
                                 @for ($i = 1; $i <= 18; $i++)
                                     <option value="{{$i}}">Ruangan {{$i}}</option>
@@ -178,22 +153,151 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="kelas_pertama">Kelas Pertama</label>
-                            <select class="form-control" id="kelas_pertama" name="kelas_pertama">
+                            <label class="form-label" for="tahun">Tahun Pelajaran</label>
+                            <select class="form-control @error('tahun') is-invalid @enderror" id="tahun" name="tahun">
                                 <option value="">-- Pilih --</option>
-                                <option value="1">10</option>
-                                <option value="2">11</option>
-                                <option value="3">12</option>
+                                @foreach ($year as $year)
+                                    <option value="{{$year->id}}">{{$year->tahun . ' - ' . $year->semester}}</option>
+                                @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="kelas_kedua">Kelas Kedua</label>
-                            <select class="form-control" id="kelas_kedua" name="kelas_kedua">
-                                <option value="">-- Pilih --</option>
-                                <option value="1">10</option>
-                                <option value="2">11</option>
-                                <option value="3">12</option>
-                            </select>
+                        <div id="update">
+                            <div class="mb-3">
+                                <label class="form-label" for="kelas">Kelas</label>
+                                <select class="form-control @error('kelas') is-invalid @enderror" id="kelas" name="kelas">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="1">10</option>
+                                    <option value="2">11</option>
+                                    <option value="3">12</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
+                                <select class="form-control @error('matapelajaran') is-invalid @enderror" id="matapelajaran" name="matapelajaran">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($subject as $showsubject)
+                                        <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="jurusan">Jurusan</label>
+                                <select class="form-select @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($department as $showdepartment)
+                                        <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="no_kelas">Bagian Kelas</label>
+                                <select class="form-select @error('no_kelas') is-invalid @enderror" id="no_kelas" name="no_kelas">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($class as $showclass)
+                                        @if ($showclass->no_kelas != null)
+                                            <option value="{{$showclass->no_kelas}}">{{$showclass->no_kelas}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div id="create">
+                            <div class="row">
+                                <div class="col-lg-4 col-lg-6" id="kelas_pertama_div">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="kelas_pertama">Kelas Pertama</label>
+                                        <select class="form-control @error('kelas_pertama') is-invalid @enderror" id="kelas_pertama" name="kelas_pertama">
+                                            <option value="">-- Pilih --</option>
+                                            <option value="1">10</option>
+                                            <option value="2">11</option>
+                                            <option value="3">12</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-lg-6" id="matapelajaran_pertama_div">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="matapelajaran_pertama">Mata Pelajaran</label>
+                                        <select class="form-control @error('matapelajaran_pertama') is-invalid @enderror" id="matapelajaran_pertama" name="matapelajaran_pertama">
+                                            <option value="">-- Pilih --</option>
+                                            @foreach ($subject as $showsubject)
+                                                <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 jurusan_pertama">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="jurusan_pertama">Jurusan</label>
+                                        <select class="form-select @error('jurusan_pertama') is-invalid @enderror" id="jurusan_pertama" name="jurusan_pertama">
+                                            <option value="">-- Pilih --</option>
+                                            @foreach ($department as $showdepartment)
+                                                <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 bagian_kelas_pertama">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="no_kelas_pertama">Bagian Kelas</label>
+                                        <select class="form-select @error('no_kelas_pertama') is-invalid @enderror" id="no_kelas_pertama" name="no_kelas_pertama">
+                                            <option value="">-- Pilih --</option>
+                                            @foreach ($class as $showclass)
+                                                @if ($showclass->no_kelas != null)
+                                                    <option value="{{$showclass->no_kelas}}">{{$showclass->no_kelas}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-lg-6" id="kelas_kedua_div">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="kelas_kedua">Kelas Kedua</label>
+                                        <select class="form-control @error('kelas_kedua') is-invalid @enderror" id="kelas_kedua" name="kelas_kedua">
+                                            <option value="">-- Pilih --</option>
+                                            <option value="1">10</option>
+                                            <option value="2">11</option>
+                                            <option value="3">12</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-lg-6" id="matapelajaran_kedua_div">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="matapelajaran_kedua">Mata Pelajaran</label>
+                                        <select class="form-control @error('matapelajaran_kedua') is-invalid @enderror" id="matapelajaran_kedua" name="matapelajaran_kedua">
+                                            <option value="">-- Pilih --</option>
+                                            @foreach ($subject as $showsubject)
+                                                <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 jurusan_kedua">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="jurusan_kedua">Jurusan</label>
+                                        <select class="form-select @error('jurusan_kedua') is-invalid @enderror" id="jurusan_kedua" name="jurusan_kedua">
+                                            <option value="">-- Pilih --</option>
+                                            @foreach ($department as $showdepartment)
+                                                <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 bagian_kelas_kedua">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="no_kelas_kedua">Bagian Kelas</label>
+                                        <select class="form-select @error('no_kelas_kedua') is-invalid @enderror" id="no_kelas_kedua" name="no_kelas_kedua">
+                                            <option value="">-- Pilih --</option>
+                                            @foreach ($class as $showclass)
+                                                @if ($showclass->no_kelas != null)
+                                                    <option value="{{$showclass->no_kelas}}">{{$showclass->no_kelas}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -210,6 +314,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('.jurusan_pertama').hide()
+            $('.bagian_kelas_pertama').hide()
+
+            $('.jurusan_kedua').hide()
+            $('.bagian_kelas_kedua').hide()
+
+            $('#update').hide();
+            $('#create').hide();
+
             $('#tambahulangan').on('click', function () {
                 $('.body_ulangan button[type=submit]').html('Add');
                 $('.modal-title').html('Tambah Jadwal Ulangan');
@@ -218,15 +331,72 @@
 
                 $("#tanggal").val('');
                 $("#jam").val('');
-                $("#matapelajaran").val('');
                 $("#tahun").val('');
                 $("#jurusan").val('');
                 $("#kursi").val('');
                 $("#ruangan").val('');
                 $("#kelas_pertama").val('');
+                $("#jurusan_pertama").val('');
+                $("#matapelajaran_pertama").val('');
+                $("#no091_kelas_pertama").val('');
                 $("#kelas_kedua").val('');
+                $("#jurusan_kedua").val('');
+                $("#matapelajaran_kedua").val('');
+                $("#no091_kelas_kedua").val('');
+
+                $('.kursi').show()
+                $('#create').show();
+                $('#update').hide();
             });
+
+            $('#kelas_pertama').change(function (){
+                let id = $(this).val();
+                if (id != '') {
+                    $('#matapelajaran_pertama_div').removeClass("col-lg-6")
+                    $('#kelas_pertama_div').removeClass("col-lg-6")
+                }else{
+                    $('#matapelajaran_pertama_div').addClass("col-lg-6")
+                    $('#kelas_pertama_div').addClass("col-lg-6")
+                }
+
+                if (id == 1) {
+                    $('.jurusan_pertama').hide();
+                    $('.bagian_kelas_pertama').show();
+                }else if(id == 2 || id == 3){
+                    $('.jurusan_pertama').show();
+                    $('.bagian_kelas_pertama').hide();
+                }else{
+                    $('.jurusan_pertama').hide();
+                    $('.bagian_kelas_pertama').hide();
+                }
+            });
+
+            $('#kelas_kedua').change(function (){
+                let id = $(this).val();
+                if (id != '') {
+                    $('#matapelajaran_kedua_div').removeClass("col-lg-6")
+                    $('#kelas_kedua_div').removeClass("col-lg-6")
+                }else{
+                    $('#matapelajaran_kedua_div').addClass("col-lg-6")
+                    $('#kelas_kedua_div').addClass("col-lg-6")
+                }
+
+                if (id == 1) {
+                    $('.jurusan_kedua').hide();
+                    $('.bagian_kelas_kedua').show();
+                }else if(id == 2 || id == 3){
+                    $('.jurusan_kedua').show();
+                    $('.bagian_kelas_kedua').hide();
+                }else{
+                    $('.jurusan_kedua').hide();
+                    $('.bagian_kelas_kedua').hide();
+                }
+            });
+
             $('#editulangan*').on('click', function () {
+                $('#update').show();
+                $('#create').hide();
+
                 const id = $(this).data('id');
                 let _url = '{{route("admin.deuteronomi.edit",":id")}}'.replace(':id', id);
 
@@ -247,13 +417,20 @@
                         $('#matapelajaran').val(hasil.matapelajaran)
                         $('#tahun').val(hasil.tahun)
                         $('#jurusan').val(hasil.jurusan)
-                        $('#kursi').val(hasil.kursi)
+                        $('.kursi').hide()
                         $('#ruangan').val(hasil.ruangan)
 
-                        var kelas = hasil.kelas.split('/');
+                        var kelas = 0;
 
-                        $("#kelas_pertama").val(kelas[0]);
-                        $("#kelas_kedua").val(kelas[1]);
+                        if (hasil.kelas == 'X') {
+                            kelas = 1;
+                        }else if(hasil.kelas == 'XI'){
+                            kelas = 2;
+                        } else {
+                            kelas = 3;
+                        }
+                        $("#kelas").val(kelas);
+                        $("#no_kelas").val(hasil.no_kelas);
                     }
                 });
             });

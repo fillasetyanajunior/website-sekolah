@@ -69,7 +69,6 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Hari</th>
-                                                <th>Jam</th>
                                                 <th>Mata Pelajaran</th>
                                                 <th>Guru</th>
                                                 <th>Tahun</th>
@@ -82,19 +81,21 @@
                                         <tbody>
                                             <?php $i = 1; ?>
                                             @foreach ($schedule as $showschedule)
+                                                @php
+                                                    $detail = App\Models\Schedule::where('matapelajaran', $showschedule->matapelajaran)->first();
+                                                @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td class="text-capitalize">{{$showschedule->hari}}</td>
-                                                    <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
-                                                    <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{$showschedule->guru == 0 ? '' : App\Models\TeacherDetail::find($showschedule->guru)->nama}}</td>
-                                                    <td>{{App\Models\Year::find($showschedule->tahun)->tahun}}</td>
-                                                    <td>{{$showschedule->kelas}}</td>
-                                                    <td>{{$showschedule->jurusan != null ? App\Models\Department::find($showschedule->jurusan)->jurusan : ''}}</td>
-                                                    <td>{{$showschedule->no_kelas}}</td>
+                                                    <td class="text-capitalize">{{$detail->hari}}</td>
+                                                    <td>{{App\Models\Subject::find($detail->matapelajaran)->matapelajaran}}</td>
+                                                    <td>{{$detail->guru == 0 ? '' : App\Models\TeacherDetail::find($detail->guru)->nama}}</td>
+                                                    <td>{{App\Models\Year::find($detail->tahun)->tahun . ' - ' . App\Models\Year::find($detail->tahun)->semester}}</td>
+                                                    <td>{{$detail->kelas}}</td>
+                                                    <td>{{$detail->jurusan != null ? App\Models\Department::find($detail->jurusan)->jurusan : ''}}</td>
+                                                    <td>{{$detail->no_kelas}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editjadwal" data-bs-toggle="modal" data-bs-target="#JadwalModal" data-id="{{$showschedule->id}}">Ubah</button>
-                                                        <form action="{{route('admin.schedule.destroy', $showschedule->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editjadwal" data-bs-toggle="modal" data-bs-target="#JadwalModal" data-id="{{$detail->id}}">Ubah</button>
+                                                        <form action="{{route('admin.schedule.destroy', $detail->id)}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -140,7 +141,36 @@
                                 <option value="6">Sabtu</option>
                             </select>
                         </div>
-                        <div class="row">
+                        <div class="update">
+                            <div class="mb-3">
+                                <label class="form-label" for="jam">Jam Pelajaran</label>
+                                <select class="form-select @error('jam') is-invalid @enderror" id="jam" name="jam_edit">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="1">1 Jam Pelajaran</option>
+                                    <option value="2">2 Jam Pelajaran</option>
+                                    <option value="3">3 Jam Pelajaran</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
+                                <select class="form-select @error('matapelajaran') is-invalid @enderror" id="matapelajaran" name="matapelajaran_edit">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($subject as $showsubject)
+                                        <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="guru">Guru</label>
+                                <select class="form-select @error('guru') is-invalid @enderror" id="guru" name="guru_edit">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($teacher as $showteacher)
+                                        <option value="{{$showteacher->id}}">{{$showteacher->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row create">
                             <div class="col-lg-3 mb-3">
                                 <label class="form-label" for="jam">Jam Pelajaran</label>
                                 <select class="form-select @error('jam') is-invalid @enderror" id="jam" name="jam[]">
@@ -251,6 +281,9 @@
                 $("#tahun").val('');
                 $("#jurusan").val('');
                 $("#kelas").val('');
+
+                $('.update').hide()
+                $('.create').show()
             });
 
             $('#kelas').change(function (){
@@ -265,6 +298,8 @@
             });
 
             $('#editjadwal*').on('click', function () {
+                $('.update').show()
+                $('.create').hide()
                 const id = $(this).data('id');
                 let _url = '{{route("admin.schedule.edit",":id")}}'.replace(':id', id);
 
@@ -286,7 +321,9 @@
                         $('#guru').val(hasil.schedule.guru)
                         $('#tahun').val(hasil.schedule.tahun)
                         $('#jurusan').val(hasil.schedule.jurusan)
+                        $('#no_kelas').val(hasil.schedule.no_kelas)
                         $('#kelas').val(hasil.kelas)
+                        $('#kelas').trigger('change');
                     }
                 });
             });
