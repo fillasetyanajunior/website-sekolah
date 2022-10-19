@@ -16,7 +16,8 @@ class CreateTeachingsTable extends Migration
         Schema::create('teachings', function (Blueprint $table) {
             $table->integer('id_guru');
             $table->enum('kelas',['X', 'XI', 'XII']);
-            $table->integer('jurusan');
+            $table->integer('jurusan')->nullable();
+            $table->char('no_kelas', 1)->nullable();
             $table->integer('matapelajaran');
         });
     }

@@ -21,7 +21,8 @@ class CreateAttendancesTable extends Migration
             $table->enum('keterangan', ['Hadir','Sakit', 'Izin', 'Tanpa Keterangan']);
             $table->enum('semester',['Ganjil','Genap']);
             $table->integer('matapelajaran');
-            $table->integer('jurusan');
+            $table->integer('jurusan')->nullable();
+            $table->char('no_kelas', 1)->nullable();
             $table->integer('guru');
             $table->string('tahun');
             $table->date('tanggal');

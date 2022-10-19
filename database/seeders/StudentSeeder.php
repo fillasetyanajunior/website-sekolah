@@ -22,7 +22,7 @@ class StudentSeeder extends Seeder
             $jenis          = ['Laki-laki', 'Perempuan'];
             $jenis_kelamin  = array_rand($jenis, 1);
             $nomer          = ['A','B','C','D','E','F','G','H','I','J'];
-            $nomer_kelas    = 0;
+            $nomer_kelas    = array_rand($nomer, 1);
             $int            = '0123456789';
             $nis            =  substr(str_shuffle($int), 0, 8);
             $kelas          = ['X', 'XI', 'XII'];
@@ -62,11 +62,6 @@ class StudentSeeder extends Seeder
                     'no_kelas'              => $nomer[$nomer_kelas],
                 ]);
 
-                $sudents = StudentDetail::where('kelas', $kelas[$k])->where('no_kelas', $nomer[$nomer_kelas])->count();
-
-                if ($sudents > 20) {
-                    $nomer_kelas += $nomer_kelas;
-                }
             }else {
                 $id_siswa = StudentDetail::create([
                     'nama'                  => 'Student ' . $i,

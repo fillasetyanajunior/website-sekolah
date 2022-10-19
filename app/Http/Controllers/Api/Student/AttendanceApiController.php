@@ -13,14 +13,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AttendanceApiController extends Controller
+class AttendanceApiController extends AppController
 {
     public function absen(Request $request)
     {
-        if (request()->user()->currentAccessToken()->name != 'student') {
-            return response()->json(['status' => 'error']);
-        }
-
         $hari = array(
             1 =>
             'Senin',
@@ -33,7 +29,12 @@ class AttendanceApiController extends Controller
         );
         $kode       = QrCode::where('kode', $request->kodeqr)->first();
         $student    = StudentDetail::find(Auth::user()->id_siswa);
-        $schedule   = Schedule::where('hari', $hari[date('N')])->where('jam_start', date('H:i:s'))->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
+        if ($student->kelas == 'X') {
+            $schedule = Schedule::where('hari', $hari[date('N')])->where('jam_start', date('H:i:s'))->where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->first();
+        } else {
+            $schedule = Schedule::where('hari', $hari[date('N')])->where('jam_start', date('H:i:s'))->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
+        }
+
         $year       = Year::find($schedule->tahun);
         $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', Carbon::now()->isoFormat('Y-M-d'))->first();
 
@@ -58,7 +59,27 @@ class AttendanceApiController extends Controller
                 } else {
                     return response()->json(['status' => 'Anda Sudah Absen']);
                 }
-            } else {
+            } elseif ($kode->no_kelas == $student->no_kelas && $kode->kelas == $student->kelas && $kode->matapelajaran == $schedule->matapelajaran){
+                if ($attendance == null) {
+                    Attendance::create([
+                        'id_siswa'      => $student->id,
+                        'nis'           => Auth::user()->username,
+                        'matapelajaran' => $schedule->matapelajaran,
+                        'no_kelas'      => $student->no_kelas,
+                        'guru'          => $schedule->guru,
+                        'tahun'         => $schedule->tahun,
+                        'kelas'         => $student->kelas,
+                        'tanggal'       => Carbon::now()->isoFormat('Y-M-d'),
+                        'semester'      => $year->semester,
+                        'jam'           => date('H:i:s'),
+                        'keterangan'    => 'Hadir',
+                    ]);
+
+                    return response()->json(['status' => 'Absen Berhasil']);
+                } else {
+                    return response()->json(['status' => 'Anda Sudah Absen']);
+                }
+            }else {
                 return response()->json(['status' => 'Absen Gagal']);
             }
         } else {
@@ -68,10 +89,6 @@ class AttendanceApiController extends Controller
 
     public function show(Request $request)
     {
-        if (request()->user()->currentAccessToken()->name != 'student') {
-            return response()->json(['status' => 'error']);
-        }
-
         $subject    = Attendance::groupBy('matapelajaran')->where('kelas', $request->kelas)->where('semester', $request->semester)->where('id_siswa', Auth::user()->id_siswa)->get('matapelajaran');
         $subjects   = Attendance::where('kelas', $request->kelas)->where('semester', $request->semester)->where('id_siswa', Auth::user()->id_siswa)->first();
         if ($subjects == null) {

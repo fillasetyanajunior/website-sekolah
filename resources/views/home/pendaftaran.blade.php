@@ -452,7 +452,7 @@
                                     <h3 class="card-title">Pilihan Jurusan MAN BULELENG</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-lg-6">
                                             <label class="form-label" for="pilihan_1">Pilihan 1</label>
                                             <select class="form-control @error('pilihan_1') is-invalid @enderror"
@@ -473,7 +473,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group mt-4">
                                         <label class="form-label" for="info">Info Pendaftaran MAN BULELENG</label>
                                         <select class="form-control @error('info') is-invalid @enderror" id="info"

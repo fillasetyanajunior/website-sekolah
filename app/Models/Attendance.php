@@ -13,6 +13,7 @@ class Attendance extends Model
         'nis',
         'matapelajaran',
         'jurusan',
+        'no_kelas',
         'guru',
         'tahun',
         'kelas',

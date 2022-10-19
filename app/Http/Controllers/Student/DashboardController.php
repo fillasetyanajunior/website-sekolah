@@ -17,7 +17,12 @@ class DashboardController extends AppController
     {
         $title          = 'Dashboard';
         $student        = StudentDetail::find(Auth::user()->id_siswa);
-        $schedule       = Schedule::orderBy('hari')->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->get();
+        if ($student->kelas == 'X') {
+            $schedule = Schedule::orderBy('hari')->where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->get();
+        } else {
+            $schedule = Schedule::orderBy('hari')->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->get();
+        }
+
         $deuteronomi    = Deuteronomi::where('id_siswa', Auth::user()->id_siswa)->get();
         return view('student.dashboard', compact('title', 'deuteronomi', 'schedule'));
     }

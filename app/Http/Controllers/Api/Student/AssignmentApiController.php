@@ -9,17 +9,19 @@ use App\Models\StudentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AssignmentApiController extends Controller
+class AssignmentApiController extends AppController
 {
     public function assignment()
     {
-        if (request()->user()->currentAccessToken()->name != 'student') {
-            return response()->json(['status' => 'error']);
+        $student    = StudentDetail::find(Auth::user()->id_siswa);
+        if ($student->kelas == 'X') {
+            $classroom  = Classroom::where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->get();
+            $classrooms = Classroom::where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->first();
+        } else {
+            $classroom  = Classroom::where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->get();
+            $classrooms = Classroom::where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
         }
 
-        $student    = StudentDetail::find(Auth::user()->id_siswa);
-        $classroom  = Classroom::where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->get();
-        $classrooms = Classroom::where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
         if ($classrooms == null) {
             $response = [];
         } else {

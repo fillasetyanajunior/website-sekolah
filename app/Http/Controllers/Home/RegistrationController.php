@@ -113,8 +113,6 @@ class RegistrationController extends Controller
         Registration::create([
             'id_registration'   => $siswa->id,
             'kode'              => $kode,
-            'pilihan_1'         => $request->pilihan_1,
-            'pilihan_2'         => $request->pilihan_2,
             'info'              => $request->info,
             'password'          => $password,
             'is_active'         => 'belum test',

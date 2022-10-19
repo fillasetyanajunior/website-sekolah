@@ -8,14 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class StudentApiController extends Controller
+class StudentApiController extends AppController
 {
     public function index()
     {
-        if (request()->user()->currentAccessToken()->name != 'student') {
-            return response()->json(['status' => 'error']);
-        }
-
         $avatar = StudentDetail::find(Auth::user()->id_siswa)->avatar;
         if ($avatar == null) {
             return response()->json([
@@ -36,10 +32,6 @@ class StudentApiController extends Controller
 
     public function show()
     {
-        if (request()->user()->currentAccessToken()->name != 'student') {
-            return response()->json(['status' => 'error']);
-        }
-
         $avatar = StudentDetail::find(Auth::user()->id_siswa)->avatar;
         if ($avatar == null) {
             return response()->json([

@@ -251,11 +251,7 @@
                             $('#kabupaten').append('<option value="' + kebupaten.id +
                                 '"' + '>' + kebupaten.name + '</option>');
                         });
-                        $('#kabupaten').val({
-                            {
-                                $student - > kabupaten_id
-                            }
-                        });
+                        $('#kabupaten').val({{$student->kabupaten_id}});
                         $('#kabupaten').trigger("change");
                     }
                 });
@@ -276,11 +272,7 @@
                             $('#kecamatan').append('<option value="' + kecamatan.id +
                                 '"' + '>' + kecamatan.name + '</option>');
                         });
-                        $('#kecamatan').val({
-                            {
-                                $student - > kecamatan_id
-                            }
-                        });
+                        $('#kecamatan').val({{ $student->kecamatan_id}});
                         $('#kecamatan').trigger("change");
                     }
                 });
@@ -301,11 +293,7 @@
                             $("#desa").append('<option value="' + desa.id + '"' + '>' +
                                 desa.name + '</option>');
                         });
-                        $('#desa').val({
-                            {
-                                $student - > desa_id
-                            }
-                        });
+                        $('#desa').val({{$student->desa_id}});
                         $('#desa').trigger("change");
                     }
                 });

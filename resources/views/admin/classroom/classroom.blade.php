@@ -69,8 +69,8 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Guru</th>
-                                                <th>Title</th>
-                                                <th>file</th>
+                                                <th>Kelas Jurusan/Bagian Kelas</th>
+                                                <th>Nama Ruang Kelas</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -81,7 +81,7 @@
                                                 <tr>
                                                     <td>{{$i++}}</td>
                                                     <td>{{App\Models\TeacherDetail::find($showclassroom->id_guru)->nama}}</td>
-                                                    <td>{{$showclassroom->kelas . ' ' . App\Models\Department::find($showclassroom->jurusan)->jurusan}}</td>
+                                                    <td>{{$showclassroom->jurusan != null ? $showclassroom->kelas . ' ' . App\Models\Department::find($showclassroom->jurusan)->jurusan : $showclassroom->kelas . ' ' . $showclassroom->no_kelas}}</td>
                                                     <td>{{App\Models\Subject::find($showclassroom->nama)->matapelajaran}}</td>
                                                     <td width="100px">
                                                         <button type="button" class="btn btn-sm btn-warning" id="editclassroom" data-bs-toggle="modal" data-bs-target="#ClassroomModal" data-id="{{$showclassroom->id}}">Ubah</button>
@@ -128,6 +128,44 @@
                                 <option value="3">12</option>
                             </select>
                         </div>
+                        <div class="update">
+                            <div class="mb-3">
+                                <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
+                                <select class="form-control" id="matapelajaran" name="matapelajaran">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($subject as $showsubject)
+                                        <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="guru">Guru</label>
+                                <select class="form-control" id="guru" name="guru">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($teacher as $showteacher)
+                                        <option value="{{$showteacher->id}}">{{$showteacher->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3 jurusan">
+                                <label class="form-label" for="jurusan">Jurusan</label>
+                                <select class="form-control" id="jurusan" name="jurusan">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($department as $showdepartment)
+                                        <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3 no_kelas">
+                                <label class="form-label" for="no_kelas">Bagian Kelas</label>
+                                <select class="form-control" id="no_kelas" name="no_kelas">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($no_kelas as $showno_kelas)
+                                        <option value="{{$showno_kelas->no_kelas}}">{{$showno_kelas->no_kelas}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -152,8 +190,11 @@
                 $('#title').val('')
                 $('#thumnail').val('')
                 $('#file').val('')
+
+                $('.update').hide();
             });
             $('#editclassroom*').on('click', function () {
+                $('.update').show();
                 const id = $(this).data('id');
                 let _url = '{{route("admin.classroom.edit",":id")}}'.replace(':id', id);
 
@@ -169,7 +210,25 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#title').val(hasil.title)
+                        $('#matapelajaran').val(hasil.nama)
+                        $('#jurusan').val(hasil.jurusan)
+                        if (hasil.kelas == 'X') {
+                            var kelas = 1;
+                        }else if (hasil.kelas == 'XI') {
+                            var kelas = 2;
+                        } else {
+                            var kelas = 3;
+                        }
+                        $('#kelas').val(kelas)
+                        $('#no_kelas').val(hasil.no_kelas);
+                        $('#guru').val(hasil.id_guru);
+                        if (hasil.kelas == 'X') {
+                            $('.jurusan').hide();
+                            $('.no_kelas').show();
+                        } else {
+                            $('.jurusan').show();
+                            $('.no_kelas').hide();
+                        }
                     }
                 });
             });

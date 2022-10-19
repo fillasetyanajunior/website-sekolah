@@ -12,6 +12,7 @@ class Teaching extends Model
         'id_guru',
         'kelas',
         'jurusan',
+        'no_kelas',
         'matapelajaran',
     ];
 

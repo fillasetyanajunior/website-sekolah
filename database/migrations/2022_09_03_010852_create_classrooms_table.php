@@ -17,7 +17,8 @@ class CreateClassroomsTable extends Migration
             $table->id();
             $table->integer('id_guru');
             $table->string('nama');
-            $table->integer('jurusan');
+            $table->integer('jurusan')->nullable();
+            $table->char('no_kelas')->nullable();
             $table->enum('kelas', ['X', 'XI', 'XII']);
             $table->timestamps();
         });

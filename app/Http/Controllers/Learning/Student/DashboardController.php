@@ -14,7 +14,12 @@ class DashboardController extends AppController
     {
         $title      = 'Dashboard';
         $student    = StudentDetail::find(Auth::user()->id_siswa);
-        $class      = Classroom::where('jurusan', $student->jurusan)->where('kelas', $student->kelas)->get();
+        if ($student->kelas == 'X') {
+            $class = Classroom::where('no_kelas', $student->no_kelas)->where('kelas', $student->kelas)->get();
+        } else {
+            $class = Classroom::where('jurusan', $student->jurusan)->where('kelas', $student->kelas)->get();
+        }
+
         return view('student.learning.dashboard' ,compact('title', 'class'));
     }
 }

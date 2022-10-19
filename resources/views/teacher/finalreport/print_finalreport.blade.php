@@ -32,9 +32,15 @@
                     <td>NISN</td>
                     <td>:</td>
                     <td>{{$student->nisn}}</td>
-                    <td>Fase</td>
-                    <td>:</td>
-                    <td>B</td>
+                    @if ($student->kelas == 'X')
+                        <td>Fase</td>
+                        <td>:</td>
+                        <td>{{$student->no_kelas}}</td>
+                    @else
+                        <td>Jurusan</td>
+                        <td>:</td>
+                        <td>{{App\Models\Department::find($student->jurusan)->jurusan}}</td>
+                    @endif
                 </tr>
                 <tr>
                     <td>Sekolah</td>
@@ -42,7 +48,7 @@
                     <td>MAN Buleleng</td>
                     <td>Semester</td>
                     <td>:</td>
-                    <td>1</td>
+                    <td>{{$grades != null ? $grades->semester : ''}}</td>
                 </tr>
                 <tr>
                     <td>Alamat</td>
@@ -50,7 +56,7 @@
                     <td>{{$student->alamat}}</td>
                     <td>Tahun Pelajaran</td>
                     <td>:</td>
-                    <td>2022/2023</td>
+                    <td>{{$grades != null ? App\Models\Year::find($grades->tahun)->tahun : ''}}</td>
                 </tr>
             </tbody>
         </table>
