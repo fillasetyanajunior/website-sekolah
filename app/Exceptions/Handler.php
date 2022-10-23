@@ -67,6 +67,9 @@ class Handler extends ExceptionHandler
             case 'teacher_learning':
                 return redirect()->guest(route('learning.teacher.login.form'));
                 break;
+            case 'app':
+                return redirect()->guest(route('attandance.login.form'));
+                break;
                 // default:
                 //     return redirect()->guest(route('index'));
                 //     break;

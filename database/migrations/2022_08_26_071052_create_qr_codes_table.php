@@ -16,7 +16,8 @@ class CreateQrCodesTable extends Migration
         Schema::create('qr_codes', function (Blueprint $table) {
             $table->string('kode');
             $table->integer('matapelajaran');
-            $table->integer('jurusan');
+            $table->integer('jurusan')->nullable();
+            $table->char('no_kelas', 1)->nullable();
             $table->enum('kelas',['X','XI','XII']);
         });
     }

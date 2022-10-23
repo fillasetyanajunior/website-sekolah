@@ -14,6 +14,7 @@ class CreateTeachingsTable extends Migration
     public function up()
     {
         Schema::create('teachings', function (Blueprint $table) {
+            $table->id();
             $table->integer('id_guru');
             $table->enum('kelas',['X', 'XI', 'XII']);
             $table->integer('jurusan')->nullable();

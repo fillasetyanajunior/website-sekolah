@@ -12,6 +12,7 @@ class QrCode extends Model
         'kode',
         'matapelajaran',
         'jurusan',
+        'no_kelas',
         'kelas',
     ];
 

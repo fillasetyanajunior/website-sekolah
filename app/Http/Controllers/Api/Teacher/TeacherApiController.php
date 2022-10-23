@@ -10,14 +10,10 @@ use App\Models\Teaching;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TeacherApiController extends Controller
+class TeacherApiController extends AppController
 {
     public function index()
     {
-        if (request()->user()->currentAccessToken()->name != 'teacher') {
-            return response()->json(['status' => 'error']);
-        }
-
         $response = [
             'id'    => Auth::user()->id_guru,
             'nama'  => Auth::user()->name,
@@ -36,17 +32,29 @@ class TeacherApiController extends Controller
 
     public function showjurusan(Request $request)
     {
-        $teaching  = Teaching::join('departments', 'teachings.jurusan','=', 'departments.id')->groupBy('departments.jurusan')
-                            ->where('id_guru', $request->id)->where('kelas', $request->kelas)->get('departments.jurusan');
+        if ($request->kelas == 'X') {
+            $teaching  = Teaching::groupBy('no_kelas')->having('no_kelas', '!=', 'null')->where('id_guru', $request->id)->where('kelas', $request->kelas)->get('no_kelas');
+        } else {
+            $teaching  = Teaching::join('departments', 'teachings.jurusan','=', 'departments.id')->groupBy('departments.jurusan')
+                                ->where('id_guru', $request->id)->where('kelas', $request->kelas)->get('departments.jurusan');
+        }
+
         return response()->json($teaching);
     }
 
     public function showmapel(Request $request)
     {
-        $jurusan    = Department::where('jurusan', $request->jurusan)->first();
-        $teaching   = Teaching::join('subjects', 'teachings.matapelajaran', '=', 'subjects.id')
-                            ->groupBy('subjects.matapelajaran')->where('id_guru', $request->id)
-                            ->where('jurusan', $jurusan->id)->where('kelas', $request->kelas)->get('subjects.matapelajaran');
+        if ($request->kelas == 'X') {
+            $teaching   = Teaching::join('subjects', 'teachings.matapelajaran', '=', 'subjects.id')
+                               ->groupBy('subjects.matapelajaran')->where('id_guru', $request->id)
+                                 ->where('no_kelas', $request->no_kelas)->where('kelas', $request->kelas)->get('subjects.matapelajaran');
+        } else {
+            $jurusan    = Department::where('jurusan', $request->jurusan)->first();
+            $teaching   = Teaching::join('subjects', 'teachings.matapelajaran', '=', 'subjects.id')
+                               ->groupBy('subjects.matapelajaran')->where('id_guru', $request->id)
+                                 ->where('jurusan', $jurusan->id)->where('kelas', $request->kelas)->get('subjects.matapelajaran');
+        }
+
         return response()->json($teaching);
     }
 }

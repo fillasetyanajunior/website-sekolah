@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AttendanceApiController extends Controller
+class AttendanceApiController extends AppController
 {
     public function absendekstop(Request $request)
     {
@@ -33,8 +33,13 @@ class AttendanceApiController extends Controller
         $student    = StudentDetail::find($user->id_siswa);
         $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->first();
         $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
-        $jurusan    = Department::where('jurusan', $request->jurusan)->first();
-        $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $mapel->id)->where('jurusan', $jurusan->id)->first();
+        if ($student->kelas == 'X') {
+            $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $mapel->id)->where('no_kelas', $student->no_kelas)->first();
+        } else {
+            $jurusan    = Department::where('jurusan', $request->jurusan)->first();
+            $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $mapel->id)->where('jurusan', $jurusan->id)->first();
+        }
+
         $year       = Year::find($schedule->tahun);
 
         if ($request->keterangan == 'Izin') {
@@ -46,19 +51,35 @@ class AttendanceApiController extends Controller
         }
 
         if ($attendance == null) {
-            Attendance::create([
-                'id_siswa'      => $student->id,
-                'nis'           => Auth::user()->username,
-                'matapelajaran' => $schedule->matapelajaran,
-                'jurusan'       => $student->jurusan,
-                'guru'          => $schedule->guru,
-                'tahun'         => $schedule->tahun,
-                'kelas'         => $student->kelas,
-                'tanggal'       => Carbon::now()->isoFormat('Y-M-d'),
-                'semester'      => $year->semester,
-                'jam'           => date('H:i:s'),
-                'keterangan'    => $keterangan,
-            ]);
+            if ($student->kelas == 'X') {
+                Attendance::create([
+                    'id_siswa'      => $student->id,
+                    'nis'           => Auth::user()->username,
+                    'matapelajaran' => $schedule->matapelajaran,
+                    'no_kelas'      => $student->no_kelas,
+                    'guru'          => $schedule->guru,
+                    'tahun'         => $schedule->tahun,
+                    'kelas'         => $student->kelas,
+                    'tanggal'       => Carbon::now()->isoFormat('Y-M-d'),
+                    'semester'      => $year->semester,
+                    'jam'           => date('H:i:s'),
+                    'keterangan'    => $keterangan,
+                ]);
+            } else {
+                Attendance::create([
+                    'id_siswa'      => $student->id,
+                    'nis'           => Auth::user()->username,
+                    'matapelajaran' => $schedule->matapelajaran,
+                    'jurusan'       => $student->jurusan,
+                    'guru'          => $schedule->guru,
+                    'tahun'         => $schedule->tahun,
+                    'kelas'         => $student->kelas,
+                    'tanggal'       => Carbon::now()->isoFormat('Y-M-d'),
+                    'semester'      => $year->semester,
+                    'jam'           => date('H:i:s'),
+                    'keterangan'    => $keterangan,
+                ]);
+            }
 
             return response()->json(['status_code' => 200, 'nis' => $request->nis]);
         } else {
@@ -68,16 +89,29 @@ class AttendanceApiController extends Controller
 
     public function show(Request $request)
     {
-        $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
-        $jurusan    = Department::where('jurusan', $request->jurusan)->first();
-        $attendance = Attendance::join('student_details', 'student_details.id', '=', 'attendances.id_siswa')
-                               ->where('matapelajaran', $mapel->id)
-                               ->where('attendances.jurusan', $jurusan->id)
-                               ->where('attendances.kelas', $request->kelas)
-                               ->where('guru', Auth::user()->id)
-                               ->where('tanggal',date('Y-m-d'))
-                              ->select('attendances.*', 'student_details.nama')
-                                 ->get();
+        if ($request->kelas == 'X') {
+            $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
+            $attendance = Attendance::join('student_details', 'student_details.id', '=', 'attendances.id_siswa')
+                                   ->where('matapelajaran', $mapel->id)
+                                   ->where('attendances.no_kelas', $request->no_kelas)
+                                   ->where('attendances.kelas', $request->kelas)
+                                   ->where('guru', Auth::user()->id)
+                                   ->where('tanggal',date('Y-m-d'))
+                                  ->select('attendances.*', 'student_details.nama')
+                                     ->get();
+        } else {
+            $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
+            $jurusan    = Department::where('jurusan', $request->jurusan)->first();
+            $attendance = Attendance::join('student_details', 'student_details.id', '=', 'attendances.id_siswa')
+                                   ->where('matapelajaran', $mapel->id)
+                                   ->where('attendances.jurusan', $jurusan->id)
+                                   ->where('attendances.kelas', $request->kelas)
+                                   ->where('guru', Auth::user()->id)
+                                   ->where('tanggal',date('Y-m-d'))
+                                  ->select('attendances.*', 'student_details.nama')
+                                     ->get();
+        }
+
         return response()->json($attendance);
     }
 

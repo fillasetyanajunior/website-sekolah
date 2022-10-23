@@ -42,7 +42,7 @@ return [
         ],
         'student_learning' => [
             'driver' => 'session',
-            'provider' => 'student_learnings',
+            'provider' => 'students',
         ],
         'teacher' => [
             'driver' => 'session',
@@ -50,13 +50,17 @@ return [
         ],
         'teacher_learning' => [
             'driver' => 'session',
-            'provider' => 'teacher_learnings',
+            'provider' => 'teachers',
         ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
         'library' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
+        ],
+        'app' => [
             'driver' => 'session',
             'provider' => 'teachers',
         ],
@@ -83,14 +87,6 @@ return [
         'students' => [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,
-        ],
-        'student_learnings' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Student::class,
-        ],
-        'teacher_learnings' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Teacher::class,
         ],
         'teachers' => [
             'driver' => 'eloquent',

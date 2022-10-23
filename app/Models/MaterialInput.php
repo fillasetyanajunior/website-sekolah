@@ -14,6 +14,7 @@ class MaterialInput extends Model
         'kelas',
         'matapelajaran',
         'jurusan',
+        'no_kelas',
         'guru',
     ];
 }

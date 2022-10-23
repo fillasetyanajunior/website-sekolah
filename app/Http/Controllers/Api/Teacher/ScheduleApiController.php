@@ -9,7 +9,7 @@ use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ScheduleApiController extends Controller
+class ScheduleApiController extends AppController
 {
     public function index(Request $request)
     {
@@ -24,8 +24,14 @@ class ScheduleApiController extends Controller
         );
         $mapel      = Subject::where('matapelajaran', $request->matapelajaran)->first();
         $jurusan    = Department::where('jurusan', $request->jurusan)->first();
-        $jadwal     = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $request->kelas)->where('matapelajaran', $mapel->id)
-                              ->where('jurusan', $jurusan->id)->where('hari', $hari[date('N')])->first();
+        if ($request->kelas == 'X') {
+            $jadwal = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $request->kelas)->where('matapelajaran', $mapel->id)
+                                  ->where('no_kelas', $request->no_kelas)->where('hari', $hari[date('N')])->first();
+        } else {
+            $jadwal = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $request->kelas)->where('matapelajaran', $mapel->id)
+                                  ->where('jurusan', $jurusan->id)->where('hari', $hari[date('N')])->first();
+        }
+
         if ($jadwal == null) {
             return response()->json([
                 'jam'       => null,
