@@ -152,6 +152,7 @@
                                                 <th>Jam</th>
                                                 <th>Mata Pelajaran</th>
                                                 <th>Jurusan</th>
+                                                <th>Bagian Kelas</th>
                                                 <th>Kelas</th>
                                             </tr>
                                         </thead>
@@ -161,7 +162,8 @@
                                                     <td class="text-capitalize">{{$showschedule->hari}}</td>
                                                     <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
                                                     <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{App\Models\Department::find($showschedule->jurusan)->jurusan}}</td>
+                                                    <td>{{$showschedule->jurusan!= null ? App\Models\Department::find($showschedule->jurusan)->jurusan : ''}}</td>
+                                                    <td>{{$showschedule->no_kelas}}</td>
                                                     <td>{{$showschedule->kelas}}</td>
                                                 </tr>
                                             @endforeach
@@ -182,8 +184,9 @@
                                                 <th>#</th>
                                                 <th>Judul</th>
                                                 <th>Mata Pelajaran</th>
-                                                <th>Jurusan</th>
                                                 <th>Kelas</th>
+                                                <th>Jurusan</th>
+                                                <th>Bagian Kelas</th>
                                                 <th>Dateline</th>
                                             </tr>
                                         </thead>
@@ -198,8 +201,9 @@
                                                         <td class="text-capitalize">{{$i++}}</td>
                                                         <td class="text-capitalize">{{$showcontent->judul}}</td>
                                                         <td>{{$showclassroom->nama}}</td>
-                                                        <td>{{App\Models\Department::find($showclassroom->jurusan)->jurusan}}</td>
                                                         <td>{{$showclassroom->kelas}}</td>
+                                                        <td>{{$showclassroom->jurusan != null ? App\Models\Department::find($showclassroom->jurusan)->jurusan : ''}}</td>
+                                                        <td>{{$showclassroom->no_kelas}}</td>
                                                         <td>{{$showcontent->dateline}}</td>
                                                     </tr>
                                                 @endforeach

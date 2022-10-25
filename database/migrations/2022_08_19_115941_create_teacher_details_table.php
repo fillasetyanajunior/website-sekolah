@@ -16,7 +16,7 @@ class CreateTeacherDetailsTable extends Migration
         Schema::create('teacher_details', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('nuptk');
+            $table->string('nuptk')->nullable();
             $table->string('alamat');
             $table->string('nomer');
             $table->string('email');

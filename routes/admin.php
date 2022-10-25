@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AchievementController as Achievement;
+use App\Http\Controllers\Admin\AddStudentController as AddStudent;
+use App\Http\Controllers\Admin\AddTeacherController as AddTeacher;
 use App\Http\Controllers\Admin\ClassroomController as Classroom;
 use App\Http\Controllers\Admin\DashboardController as Dashboard;
 use App\Http\Controllers\Admin\DepartmentController as Department;
@@ -33,6 +35,14 @@ Route::group([
     Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
+
+    Route::get('input-siswa', [AddStudent::class, 'index'])->name('admin.input-student');
+    Route::post('input-siswa', [AddStudent::class, 'store'])->name('admin.input-student.store');
+    Route::delete('input-siswa/{studentDetail}', [AddStudent::class, 'destroy'])->name('admin.input-student.destroy');
+
+    Route::get('input-guru', [AddTeacher::class, 'index'])->name('admin.input-teacher');
+    Route::post('input-guru', [AddTeacher::class, 'store'])->name('admin.input-teacher.store');
+    Route::delete('input-guru/{teacherDetail}', [AddTeacher::class, 'destroy'])->name('admin.input-teacher.destroy');
 
     Route::get('ruangkelas', [Classroom::class, 'index'])->name('admin.classroom');
     Route::post('ruangkelas/store', [Classroom::class, 'store'])->name('admin.classroom.store');

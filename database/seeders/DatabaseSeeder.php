@@ -65,10 +65,12 @@ class DatabaseSeeder extends Seeder
             'is_active'         => 'belum test',
         ]);
         DB::table('departments')->insert([
-            ['kode' => 98, 'jurusan' => 'IPA 1'],
-            ['kode' => 99, 'jurusan' => 'IPA 2'],
-            ['kode' => 1,  'jurusan' => 'IPS 1'],
-            ['kode' => 2,  'jurusan' => 'IPS 2'],
+            ['kode' => rand(1,100), 'jurusan' => 'IPA 1'],
+            ['kode' => rand(1, 100), 'jurusan' => 'IPA 2'],
+            ['kode' => rand(1, 100),  'jurusan' => 'IPS 1'],
+            ['kode' => rand(1, 100),  'jurusan' => 'IPS 2'],
+            ['kode' => rand(1, 100),  'jurusan' => 'IPB'],
+            ['kode' => rand(1, 100),  'jurusan' => 'AGAMA'],
         ]);
         DB::table('subjects')->insert([
             ['matapelajaran' => 'Fisika'],
@@ -175,8 +177,8 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call([
             IndoRegionSeeder::class,
-            StudentSeeder::class,
-            TeacherSeeder::class,
+            // StudentSeeder::class,
+            // TeacherSeeder::class,
             // AttendanceSeeder::class,
         ]);
     }
