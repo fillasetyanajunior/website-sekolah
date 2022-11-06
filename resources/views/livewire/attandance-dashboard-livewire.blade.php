@@ -7,6 +7,7 @@
                     <th>Jam</th>
                     <th>NIS</th>
                     <th>Nama</th>
+                    <th>Keterangan</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -18,7 +19,11 @@
                     <td>{{$showstudents->jam}}</td>
                     <td>{{$showstudents->nis}}</td>
                     <td>{{App\Models\StudentDetail::find($showstudents->id_siswa)->nama}}</td>
-                    <td></td>
+                    <td>{{$showstudents->keterangan}}</td>
+                    <td>
+                        <button type="button" id="editabsen" data-id="{{Crypt::encrypt($showstudents->id)}}" data-bs-toggle="modal" data-bs-target="#ModalAbsenEdit" class="btn btn-warning btn-sm">Edit</button>
+                        <button wire:click="destroy('{{Crypt::encrypt($showstudents->id)}}')" class="btn btn-danger btn-sm">Hapus</button>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Attendance;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 
 class AttandanceDashboardLivewire extends Component
@@ -24,5 +25,10 @@ class AttandanceDashboardLivewire extends Component
             $students = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('jurusan', $this->jurusan)->where('tanggal', date('Y-m-d'))->get();
         }
         return view('livewire.attandance-dashboard-livewire', compact('students'));
+    }
+
+    public function destroy($attendance)
+    {
+        Attendance::destroy(Crypt::decrypt($attendance));
     }
 }

@@ -123,7 +123,7 @@
                             <select class="form-select" id="name" name="name">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($guru as $guru)
-                                    <option value="{{$guru->id}}">{{$guru->nama}}</option>
+                                    <option value="{{Crypt::encrypt($guru->id)}}">{{$guru->nama}}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -65,12 +65,12 @@ class DatabaseSeeder extends Seeder
             'is_active'         => 'belum test',
         ]);
         DB::table('departments')->insert([
-            ['kode' => rand(1,100), 'jurusan' => 'IPA 1'],
-            ['kode' => rand(1, 100), 'jurusan' => 'IPA 2'],
-            ['kode' => rand(1, 100),  'jurusan' => 'IPS 1'],
-            ['kode' => rand(1, 100),  'jurusan' => 'IPS 2'],
-            ['kode' => rand(1, 100),  'jurusan' => 'IPB'],
-            ['kode' => rand(1, 100),  'jurusan' => 'AGAMA'],
+            ['jurusan' => 'IPA 1'],
+            ['jurusan' => 'IPA 2'],
+            ['jurusan' => 'IPS 1'],
+            ['jurusan' => 'IPS 2'],
+            ['jurusan' => 'IPB'],
+            ['jurusan' => 'AGAMA'],
         ]);
         DB::table('subjects')->insert([
             ['matapelajaran' => 'Fisika'],

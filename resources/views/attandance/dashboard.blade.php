@@ -10,8 +10,12 @@
                             <div>
                                 <div class="list-group list-group-transparent mb-3">
                                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalAbsenManual">Absen Manual</button>
-                                    <button type="button" class="btn btn-primary mb-5" id="absenqr" data-bs-toggle="modal" data-bs-target="#ModalAbsenQR">Absen QR</button>
-                                    <button type="button" class="btn btn-primary mb-3" href="#">Logout</button>
+                                    <button type="button" class="btn btn-primary mb-3" id="absenqr" data-bs-toggle="modal" data-bs-target="#ModalAbsenQR">Absen QR</button>
+                                    <button type="button" class="btn btn-primary mb-5" id="absenall">Absen Semua Siswa</button>
+                                    <form action="{{route('attandance.logout')}}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary mb-3 col-sm-12" id="logout">Logout</button>
+                                    </form>
                                 </div>
                                 <div class="list-group list-group-transparent mb-3">
                                     <div class="mb-3">
@@ -106,7 +110,35 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="submit">Save changes</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-blur fade" id="ModalAbsenEdit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="close" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="number" class="form-control" id="nis" readonly>
+                    </div>
+                    <input type="hidden" id="id" name="id">
+                    <div class="mb-3">
+                        <label class="form-label" for="keterangan">Keterangan</label>
+                        <select class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan">
+                            <option value="">-- Pilih --</option>
+                            <option value="1">Izin</option>
+                            <option value="2">Tanpa Keterangan</option>
+                            <option value="3">Sakit</option>
+                            <option value="4">Hadir</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="submitedit">Submit</button>
                 </div>
             </div>
         </div>
@@ -130,6 +162,51 @@
                 }
             });
 
+            $('#editabsen').click(function () {
+                var id   = $(this).data('id');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('attandance.attandance.edit')}}",
+                    data: {
+                        _token: "{{csrf_token()}}",
+                        id : id,
+                    },
+                    success: function (hasil) {
+                        $('#nis').val(hasil.nis);
+                        $('#id').val(hasil.id);
+                        if (hasil.keterangan == 'Izin') {
+                            $('#keterangan').val(1);
+                        }else if (hasil.keterangan == 'Tanpa Keterangan') {
+                            $('#keterangan').val(2);
+                        }else if (hasil.keterangan == 'Sakit') {
+                            $('#keterangan').val(3);
+                        } else {
+                            $('#keterangan').val(4);
+                        }
+                    }
+                });
+            });
+
+             $('#submitedit').click(function () {
+                var keterangan  = $('#keterangan').val();
+                var id          = $('#id').val();
+
+                $('#keterangan').val('');
+                $('#id').val('');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('attandance.attandance.update')}}",
+                    data: {
+                        _token: "{{csrf_token()}}",
+                        id : id,
+                        keterangan : keterangan,
+                    },
+                    success: function (hasil) {
+
+                    }
+                });
+            });
+
             $('#submit').click(function () {
                 var tahun   = $('#tahun').val();
                 var jurusan = $('#jurusan').val();
@@ -149,9 +226,9 @@
                     success: function (hasil) {
                         if (hasil.status_code == 200) {
                             startTimer()
-                           startTimer(10, "Absen Berhasil", "#00ff1a");
+                            startTimer(10, "Absen Berhasil", "#00ff1a");
                         }else if(hasil.status_code){
-                           startTimer(10, "Anda Sudah Absen", "#e5ff00");
+                            startTimer(10, "Anda Sudah Absen", "#e5ff00");
                         }
                     }
                 });
@@ -183,6 +260,27 @@
                 }, 500);
             }
 
+            $('#absenall').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('attandance.attandance.storeall')}}",
+                    data: {
+                        _token: "{{csrf_token()}}",
+                        matapelajaran : "{{$material->matapelajaran}}",
+                        jurusan : "{{$material->jurusan}}",
+                        no_kelas : "{{$material->no_kelas}}",
+                        kelas : "{{$material->kelas}}",
+                    },
+                    success: function (hasil) {
+                        if (hasil.status_code == 200) {
+                            console.log("berhasil bang");
+                        }else{
+                            console.log("gagal bang");
+                        }
+                    }
+                });
+            });
+
             $('#absenqr').click(function () {
                 var kode = $('#kode_qr').val();
                 if (kode == '') {
@@ -200,7 +298,7 @@
                             if (hasil.status_code == 200) {
                                 $('#kode_qr').val(hasil.kode);
                                 $('#qr').html('<img src="' + hasil.qr + '">');
-                                data();
+                                qrcode();
                             }
                         }
                     });
@@ -208,7 +306,7 @@
             });
 
             var qr = null;
-            function data() {
+            function qrcode() {
                 qr = setInterval(function () {
                     var kode = $('#kode_qr').val();
                     $.ajax({
@@ -245,7 +343,22 @@
                         }
                     }
                 });
-            })
+            });
+
+            function logout() {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('attandance.logout')}}",
+                    data: {
+                        _token: "{{csrf_token()}}",
+                    },
+                    success: function (hasil) {
+                        if (hasil != null) {
+                            location.reload();
+                        }
+                    }
+                });
+            }
 
             var countDownDate   = new Date("{{date('M d, Y ') . $jam_end}}").getTime(); // Set the date we're counting down to
             var now2            = new Date("{{date('M d, Y ') . $jam_start}}").getTime(); // Get today's date and time
@@ -282,6 +395,7 @@
                 // If the count down is finished, write some text
                 if (distance < 0) {
                     clearInterval(x);
+                    // logout();
                 }
             },
             1000);

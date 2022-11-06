@@ -30,11 +30,12 @@
                     <label class="form-label">Jurusan/Bagian Kelas</label>
                     <select class="form-select" wire:model="jurusan_no_kelas" wire:change="matapelajaran">
                         <option value="">-- Pilih --</option>
+                        @php
+                            $validjurusan = null;
+                            $validno_kelas = null;
+                        @endphp
                         @foreach ($alljurusan_no_kelas as $showalljurusan_no_kelas)
                             @if ($kelas == 'X')
-                                @php
-                                    $validno_kelas = null;
-                                @endphp
                                 @if ($showalljurusan_no_kelas->no_kelas != $validno_kelas && $showalljurusan_no_kelas->no_kelas != null)
                                     <option value="{{$showalljurusan_no_kelas->no_kelas}}">{{$showalljurusan_no_kelas->no_kelas}}</option>
                                 @endif
@@ -42,11 +43,9 @@
                                     $validno_kelas = $showalljurusan_no_kelas->no_kelas;
                                 @endphp
                             @else
-                                @php
-                                    $validjurusan = null;
-                                @endphp
+
                                 @if ($showalljurusan_no_kelas->jurusan != $validjurusan && $showalljurusan_no_kelas->jurusan != null)
-                                    <option value="{{$showalljurusan_no_kelas->jurusan}}">{{$showalljurusan_no_kelas->jurusan}}</option>
+                                    <option value="{{App\Models\Department::find($showalljurusan_no_kelas->jurusan)->jurusan}}">{{App\Models\Department::find($showalljurusan_no_kelas->jurusan)->jurusan}}</option>
                                 @endif
                                 @php
                                     $validjurusan = $showalljurusan_no_kelas->jurusan;

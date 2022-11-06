@@ -27,16 +27,30 @@ class TeacherSeeder extends Seeder
             $status     = ['PNS', 'Non PNS'];
             $i          = array_rand($status, 1);
 
-            $walikelas  = array('X', 'XI', 'XII');
-            $wk         = array_rand($walikelas, 1);
-
-            $databagian_kelas = StudentDetail::groupBy('no_kelas')->having('no_kelas', '!=', 'null')->get('no_kelas');
-
-            $no_kelas = [];
-            foreach ($databagian_kelas as $show_bagian_kelas) {
-                $no_kelas[] = $show_bagian_kelas->no_kelas;
+            $datakelas  = StudentDetail::groupBy('kelas')->get('kelas');
+            $walikelas  = [];
+            foreach ($datakelas as $showkelas) {
+                $walikelas[] = $showkelas->kelas;
             }
-            $nks = array_rand($no_kelas, 1);
+            $wk = array_rand($walikelas, 1);
+
+            if ($walikelas[$wk] == 'X') {
+                $databagian_kelas = StudentDetail::groupBy('no_kelas')->having('no_kelas', '!=', 'null')->get('no_kelas');
+
+                $no_kelas = [];
+                foreach ($databagian_kelas as $show_bagian_kelas) {
+                    $no_kelas[] = $show_bagian_kelas->no_kelas;
+                }
+                $nks = array_rand($no_kelas, 1);
+            } else {
+                $datajurusan = StudentDetail::groupBy('jurusan')->having('jurusan', '!=', 'null')->get('jurusan');
+
+                $jurusan = [];
+                foreach ($datajurusan as $show_jurusan) {
+                    $jurusan[] = $show_jurusan->jurusan;
+                }
+                $jrs = array_rand($jurusan, 1);
+            }
 
             if ($walikelas[$wk] == 'X') {
                 $id_guru = TeacherDetail::create([
@@ -60,28 +74,32 @@ class TeacherSeeder extends Seeder
                     'email'         => 'teacher@teacher.com',
                     'lulusan'       => 'S1',
                     'wali_kelas'    => $walikelas[$wk],
-                    'wali_jurusan'  => rand(1, 4),
+                    'wali_jurusan'  => $jurusan[$jrs],
                     'status'        => $status[$i],
                     'jabatan'       => $jabatan[$y],
                 ]);
             }
 
-
             for ($l = 0; $l < 8; $l++) {
-                $kelas          = array('X', 'XI', 'XII');
-                $k              = array_rand($kelas, 1);
-                $jurusan        = rand(1,4);
-                $matapelajaran  = rand(1,4);
-                $data2          = Teaching::where('kelas', $kelas[$k])->where('jurusan', $jurusan)->where('matapelajaran', $matapelajaran)->first();
-                $databagian_kelas2 = StudentDetail::groupBy('no_kelas')->having('no_kelas', '!=', 'null')->get('no_kelas');
-
-                $no_kelas2 = [];
-                foreach ($databagian_kelas2 as $show_bagian_kelas2) {
-                    $no_kelas2[] = $show_bagian_kelas2->no_kelas;
+                $datakelas2  = StudentDetail::groupBy('kelas')->get('kelas');
+                $kelas  = [];
+                foreach ($datakelas2 as $showkelas) {
+                    $kelas[] = $showkelas->kelas;
                 }
-                $nks2 = array_rand($no_kelas2, 1);
+                $k = array_rand($kelas, 1);
+                $matapelajaran  = rand(1,4);
 
                 if ($kelas[$k] == 'X') {
+                    $databagian_kelas2  = StudentDetail::groupBy('no_kelas')->having('no_kelas', '!=', 'null')->get('no_kelas');
+                    $no_kelas2          = [];
+
+                    foreach ($databagian_kelas2 as $show_bagian_kelas2) {
+                        $no_kelas2[] = $show_bagian_kelas2->no_kelas;
+                    }
+
+                    $nks2   = array_rand($no_kelas2, 1);
+                    $data2  = Teaching::where('id_guru', $id_guru->id)->where('kelas', $kelas[$k])->where('no_kelas', $no_kelas2[$nks2])->where('matapelajaran', $matapelajaran)->first();
+
                     if ($data2 == null) {
                         Teaching::create([
                             'id_guru'       => $id_guru->id,
@@ -91,16 +109,25 @@ class TeacherSeeder extends Seeder
                         ]);
                     }
                 } else {
+                    $datajurusan2   = StudentDetail::groupBy('jurusan')->having('jurusan', '!=', 'null')->get('jurusan');
+                    $jurusan2       = [];
+
+                    foreach ($datajurusan2 as $show_jurusan2) {
+                        $jurusan2[] = $show_jurusan2->jurusan;
+                    }
+
+                    $jrs2   = array_rand($jurusan2, 1);
+                    $data2  = Teaching::where('id_guru', $id_guru->id)->where('kelas', $kelas[$k])->where('jurusan', $jurusan2[$jrs2])->where('matapelajaran', $matapelajaran)->first();
+
                     if ($data2 == null) {
                         Teaching::create([
                             'id_guru'       => $id_guru->id,
                             'kelas'         => $kelas[$k],
-                            'jurusan'       => $jurusan,
+                            'jurusan'       => $jurusan2[$jrs2],
                             'matapelajaran' => $matapelajaran,
                         ]);
                     }
                 }
-
             }
 
             Teacher::create([

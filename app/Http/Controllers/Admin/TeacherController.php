@@ -36,6 +36,7 @@ class TeacherController extends AppController
         $teacher = TeacherDetail::find($request->name);
 
         Teacher::create([
+            'id_guru'               => $teacher->id,
             'name'                  => $teacher->nama,
             'username'              => $username,
             'password'              => Hash::make($password),
@@ -55,7 +56,7 @@ class TeacherController extends AppController
 
     public function update(Request $request, Teacher $teacher)
     {
-        $teacher = TeacherDetail::find(Crypt::decrypt($request->name));
+        $teacher = TeacherDetail::find($request->name);
 
         Teacher::where('id', $teacher->id)
             ->update([

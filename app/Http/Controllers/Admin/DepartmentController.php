@@ -21,12 +21,8 @@ class DepartmentController extends AppController
             'jurusan' => 'required',
         ]);
 
-        $int = '1234567890';
-        $kode = substr(str_shuffle($int), 0, 2);
-
         Department::create([
-            'kode'      => $kode,
-            'jurusan'   => $request->jurusan,
+            'jurusan' => $request->jurusan,
         ]);
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }

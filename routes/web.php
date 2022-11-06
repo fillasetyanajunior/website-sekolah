@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CobaController;
 use App\Http\Controllers\Home\RegistrationController as Registration;
 use App\Http\Controllers\Home\HomeController as Home;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/coba', [CobaController::class,'coba']);
 Route::get('/', [Home::class, 'index'])->name('home');
 Route::get('/guru-dan-pegawai',[Home::class, 'teacher'])->name('home.teacher');
 Route::get('/siswa',[Home::class, 'student'])->name('home.student');

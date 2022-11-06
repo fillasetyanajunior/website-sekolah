@@ -39,6 +39,27 @@
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
                                 </a>
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                    data-bs-target="#SiswaKelasModal" id="tambahsiswakelas">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Tambah Siswa Dengan Kelas
+                                </a>
+                                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                    data-bs-target="#SiswaKelasModal" id="tambahsiswakelas" aria-label="Tambah Siswa Dengan Kelas">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -123,7 +144,7 @@
                             <select class="form-control" id="name" name="name">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($siswa as $siswa)
-                                    <option value="{{$siswa->id}}">{{$siswa->nama}}</option>
+                                    <option value="{{$siswa->id}}">{{$siswa->kelas == 'X' ? $siswa->nama . ' - ' . $siswa->no_kelas : $siswa->nama . ' - ' . App\Models\Department::find($siswa->jurusan)->jurusan}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -134,6 +155,56 @@
                         <div class="mb-3 password">
                             <label class="form-label" for="password">Password</label>
                             <input type="text" class="form-control" id="password" name="password">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-blur fade" id="SiswaKelasModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Large modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="body_siswa_kelas">
+                <form action="" method="POST" class="needs-validation" novalidate>
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="kelas">Kelas</label>
+                            <select class="form-control @error('kelas') is-invalid @enderror" id="kelas" name="kelas">
+                                <option value="">-- Pilih --</option>
+                                <option value="1">X</option>
+                                <option value="2">XI</option>
+                                <option value="3">XII</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 jurusan">
+                            <label class="form-label" for="jurusan">Jurusan</label>
+                            <select class="form-select @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan">
+                                <option value="">-- Pilih --</option>
+                                @foreach ($department as $showdepartment)
+                                    <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3 bagian_kelas">
+                            <label class="form-label" for="no_kelas">Bagian Kelas</label>
+                            <select class="form-select @error('no_kelas') is-invalid @enderror" id="no_kelas" name="no_kelas">
+                                <option value="">-- Pilih --</option>
+                                @foreach ($class as $showclass)
+                                    @if ($showclass->no_kelas != null)
+                                        <option value="{{$showclass->no_kelas}}">{{$showclass->no_kelas}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -163,6 +234,32 @@
                 $('#username').val('')
                 $('#password').val('')
             });
+
+            $('#tambahsiswakelas').on('click', function () {
+                $('.body_siswa_kelas button[type=submit]').text('Add');
+                $('.modal-title').text('Tambah User Siswa');
+                $('.body_siswa_kelas form').attr('action', '{{route("admin.student.store")}}');
+                $('.body_siswa_kelas form').attr('method', 'post');
+
+                $('.jurusan').hide();
+                $('.bagian_kelas').hide();
+
+                $('#kelas').val('')
+                $('#jurusan').val('')
+                $('#no_kelas').val('')
+            });
+
+            $('#kelas').change(function (){
+                let id = $(this).val();
+                if (id == 1) {
+                    $('.jurusan').hide();
+                    $('.bagian_kelas').show();
+                }else{
+                    $('.jurusan').show();
+                    $('.bagian_kelas').hide();
+                }
+            });
+
             $('#editsiswa*').on('click', function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.student.edit",":id")}}'.replace(':id', id);

@@ -33,20 +33,20 @@ class DashboardController extends AppController
                         'Sabtu',
                         'Minggu'
                     );
-        if ($material->kelas == 'X') {
-            $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
-                                ->where('no_kelas', $material->no_kelas)->get();
-        } else {
-            $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
-                                ->where('jurusan', $material->jurusan)->get();
-        }
         // if ($material->kelas == 'X') {
         //     $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
-        //                         ->where('no_kelas', $material->no_kelas)->where('hari', $hari[date('N')])->get();
+        //                         ->where('no_kelas', $material->no_kelas)->get();
         // } else {
         //     $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
-        //                         ->where('jurusan', $material->jurusan)->where('hari', $hari[date('N')])->get();
+        //                         ->where('jurusan', $material->jurusan)->get();
         // }
+        if ($material->kelas == 'X') {
+            $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
+                                ->where('no_kelas', $material->no_kelas)->where('hari', $hari[date('N')])->get();
+        } else {
+            $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
+                                ->where('jurusan', $material->jurusan)->where('hari', $hari[date('N')])->get();
+        }
 
         if (count($schedule) == 1) {
             $jam_start  = $schedule[0]->jam_start;
