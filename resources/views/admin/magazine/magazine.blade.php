@@ -146,7 +146,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahmagazine').on('click', function () {
+            $('#tambahmagazine').click(function () {
                 $('.body_majalah button[type=submit]').html('Add');
                 $('.modal-title').html('Tambah Magazine');
                 $('.body_majalah form').attr('action', '{{route("admin.magazine.store")}}');
@@ -156,7 +156,7 @@
                 $('#thumnail').val('')
                 $('#file').val('')
             });
-            $('#editmagazine*').on('click', function () {
+            $('#editmagazine*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.magazine.edit",":id")}}'.replace(':id', id);
 

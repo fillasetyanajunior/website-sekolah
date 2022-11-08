@@ -177,7 +177,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahmateri').on('click', function () {
+            $('#tambahmateri').click(function () {
                 $('.body_materi button[type=submit]').text('Add');
                 $('.modal-title').text('Tambah Materi');
                 $('.body_materi form').attr('action', '{{route("admin.material.store")}}');
@@ -187,7 +187,7 @@
                 $("#judul").val('');
                 $("#kelas").val('');
             });
-            $('#editmateri*').on('click', function () {
+            $('#editmateri*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.material.edit",":id")}}'.replace(':id', id);
 

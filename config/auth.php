@@ -60,6 +60,10 @@ return [
             'driver' => 'session',
             'provider' => 'teachers',
         ],
+        'counseling' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
+        ],
         'app' => [
             'driver' => 'session',
             'provider' => 'teachers',

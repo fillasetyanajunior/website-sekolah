@@ -153,7 +153,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahinformasi').on('click', function () {
+            $('#tambahinformasi').click(function () {
                 $('.body_informasi button[type=submit]').html('Upload');
                 $('.modal-title').html('Upload Berita');
                 $('.body_informasi form').attr('action', '{{route("admin.news.store")}}');
@@ -163,7 +163,7 @@
                 $('#description').val('')
                 $('#thumnail').val('')
             });
-            $('#editinformasi*').on('click', function () {
+            $('#editinformasi*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.news.edit",":id")}}'.replace(':id', id);
 

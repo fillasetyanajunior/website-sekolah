@@ -158,7 +158,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahnilai').on('click', function () {
+            $('#tambahnilai').click(function () {
                 $('.body_nilai button[type=submit]').text('Add');
                 $('.modal-title').text('Tambah Nilai');
                 $('.body_nilai form').attr('action', '{{route("admin.grade.store")}}');
@@ -169,7 +169,7 @@
                 $('.import_excel').show()
                 $('.guru').show()
             });
-            $('#editnilai*').on('click', function () {
+            $('#editnilai*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.grade.edit",":id")}}'.replace(':id', id);
 

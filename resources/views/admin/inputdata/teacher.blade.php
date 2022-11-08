@@ -150,7 +150,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#tambahguru').on('click', function () {
+        $('#tambahguru').click(function () {
             $('.body_guru button[type=submit]').text('Add');
             $('.modal-title').text('Tambah Guru');
             $('.body_guru form').attr('action', '{{route("admin.input-teacher.store")}}');

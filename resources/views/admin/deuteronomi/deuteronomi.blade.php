@@ -323,7 +323,7 @@
             $('#update').hide();
             $('#create').hide();
 
-            $('#tambahulangan').on('click', function () {
+            $('#tambahulangan').click(function () {
                 $('.body_ulangan button[type=submit]').html('Add');
                 $('.modal-title').html('Tambah Jadwal Ulangan');
                 $('.body_ulangan form').attr('action', '{{route("admin.deuteronomi.store")}}');
@@ -393,7 +393,7 @@
                 }
             });
 
-            $('#editulangan*').on('click', function () {
+            $('#editulangan*').click(function () {
                 $('#update').show();
                 $('#create').hide();
 

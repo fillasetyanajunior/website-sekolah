@@ -268,7 +268,7 @@
             $('.jurusan').hide()
             $('.bagian_kelas').hide()
 
-            $('#tambahjadwal').on('click', function () {
+            $('#tambahjadwal').click(function () {
                 $('.body_jadwal button[type=submit]').text('Add');
                 $('.modal-title').text('Tambah Jadwal Pelajaran');
                 $('.body_jadwal form').attr('action', '{{route("admin.schedule.store")}}');
@@ -291,13 +291,16 @@
                 if (id == 1) {
                     $('.jurusan').hide();
                     $('.bagian_kelas').show();
-                }else{
+                }else if(id == 2 || id == 3){
                     $('.jurusan').show();
+                    $('.bagian_kelas').hide();
+                }else{
+                    $('.jurusan').hide();
                     $('.bagian_kelas').hide();
                 }
             });
 
-            $('#editjadwal*').on('click', function () {
+            $('#editjadwal*').click(function () {
                 $('.update').show()
                 $('.create').hide()
                 const id = $(this).data('id');
@@ -373,7 +376,7 @@
                     $(font).append(fieldHTMLfont);
                 }
             });
-            $(font).on('click', '.remove' , function (e) {
+            $(font).click('.remove' , function (e) {
                 e.preventDefault();
                 $(this).parent('div').remove();
                 x--;

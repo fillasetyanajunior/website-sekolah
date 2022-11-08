@@ -221,7 +221,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#tambahsiswa').on('click', function () {
+            $('#tambahsiswa').click(function () {
                 $('.body_siswa button[type=submit]').text('Add');
                 $('.modal-title').text('Tambah User Siswa');
                 $('.body_siswa form').attr('action', '{{route("admin.student.store")}}');
@@ -235,7 +235,7 @@
                 $('#password').val('')
             });
 
-            $('#tambahsiswakelas').on('click', function () {
+            $('#tambahsiswakelas').click(function () {
                 $('.body_siswa_kelas button[type=submit]').text('Add');
                 $('.modal-title').text('Tambah User Siswa');
                 $('.body_siswa_kelas form').attr('action', '{{route("admin.student.store")}}');
@@ -260,7 +260,7 @@
                 }
             });
 
-            $('#editsiswa*').on('click', function () {
+            $('#editsiswa*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.student.edit",":id")}}'.replace(':id', id);
 

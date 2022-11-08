@@ -181,7 +181,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahclassroom').on('click', function () {
+            $('#tambahclassroom').click(function () {
                 $('.body_ruangkelas button[type=submit]').html('Add');
                 $('.modal-title').html('Tambah Ruang Kelas');
                 $('.body_ruangkelas form').attr('action', '{{route("admin.classroom.store")}}');
@@ -193,7 +193,7 @@
 
                 $('.update').hide();
             });
-            $('#editclassroom*').on('click', function () {
+            $('#editclassroom*').click(function () {
                 $('.update').show();
                 const id = $(this).data('id');
                 let _url = '{{route("admin.classroom.edit",":id")}}'.replace(':id', id);

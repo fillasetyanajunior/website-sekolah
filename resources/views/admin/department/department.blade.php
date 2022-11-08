@@ -135,7 +135,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#tambahjurusan').on('click', function () {
+            $('#tambahjurusan').click(function () {
                 $('.body_jurusan button[type=submit]').text('Add');
                 $('.modal-title').text('Tambah Jurusan');
                 $('.body_jurusan form').attr('action', '{{route("admin.department.store")}}');
@@ -143,7 +143,7 @@
 
                 $("#jurusan").val('');
             });
-            $('#editjurusan*').on('click', function () {
+            $('#editjurusan*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.department.edit",":id")}}'.replace(':id', id);
 

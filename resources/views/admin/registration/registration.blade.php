@@ -152,7 +152,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#editpendaftaran*').on('click', function () {
+            $('#editpendaftaran*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.registration.edit",":id")}}'.replace(':id',id);
 

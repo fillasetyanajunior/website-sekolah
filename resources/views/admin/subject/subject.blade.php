@@ -135,7 +135,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#tambahmatapelajaran').on('click', function () {
+            $('#tambahmatapelajaran').click(function () {
                 $('.body_matapelajaran button[type=submit]').html('Add');
                 $('.modal-title').html('Tambah Matapelajaran');
                 $('.body_matapelajaran form').attr('action', '{{route("admin.subject.store")}}');
@@ -143,7 +143,7 @@
 
                 $("#matapelajaran").val('');
             });
-            $('#editmatapelajaran*').on('click', function () {
+            $('#editmatapelajaran*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.subject.edit",":id")}}'.replace(':id', id);
 

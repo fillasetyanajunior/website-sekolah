@@ -148,7 +148,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#tambahsiswa').on('click', function () {
+        $('#tambahsiswa').click(function () {
             $('.body_siswa button[type=submit]').text('Add');
             $('.modal-title').text('Tambah Siswa');
             $('.body_siswa form').attr('action', '{{route("admin.input-student.store")}}');

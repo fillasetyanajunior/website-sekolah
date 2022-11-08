@@ -145,7 +145,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#tambahtahun').on('click', function () {
+            $('#tambahtahun').click(function () {
                 $('.body_tahun button[type=submit]').html('Add');
                 $('.modal-title').html('Tambah Tahun Ajaran');
                 $('.body_tahun form').attr('action', '{{route("admin.year.store")}}');
@@ -154,7 +154,7 @@
                 $("#tahun").val('');
                 $("#semester").val('');
             });
-            $('#edittahun*').on('click', function () {
+            $('#edittahun*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.year.edit",":id")}}'.replace(':id', id);
 

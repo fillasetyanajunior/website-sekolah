@@ -19,6 +19,7 @@ class CreateStudentOffancesTable extends Migration
             $table->integer('id_siswa');
             $table->integer('skor');
             $table->integer('jenis_pelanggaran');
+            $table->enum('pilihan_pelapor', ['Guru', 'Lainnya']);
             $table->string('pelapor');
             $table->enum('pembinaan', ['Lisan', 'Perjanjian 1', 'Perjanjian 2', 'Pangilan Orang Tua', 'Skor']);
             $table->enum('keterangan', ['Pantauan']);

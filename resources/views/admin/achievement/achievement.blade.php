@@ -175,7 +175,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahprestasi').on('click', function () {
+            $('#tambahprestasi').click(function () {
                 $('.body_prestasi button[type=submit]').html('Add');
                 $('.modal-title').html('Tambah Prestasi');
                 $('.body_prestasi form').attr('action', '{{route("admin.achievement.store")}}');
@@ -185,7 +185,7 @@
                 $('#description').val('')
                 $('#thumnail').val('')
             });
-            $('#editprestasi*').on('click', function () {
+            $('#editprestasi*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.achievement.edit",":id")}}'.replace(':id', id);
 

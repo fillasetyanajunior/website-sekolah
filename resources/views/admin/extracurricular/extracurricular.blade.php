@@ -149,7 +149,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#tambahextra').on('click', function () {
+            $('#tambahextra').click(function () {
                 $('.body_extra button[type=submit]').text('Add');
                 $('.modal-title').text('Tambah Extra');
                 $('.body_extra form').attr('action', '{{route("admin.extracurricular.store")}}');
@@ -159,7 +159,7 @@
                 $('.huruf').hide()
                 $('.import_excel').show()
             });
-            $('#editextra*').on('click', function () {
+            $('#editextra*').click(function () {
                 const id = $(this).data('id');
                 let _url = '{{route("admin.extracurricular.edit",":id")}}'.replace(':id', id);
 
