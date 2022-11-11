@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class YearController extends AppController
 {
@@ -35,12 +36,12 @@ class YearController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Year $year)
+    public function edit(Request $request)
     {
-        return response()->json($year);
+        return response()->json(Year::find(Crypt::decrypt($request->year)));
     }
 
-    public function update(Request $request, Year $year)
+    public function update(Request $request)
     {
         if ($request->semester == 1) {
             $semester = 'Ganjil';
@@ -48,7 +49,7 @@ class YearController extends AppController
             $semester = 'Genap';
         }
 
-        Year::where('id', $year->id)
+        Year::where('id', Crypt::decrypt($request->year))
             ->update([
                 'tahun'     => $request->tahun,
                 'semester'  => $semester,
@@ -56,9 +57,9 @@ class YearController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Year $year)
+    public function destroy(Request $request)
     {
-        Year::destroy($year->id);
+        Year::destroy(Crypt::decrypt($request->year));
         return redirect()->back()->with('success', 'Data Berhasil Delete');
     }
 }

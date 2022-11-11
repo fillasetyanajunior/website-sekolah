@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -91,6 +91,7 @@
                                                 <th>#</th>
                                                 <th>Nama</th>
                                                 <th>Username</th>
+                                                <th>Kelas</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -99,13 +100,21 @@
                                                 $i = 1;
                                             @endphp
                                             @foreach ($student as $showstudent)
+                                                @php
+                                                    $detail = App\Models\StudentDetail::find($showstudent->id_siswa);
+                                                @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
                                                     <td>{{$showstudent->name}}</td>
                                                     <td>{{$showstudent->username}}</td>
+                                                    @if ($detail->kelas == 'X')
+                                                        <td>{{$detail->kelas . ' ' . $detail->no_kelas}}</td>
+                                                    @else
+                                                        <td>{{$detail->kelas . ' ' . App\Models\Department::find($detail->jurusan)->jurusan}}</td>
+                                                    @endif
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editsiswa" data-bs-toggle="modal" data-bs-target="#SiswaModal" data-id="{{$showstudent->id}}">Ubah</button>
-                                                        <form action="{{route('admin.student.destroy', $showstudent->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editsiswa" data-bs-toggle="modal" data-bs-target="#SiswaModal" data-id="{{Crypt::encrypt($showstudent->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.student.destroy', Crypt::encrypt($showstudent->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -144,7 +153,7 @@
                             <select class="form-control" id="name" name="name">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($siswa as $siswa)
-                                    <option value="{{$siswa->id}}">{{$siswa->kelas == 'X' ? $siswa->nama . ' - ' . $siswa->no_kelas : $siswa->nama . ' - ' . App\Models\Department::find($siswa->jurusan)->jurusan}}</option>
+                                    <option value="{{$siswa->nama}}">{{$siswa->kelas == 'X' ? $siswa->nama . ' - ' . $siswa->kelas . ' ' . $siswa->no_kelas : $siswa->nama . ' - ' . $siswa->kelas . ' ' .  App\Models\Department::find($siswa->jurusan)->jurusan}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -186,26 +195,6 @@
                                 <option value="3">XII</option>
                             </select>
                         </div>
-                        <div class="mb-3 jurusan">
-                            <label class="form-label" for="jurusan">Jurusan</label>
-                            <select class="form-select @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($department as $showdepartment)
-                                    <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3 bagian_kelas">
-                            <label class="form-label" for="no_kelas">Bagian Kelas</label>
-                            <select class="form-select @error('no_kelas') is-invalid @enderror" id="no_kelas" name="no_kelas">
-                                <option value="">-- Pilih --</option>
-                                @foreach ($class as $showclass)
-                                    @if ($showclass->no_kelas != null)
-                                        <option value="{{$showclass->no_kelas}}">{{$showclass->no_kelas}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -241,23 +230,9 @@
                 $('.body_siswa_kelas form').attr('action', '{{route("admin.student.store")}}');
                 $('.body_siswa_kelas form').attr('method', 'post');
 
-                $('.jurusan').hide();
-                $('.bagian_kelas').hide();
-
                 $('#kelas').val('')
                 $('#jurusan').val('')
                 $('#no_kelas').val('')
-            });
-
-            $('#kelas').change(function (){
-                let id = $(this).val();
-                if (id == 1) {
-                    $('.jurusan').hide();
-                    $('.bagian_kelas').show();
-                }else{
-                    $('.jurusan').show();
-                    $('.bagian_kelas').hide();
-                }
             });
 
             $('#editsiswa*').click(function () {
@@ -280,7 +255,7 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#name').val(hasil.student.id_siswa)
+                        $('#name').val(hasil.student.name)
                         $('#username').val(hasil.student.username)
                         $('#password').val(hasil.password_encrypted)
                     }

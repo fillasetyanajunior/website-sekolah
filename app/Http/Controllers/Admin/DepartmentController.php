@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class DepartmentController extends AppController
 {
@@ -27,23 +28,23 @@ class DepartmentController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Department $department)
+    public function edit(Request $request)
     {
-        return response()->json($department);
+        return response()->json(Department::find(Crypt::decrypt($request->department)));
     }
 
-    public function update(Request $request, Department $department)
+    public function update(Request $request)
     {
-        Department::where('id', $department->id)
+        Department::where('id', Crypt::decrypt($request->department))
             ->update([
                 'jurusan' => $request->jurusan,
             ]);
         return redirect()->back()->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Department $department)
+    public function destroy(Request $request)
     {
-        Department::destroy($department->id);
+        Department::destroy(Crypt::decrypt($request->department));
         return redirect()->back()->with('success', 'Data Berhasil Delete');
     }
 }

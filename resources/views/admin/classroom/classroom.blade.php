@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -84,8 +84,8 @@
                                                     <td>{{$showclassroom->jurusan != null ? $showclassroom->kelas . ' ' . App\Models\Department::find($showclassroom->jurusan)->jurusan : $showclassroom->kelas . ' ' . $showclassroom->no_kelas}}</td>
                                                     <td>{{App\Models\Subject::find($showclassroom->nama)->matapelajaran}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editclassroom" data-bs-toggle="modal" data-bs-target="#ClassroomModal" data-id="{{$showclassroom->id}}">Ubah</button>
-                                                        <form action="{{route('admin.classroom.destroy', $showclassroom->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editclassroom" data-bs-toggle="modal" data-bs-target="#ClassroomModal" data-id="{{Crypt::encrypt($showclassroom->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.classroom.destroy', Crypt::encrypt($showclassroom->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -134,7 +134,7 @@
                                 <select class="form-control" id="matapelajaran" name="matapelajaran">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($subject as $showsubject)
-                                        <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                        <option value="{{$showsubject->matapelajaran}}">{{$showsubject->matapelajaran}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -143,7 +143,7 @@
                                 <select class="form-control" id="guru" name="guru">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($teacher as $showteacher)
-                                        <option value="{{$showteacher->id}}">{{$showteacher->nama}}</option>
+                                        <option value="{{$showteacher->nama}}">{{$showteacher->nama}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -152,7 +152,7 @@
                                 <select class="form-control" id="jurusan" name="jurusan">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($department as $showdepartment)
-                                        <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                        <option value="{{$showdepartment->jurusan}}">{{$showdepartment->jurusan}}</option>
                                     @endforeach
                                 </select>
                             </div>

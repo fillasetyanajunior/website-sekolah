@@ -21,42 +21,67 @@ class TeacherController extends AppController
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
+        if ($request->name != null) {
+            $request->validate([
+                'name' => 'required',
+            ]);
 
-        $int        = '1234567890';
-        $password   = substr(str_shuffle($int), 0, 6);
+            $int        = '1234567890';
+            $password   = substr(str_shuffle($int), 0, 6);
 
-        $ints       = '1234567890';
-        $acak       = substr(str_shuffle($ints), 0, 5);
-        $thn        = date('ymd');
-        $username   = $thn . $acak;
+            $ints       = '1234567890';
+            $acak       = substr(str_shuffle($ints), 0, 5);
+            $thn        = date('ymd');
+            $username   = $thn . $acak;
 
-        $teacher = TeacherDetail::find($request->name);
+            $teacher = TeacherDetail::where('nama', $request->name)->first();
 
-        Teacher::create([
-            'id_guru'               => $teacher->id,
-            'name'                  => $teacher->nama,
-            'username'              => $username,
-            'password'              => Hash::make($password),
-            'password_encrypted'    => Crypt::encrypt($password),
-        ]);
+            Teacher::create([
+                'id_guru'               => $teacher->id,
+                'name'                  => $teacher->nama,
+                'username'              => $username,
+                'password'              => Hash::make($password),
+                'role'                  => $teacher->wali_kelas == null ? $teacher->jabatan : 'Wali Kelas',
+                'password_encrypted'    => Crypt::encrypt($password),
+            ]);
+        }else {
+            $teacher = TeacherDetail::all();
+
+            foreach ($teacher as $showteacher) {
+                $int        = '1234567890';
+                $password   = substr(str_shuffle($int), 0, 6);
+
+                $ints       = '1234567890';
+                $acak       = substr(str_shuffle($ints), 0, 5);
+                $thn        = date('ymd');
+                $username   = $thn . $acak;
+
+                Teacher::create([
+                    'id_guru'               => $showteacher->id,
+                    'name'                  => $showteacher->nama,
+                    'username'              => $username,
+                    'password'              => Hash::make($password),
+                    'role'                  => $showteacher->wali_kelas == null ? $showteacher->jabatan : 'Wali Kelas',
+                    'password_encrypted'    => Crypt::encrypt($password),
+                ]);
+            }
+        }
 
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Teacher $teacher)
+    public function edit(Request $request)
     {
+        $teacher = Teacher::find(Crypt::decrypt($request->teacher));
         return response()->json([
             'teacher'               => $teacher,
             'password_encrypted'    => Crypt::decrypt($teacher->password_encrypted),
         ]);
     }
 
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request)
     {
-        $teacher = TeacherDetail::find($request->name);
+        $teacher = TeacherDetail::find(Crypt::decrypt($request->teacher));
 
         Teacher::where('id', $teacher->id)
             ->update([
@@ -68,9 +93,9 @@ class TeacherController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Teacher $teacher)
+    public function destroy(Request $request)
     {
-        Teacher::destroy($teacher->id);
+        Teacher::destroy(Crypt::decrypt($request->teacher));
         return redirect()->back()->with('success', 'Data Berhasil Delete');
     }
 }

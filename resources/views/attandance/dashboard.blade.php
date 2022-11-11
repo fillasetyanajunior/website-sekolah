@@ -221,7 +221,7 @@
                     data: {
                         _token: "{{csrf_token()}}",
                         nis : tahun + jurusan + random,
-                        matapelajaran : "{{$material->matapelajaran}}",
+                        matapelajaran : "{{Crypt::encrypt($material->matapelajaran)}}",
                     },
                     success: function (hasil) {
                         if (hasil.status_code == 200) {
@@ -266,8 +266,8 @@
                     url: "{{route('attandance.attandance.storeall')}}",
                     data: {
                         _token: "{{csrf_token()}}",
-                        matapelajaran : "{{$material->matapelajaran}}",
-                        jurusan : "{{$material->jurusan}}",
+                        matapelajaran : "{{Crypt::encrypt($material->matapelajaran)}}",
+                        jurusan : "{{Crypt::encrypt($material->jurusan)}}",
                         no_kelas : "{{$material->no_kelas}}",
                         kelas : "{{$material->kelas}}",
                     },
@@ -289,8 +289,8 @@
                         url: "{{route('attandance.qrcode.store')}}",
                         data: {
                             _token: "{{csrf_token()}}",
-                            matapelajaran : "{{$material->matapelajaran}}",
-                            jurusan : "{{$material->jurusan}}",
+                            matapelajaran : "{{Crypt::encrypt($material->matapelajaran)}}",
+                            jurusan : "{{Crypt::encrypt($material->jurusan)}}",
                             no_kelas : "{{$material->no_kelas}}",
                             kelas : "{{$material->kelas}}",
                         },
@@ -395,7 +395,7 @@
                 // If the count down is finished, write some text
                 if (distance < 0) {
                     clearInterval(x);
-                    // logout();
+                    logout();
                 }
             },
             1000);

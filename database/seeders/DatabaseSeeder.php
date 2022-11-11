@@ -72,12 +72,12 @@ class DatabaseSeeder extends Seeder
             ['jurusan' => 'IPB'],
             ['jurusan' => 'AGAMA'],
         ]);
-        DB::table('subjects')->insert([
-            ['matapelajaran' => 'Fisika'],
-            ['matapelajaran' => 'Bahasa Indonesia'],
-            ['matapelajaran' => 'Matematika'],
-            ['matapelajaran' => 'Geografi']
-        ]);
+        // DB::table('subjects')->insert([
+        //     ['matapelajaran' => 'Fisika'],
+        //     ['matapelajaran' => 'Bahasa Indonesia'],
+        //     ['matapelajaran' => 'Matematika'],
+        //     ['matapelajaran' => 'Geografi']
+        // ]);
         DB::table('years')->insert([
             ['tahun' => '2021/2022','semester' => 'Ganjil'],
             ['tahun' => '2021/2022','semester' => 'Genap'],

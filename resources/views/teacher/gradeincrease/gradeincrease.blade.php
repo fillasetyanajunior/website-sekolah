@@ -5,7 +5,7 @@
     <x-sliderbar-teacher></x-sliderbar-teacher>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -86,7 +86,7 @@
                                                     <td>{{$showstudent->nisn}}</td>
                                                     <td>{{$showstudent->nama}}</td>
                                                     <td width="100">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editgradeincrease" data-bs-toggle="modal" data-bs-target="#GradeIncreaseModal" data-id="{{$showstudent->id}}">Ubah</button>
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editgradeincrease" data-bs-toggle="modal" data-bs-target="#GradeIncreaseModal" data-id="{{Crypt::encrypt($showstudent->id)}}">Ubah</button>
                                                     </td>
                                                 </tr>
                                             @endforeach

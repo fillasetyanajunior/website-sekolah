@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -96,8 +96,8 @@
                                                     <td>{{$detail->no_kelas}}</td>
                                                     <td>Ruangan {{$detail->ruangan}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" href="" id="editulangan" data-bs-toggle="modal" data-bs-target="#UlanganModal" data-id="{{$detail->id}}">Ubah</button>
-                                                        <form action="{{route('admin.deuteronomi.destroy', $detail->id)}}" method="post" class="d-inline" >
+                                                        <button type="button" class="btn btn-sm btn-warning" href="" id="editulangan" data-bs-toggle="modal" data-bs-target="#UlanganModal" data-id="{{Crypt::encrypt($detail->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.deuteronomi.destroy', Crypt::encrypt($detail->id))}}" method="post" class="d-inline" >
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -157,7 +157,7 @@
                             <select class="form-control @error('tahun') is-invalid @enderror" id="tahun" name="tahun">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($year as $year)
-                                    <option value="{{$year->id}}">{{$year->tahun . ' - ' . $year->semester}}</option>
+                                    <option value="{{$year->tahun . '/' . $year->semester}}">{{$year->tahun . ' - ' . $year->semester}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -176,7 +176,7 @@
                                 <select class="form-control @error('matapelajaran') is-invalid @enderror" id="matapelajaran" name="matapelajaran">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($subject as $showsubject)
-                                        <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                        <option value="{{$showsubject->matapelajaran}}">{{$showsubject->matapelajaran}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -185,7 +185,7 @@
                                 <select class="form-select @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($department as $showdepartment)
-                                        <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                        <option value="{{$showdepartment->jurusan}}">{{$showdepartment->jurusan}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -220,7 +220,7 @@
                                         <select class="form-control @error('matapelajaran_pertama') is-invalid @enderror" id="matapelajaran_pertama" name="matapelajaran_pertama">
                                             <option value="">-- Pilih --</option>
                                             @foreach ($subject as $showsubject)
-                                                <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                                <option value="{{$showsubject->matapelajaran}}">{{$showsubject->matapelajaran}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -231,7 +231,7 @@
                                         <select class="form-select @error('jurusan_pertama') is-invalid @enderror" id="jurusan_pertama" name="jurusan_pertama">
                                             <option value="">-- Pilih --</option>
                                             @foreach ($department as $showdepartment)
-                                                <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                                <option value="{{$showdepartment->jurusan}}">{{$showdepartment->jurusan}}</option>
                                             @endforeach
                                         </select>
                                     </div>

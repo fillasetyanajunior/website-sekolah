@@ -8,6 +8,7 @@ use App\Models\Exam;
 use App\Models\StudentDetail;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 
 class ExamController extends AppController
@@ -40,16 +41,23 @@ class ExamController extends AppController
         Exam::create([
             'tanggal'       => $request->tanggal,
             'jam'           => $request->jam,
-            'matapelajaran' => $request->matapelajaran,
-            'jurusan'       => $request->jurusan,
+            'matapelajaran' => Subject::where('matapelajaran', $request->matapelajaran)->first()->id,
+            'jurusan'       => Department::where('jurusan', $request->jurusan)->first()->id,
             'tipe_ujian'    => $tipe,
         ]);
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Exam $exam)
+    public function edit(Request $request)
     {
-        return response()->json($exam);
+        $exam = Exam::find(Crypt::decrypt($request->exam));
+        return response()->json([
+            'tanggal'       => $exam->tanggal,
+            'jam'           => $exam->jam,
+            'matapelajaran' => Subject::where('matapelajaran', $exam->matapelajaran)->first()->id,
+            'jurusan'       => Department::where('jurusan', $exam->jurusan)->first()->id,
+            'tipe_ujian'    => $exam->tipe_ujian,
+        ]);
     }
 
     public function update(Request $request, Exam $exam)
@@ -60,20 +68,20 @@ class ExamController extends AppController
             $tipe = 'Praktikum';
         }
 
-        Exam::where('id', $exam->id)
+        Exam::where('id', Crypt::decrypt($request->exam))
             ->update([
             'tanggal'       => $request->tanggal,
             'jam'           => $request->jam,
-            'matapelajaran' => $request->matapelajaran,
-            'jurusan'       => $request->jurusan,
+            'matapelajaran' => Subject::where('matapelajaran', $request->matapelajaran)->first()->id,
+            'jurusan'       => Department::where('jurusan', $request->jurusan)->first()->id,
             'tipe_ujian'    => $tipe,
         ]);
         return redirect()->back()->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Exam $exam)
+    public function destroy(Request $request)
     {
-        Exam::destroy($exam->id);
+        Exam::destroy(Crypt::decrypt($request->exam));
         return redirect()->back()->with('success', 'Data Berhasil Delete');
     }
 }

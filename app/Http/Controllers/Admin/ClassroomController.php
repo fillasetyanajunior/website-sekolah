@@ -10,6 +10,7 @@ use App\Models\Subject;
 use App\Models\TeacherDetail;
 use App\Models\Teaching;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class ClassroomController extends AppController
 {
@@ -39,8 +40,8 @@ class ClassroomController extends AppController
         if ($request->kelas == 1) {
             foreach ($teaching as $showteaching) {
                 Classroom::create([
-                    'id_guru'   => $showteaching->id_guru,
-                    'nama'      => $showteaching->matapelajaran,
+                    'id_guru'   => TeacherDetail::where('nama', $showteaching->id_guru)->first()->id,
+                    'nama'      => Subject::where('matapelajaran', $showteaching->matapelajaran)->first()->id,
                     'no_kelas'  => $showteaching->no_kelas,
                     'kelas'     => $showteaching->kelas,
                 ]);
@@ -48,9 +49,9 @@ class ClassroomController extends AppController
         } else {
             foreach ($teaching as $showteaching) {
                 Classroom::create([
-                    'id_guru'   => $showteaching->id_guru,
-                    'nama'      => $showteaching->matapelajaran,
-                    'jurusan'   => $showteaching->jurusan,
+                    'id_guru'   => TeacherDetail::where('nama', $showteaching->id_guru)->first()->id,
+                    'nama'      => Subject::where('matapelajaran', $showteaching->matapelajaran)->first()->id,
+                    'jurusan'   => Department::where('jurusan', $showteaching->jurusan)->first()->id,
                     'kelas'     => $showteaching->kelas,
                 ]);
             }
@@ -59,13 +60,21 @@ class ClassroomController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Classroom $classroom)
+    public function edit(Request $request)
     {
-        return response()->json($classroom);
+        $classroom = Classroom::find(Crypt::decrypt($request->classroom));
+        return response()->json([
+            'nama'      => $classroom->nama,
+            'jurusan'   => Department::find($classroom->jurusan)->jurusan,
+            'kelas'     => $classroom->kelas,
+            'no_kelas'  => $classroom->no_kelas,
+            'id_guru'   => TeacherDetail::find($classroom->id_guru)->nama,
+        ]);
     }
 
-    public function update(Request $request, Classroom $classroom)
+    public function update(Request $request)
     {
+        $classroom = Classroom::find(Crypt::decrypt($request->classroom));
         if ($classroom->kelas == 1) {
             Classroom::where('id', $classroom->id)
                     ->update([
@@ -86,9 +95,9 @@ class ClassroomController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
-    public function destroy(Classroom $classroom)
+    public function destroy(Request $request)
     {
-        Classroom::destroy($classroom->id);
+        Classroom::destroy(Crypt::decrypt($request->classroom));
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

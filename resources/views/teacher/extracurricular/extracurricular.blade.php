@@ -5,7 +5,7 @@
     <x-sliderbar-teacher></x-sliderbar-teacher>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -87,8 +87,8 @@
                                                     <td>{{$showextra->angka}}</td>
                                                     <td>{{$showextra->huruf}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editextra" data-bs-toggle="modal" data-bs-target="#ExtraModal" data-id="{{$showextra->id}}">Ubah</button>
-                                                        <form action="{{route('teacher.extracurricular.destroy', $showextra->id)}}" method="post" >
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editextra" data-bs-toggle="modal" data-bs-target="#ExtraModal" data-id="{{Crypt::encrypt($showextra->id)}}">Ubah</button>
+                                                        <form action="{{route('teacher.extracurricular.destroy', Crypt::encrypt($showextra->id))}}" method="post" >
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

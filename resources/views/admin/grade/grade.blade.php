@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -87,8 +87,8 @@
                                                     <td>{{$showgrade->angka}}</td>
                                                     <td>{{$showgrade->huruf}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editnilai" data-bs-toggle="modal" data-bs-target="#NilaiModal" data-id="{{$showgrade->id}}">Ubah</button>
-                                                        <form action="{{route('admin.grade.destroy', $showgrade->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editnilai" data-bs-toggle="modal" data-bs-target="#NilaiModal" data-id="{{Crypt::encrypt($showgrade->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.grade.destroy', Crypt::encrypt($showgrade->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

@@ -9,6 +9,7 @@ use App\Models\StudentDetail;
 use App\Models\Subject;
 use App\Models\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class DeuteronomiController extends AppController
 {
@@ -44,16 +45,22 @@ class DeuteronomiController extends AppController
             $kelas_pertama = 'XII';
         }
 
+        $years                  = explode('/', $request->tahun);
+        $matapelajaran_pertama  = Subject::where('matapelajaran', $request->matapelajaran_pertama)->first();
+        $matapelajaran_kedua    = Subject::where('matapelajaran', $request->matapelajaran_kedua)->first();
+        $tahun                  = Year::where('tahun', $years[0])->where('semester', $years[1])->first();
+
         if ($request->kelas_pertama == 1) {
             $students_kelas_pertama         = StudentDetail::where('kelas', $kelas_pertama)->where('no_kelas', $request->no_kelas_pertama)->get();
             $students_kelas_pertamavalidasi = StudentDetail::where('kelas', $kelas_pertama)->where('no_kelas', $request->no_kelas_pertama)->first();
             $cek_kursi_kelas_pertama        = round($request->kursi / 2);
             $cekkelas_pertama               = Deuteronomi::orderBy('id_siswa','DESC')->where('kelas', $kelas_pertama)->where('no_kelas', $request->no_kelas_pertama)->first();
         }else{
-            $students_kelas_pertama         = StudentDetail::where('kelas', $kelas_pertama)->where('jurusan', $request->jurusan_pertama)->get();
-            $students_kelas_pertamavalidasi = StudentDetail::where('kelas', $kelas_pertama)->where('jurusan', $request->jurusan_pertama)->first();
+            $jurusan_pertama                = Department::where('jurusan', $request->jurusan_pertama)->first();
+            $students_kelas_pertama         = StudentDetail::where('kelas', $kelas_pertama)->where('jurusan', $jurusan_pertama->id)->get();
+            $students_kelas_pertamavalidasi = StudentDetail::where('kelas', $kelas_pertama)->where('jurusan', $jurusan_pertama->id)->first();
             $cek_kursi_kelas_pertama        = round($request->kursi / 2);
-            $cekkelas_pertama               = Deuteronomi::orderBy('id_siswa','DESC')->where('kelas', $kelas_pertama)->where('jurusan', $request->jurusan_pertama)->first();
+            $cekkelas_pertama               = Deuteronomi::orderBy('id_siswa','DESC')->where('kelas', $kelas_pertama)->where('jurusan', $jurusan_pertama->id)->first();
         }
 
 
@@ -85,10 +92,11 @@ class DeuteronomiController extends AppController
             $cek_kursi_kelas_kedua          = $request->kursi - $kursi_kelas_pertama;
             $cekkelas_kedua                 = Deuteronomi::orderBy('id_siswa', 'DESC')->where('kelas', $kelas_kedua)->where('no_kelas', $request->no_kelas_kedua)->first();
         }else {
-            $students_kelas_kedua           = StudentDetail::where('kelas', $kelas_kedua)->where('jurusan', $request->jurusan_kedua)->get();
-            $students_kelas_keduavalidasi   = StudentDetail::where('kelas', $kelas_kedua)->where('jurusan', $request->jurusan_kedua)->first();
+            $jurusan_kedua                  = Department::where('jurusan', $request->jurusan_kedua)->first();
+            $students_kelas_kedua           = StudentDetail::where('kelas', $kelas_kedua)->where('jurusan',  $jurusan_kedua->id)->get();
+            $students_kelas_keduavalidasi   = StudentDetail::where('kelas', $kelas_kedua)->where('jurusan',  $jurusan_kedua->id)->first();
             $cek_kursi_kelas_kedua          = $request->kursi - $kursi_kelas_pertama;
-            $cekkelas_kedua                 = Deuteronomi::orderBy('id_siswa', 'DESC')->where('kelas', $kelas_kedua)->where('jurusan', $request->jurusan_kedua)->first();
+            $cekkelas_kedua                 = Deuteronomi::orderBy('id_siswa', 'DESC')->where('kelas', $kelas_kedua)->where('jurusan',  $jurusan_kedua->id)->first();
         }
 
         if ((count($students_kelas_kedua) / 2) < $cek_kursi_kelas_kedua) {
@@ -107,9 +115,9 @@ class DeuteronomiController extends AppController
         if ($students_kelas_pertamavalidasi != null) {
             for ($id_siswa_kelas_pertama; $id_siswa_kelas_pertama < $kursi_kelas_pertama; $id_siswa_kelas_pertama++) {
                 if ($request->kelas_pertama == 1) {
-                    $this->addkelas($students_kelas_pertama[$id_siswa_kelas_pertama]->id, $request->tanggal, $request->jam, $request->matapelajaran_pertama, $request->tahun, $request->no_kelas_pertama, $i++, $request->ruangan, $kelas_pertama);
+                    $this->addkelas($students_kelas_pertama[$id_siswa_kelas_pertama]->id, $request->tanggal, $request->jam, $matapelajaran_pertama->id, $tahun->id, $request->no_kelas_pertama, $i++, $request->ruangan, $kelas_pertama);
                 } else {
-                    $this->addjurusan($students_kelas_pertama[$id_siswa_kelas_pertama]->id, $request->tanggal, $request->jam, $request->matapelajaran_pertama, $request->tahun, $request->jurusan_kedua, $i++, $request->ruangan, $kelas_pertama);
+                    $this->addjurusan($students_kelas_pertama[$id_siswa_kelas_pertama]->id, $request->tanggal, $request->jam, $matapelajaran_pertama->id, $tahun->id, $jurusan_pertama->id, $i++, $request->ruangan, $kelas_pertama);
                 }
             }
         }
@@ -117,34 +125,50 @@ class DeuteronomiController extends AppController
         if ($students_kelas_keduavalidasi != null) {
             for ($id_siswa_kelas_kedua; $id_siswa_kelas_kedua < $kursi_kelas_kedua; $id_siswa_kelas_kedua++) {
                 if ($request->kelas_kedua == 1) {
-                    $this->addkelas($students_kelas_kedua[$id_siswa_kelas_kedua]->id, $request->tanggal, $request->jam, $request->matapelajaran_kedua, $request->tahun, $request->no_kelas_kedua, $i++, $request->ruangan, $kelas_kedua);
+                    $this->addkelas($students_kelas_kedua[$id_siswa_kelas_kedua]->id, $request->tanggal, $request->jam, $matapelajaran_kedua->id, $tahun->id, $request->no_kelas_kedua, $i++, $request->ruangan, $kelas_kedua);
                 } else {
-                    $this->addjurusan($students_kelas_kedua[$id_siswa_kelas_kedua]->id, $request->tanggal, $request->jam, $request->matapelajaran_kedua, $request->tahun, $request->jurusan_kedua, $i++, $request->ruangan, $kelas_kedua);
+                    $this->addjurusan($students_kelas_kedua[$id_siswa_kelas_kedua]->id, $request->tanggal, $request->jam, $matapelajaran_kedua->id, $tahun->id,  $jurusan_kedua->id, $i++, $request->ruangan, $kelas_kedua);
                 }
             }
         }
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Deuteronomi $deuteronomi)
+    public function edit(Request $request)
     {
-        return response()->json($deuteronomi);
+        $deuteronomi = Deuteronomi::find(Crypt::decrypt($request->deuteronomi));
+        return response()->json([
+            'tanggal'       => $deuteronomi->tanggal,
+            'jam'           => $deuteronomi->jam,
+            'matapelajaran' => Subject::find($deuteronomi->matapelajaran)->matapelajaran,
+            'tahun'         => Year::find($deuteronomi->tahun)->tahun . '/' . Year::find($deuteronomi->tahun)->semester,
+            'jurusan'       => Department::find($deuteronomi->jurusan)->jurusan,
+            'ruangan'       => $deuteronomi->ruangan,
+            'kelas'         => $deuteronomi->kelas,
+            'no_kelas'      => $deuteronomi->no_kelas,
+
+        ]);
     }
 
-    public function update(Request $request, Deuteronomi $deuteronomi)
+    public function update(Request $request)
     {
+        $deuteronomi    = Deuteronomi::find(Crypt::decrypt($request->deuteronomi));
+        $years          = explode('/', $request->tahun);
+        $matapelajaran  = Subject::where('matapelajaran', $request->matapelajaran)->first();
+        $tahun          = Year::where('tahun', $years[0])->where('semester', $years[1])->first();
+        $jurusan        = Department::where('jurusan', $request->jurusan)->first();
         if ($request->kelas == 1) {
-            $this->updatekelas($deuteronomi->matapelajaran, $deuteronomi->kelas, $deuteronomi->tahun, $request->tanggal, $request->jam, $request->matapelajaran, $request->tahun, $request->no_kelas, $request->ruangan, $request->kelas);
+            $this->updatekelas($deuteronomi->matapelajaran, $deuteronomi->kelas, $deuteronomi->tahun, $request->tanggal, $request->jam, $matapelajaran->id, $tahun->id, $request->no_kelas, $request->ruangan, $request->kelas);
         } else {
-            $this->updatejurusan($deuteronomi->matapelajaran, $deuteronomi->kelas, $deuteronomi->tahun, $request->tanggal, $request->jam, $request->matapelajaran, $request->tahun, $request->jurusan, $request->ruangan, $request->kelas);
+            $this->updatejurusan($deuteronomi->matapelajaran, $deuteronomi->kelas, $deuteronomi->tahun, $request->tanggal, $request->jam, $matapelajaran->id, $tahun->id, $jurusan->id, $request->ruangan, $request->kelas);
         }
 
         return redirect()->back()->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Deuteronomi $deuteronomi)
+    public function destroy(Request $request)
     {
-        Deuteronomi::destroy($deuteronomi->id);
+        Deuteronomi::destroy(Crypt::decrypt($request->deuteronomi));
         return redirect()->back()->with('success', 'Data Berhasil Delete');
     }
 

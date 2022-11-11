@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -84,8 +84,8 @@
                                                     <td>{{$showmagazine->title}}</td>
                                                     <td>{{$showmagazine->file}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editmagazine" data-bs-toggle="modal" data-bs-target="#MagazineModal" data-id="{{$showmagazine->id}}">Ubah</button>
-                                                        <form action="{{route('admin.magazine.destroy', $showmagazine->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editmagazine" data-bs-toggle="modal" data-bs-target="#MagazineModal" data-id="{{Crypt::encrypt($showmagazine->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.magazine.destroy', Crypt::encrypt($showmagazine->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

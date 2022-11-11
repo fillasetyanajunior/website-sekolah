@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -94,8 +94,8 @@
                                                     <td>{{$detail->jurusan != null ? App\Models\Department::find($detail->jurusan)->jurusan : ''}}</td>
                                                     <td>{{$detail->no_kelas}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editjadwal" data-bs-toggle="modal" data-bs-target="#JadwalModal" data-id="{{$detail->id}}">Ubah</button>
-                                                        <form action="{{route('admin.schedule.destroy', $detail->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editjadwal" data-bs-toggle="modal" data-bs-target="#JadwalModal" data-id="{{Crypt::encrypt($detail->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.schedule.destroy', Crypt::encrypt($detail->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -156,7 +156,7 @@
                                 <select class="form-select @error('matapelajaran') is-invalid @enderror" id="matapelajaran" name="matapelajaran_edit">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($subject as $showsubject)
-                                        <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                        <option value="{{$showsubject->matapelajaran}}">{{$showsubject->matapelajaran}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -165,7 +165,7 @@
                                 <select class="form-select @error('guru') is-invalid @enderror" id="guru" name="guru_edit">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($teacher as $showteacher)
-                                        <option value="{{$showteacher->id}}">{{$showteacher->name}}</option>
+                                        <option value="{{$showteacher->name}}">{{$showteacher->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -185,7 +185,7 @@
                                 <select class="form-select @error('matapelajaran') is-invalid @enderror" id="matapelajaran" name="matapelajaran[]">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($subject as $showsubject)
-                                        <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                        <option value="{{$showsubject->matapelajaran}}">{{$showsubject->matapelajaran}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -194,7 +194,7 @@
                                 <select class="form-select @error('guru') is-invalid @enderror" id="guru" name="guru[]">
                                     <option value="">-- Pilih --</option>
                                     @foreach ($teacher as $showteacher)
-                                        <option value="{{$showteacher->id}}">{{$showteacher->name}}</option>
+                                        <option value="{{$showteacher->name}}">{{$showteacher->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -226,7 +226,7 @@
                             <select class="form-select @error('tahun') is-invalid @enderror" id="tahun" name="tahun">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($year as $showyear)
-                                    <option value="{{$showyear->id}}">{{$showyear->tahun . ' - ' . $showyear->semester}}</option>
+                                    <option value="{{$showyear->tahun . '/' . $showyear->semester}}">{{$showyear->tahun . ' - ' . $showyear->semester}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -235,7 +235,7 @@
                             <select class="form-select @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($department as $showdepartment)
-                                    <option value="{{$showdepartment->id}}">{{$showdepartment->jurusan}}</option>
+                                    <option value="{{$showdepartment->jurusan}}">{{$showdepartment->jurusan}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -320,11 +320,11 @@
                     success: function (hasil) {
                         $('#hari').val(hasil.hari)
                         $('#jam').val(hasil.jam)
-                        $('#matapelajaran').val(hasil.schedule.matapelajaran)
-                        $('#guru').val(hasil.schedule.guru)
-                        $('#tahun').val(hasil.schedule.tahun)
-                        $('#jurusan').val(hasil.schedule.jurusan)
-                        $('#no_kelas').val(hasil.schedule.no_kelas)
+                        $('#matapelajaran').val(hasil.matapelajaran)
+                        $('#guru').val(hasil.guru)
+                        $('#tahun').val(hasil.tahun)
+                        $('#jurusan').val(hasil.jurusan)
+                        $('#no_kelas').val(hasil.no_kelas)
                         $('#kelas').val(hasil.kelas)
                         $('#kelas').trigger('change');
                     }

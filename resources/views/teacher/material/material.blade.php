@@ -5,7 +5,7 @@
     <x-sliderbar-teacher></x-sliderbar-teacher>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -90,8 +90,8 @@
                                                     <td>{{$showmaterial->kelas}}</td>
                                                     <td>{{$path[1]}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editmateri" data-bs-toggle="modal" data-bs-target="#MateriModal" data-id="{{$showmaterial->id}}">Ubah</button>
-                                                        <form action="{{route('teacher.material.destroy', $showmaterial->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editmateri" data-bs-toggle="modal" data-bs-target="#MateriModal" data-id="{{Crypt::encrypt($showmaterial->id)}}">Ubah</button>
+                                                        <form action="{{route('teacher.material.destroy', Crypt::encrypt($showmaterial->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -130,7 +130,7 @@
                             <select class="form-control" id="mapel" name="mapel">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($subject as $showsubject)
-                                    <option value="{{$showsubject->id}}">{{$showsubject->matapelajaran}}</option>
+                                    <option value="{{$showsubject->matapelajaran}}">{{$showsubject->matapelajaran}}</option>
                                 @endforeach
                             </select>
                         </div>

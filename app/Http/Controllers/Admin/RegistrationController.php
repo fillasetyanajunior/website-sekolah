@@ -9,6 +9,7 @@ use App\Models\RegistrationDetail;
 use App\Models\Student;
 use App\Models\StudentDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 
 class RegistrationController extends AppController
@@ -21,13 +22,15 @@ class RegistrationController extends AppController
         return view('admin.registration.registration', compact('registration', 'department', 'title'));
     }
 
-    public function edit(Registration $registration)
+    public function edit(Request $request)
     {
+        $registration = Registration::find(Crypt::decrypt($request->registration));
         return response()->json(['registration' => $registration, 'detail' => RegistrationDetail::find($registration->id_registration)]);
     }
 
-    public function update(Request $request, Registration $registration)
+    public function update(Request $request)
     {
+        $registration = Registration::find(Crypt::decrypt($request->registration));
         Registration::where('id', $registration->id)
                 ->update([
                     'is_active' => $request->active,
@@ -56,7 +59,7 @@ class RegistrationController extends AppController
                 'penghasilan_bapak' => $detail->penghasilan_bapak,
                 'pendidikan'        => $detail->pendidikan,
                 'nama_sekolah'      => $detail->nama_sekolah,
-                'jurusan'           => $request->jurusan,
+                'jurusan'           => Department::where('jurusan', $request->jurusan)->first()->id,
                 'provinsi_id'       => $detail->provinsi_id,
                 'kabupaten_id'      => $detail->kabupaten_id,
                 'kecamatan_id'      => $detail->kecamatan_id,

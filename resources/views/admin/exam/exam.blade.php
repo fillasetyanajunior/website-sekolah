@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -87,8 +87,8 @@
                                                     <td>{{App\Models\Department::find($showexam->jurusan)->jurusan}}</td>
                                                     <td>{{$showexam->tipe_ujian}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" href="" id="editujian" data-bs-toggle="modal" data-bs-target="#UjianModal" data-id="{{$showexam->id}}">Ubah</button>
-                                                        <form action="{{route('admin.exam.destroy', $showexam->id)}}" method="post" class="d-inline" >
+                                                        <button type="button" class="btn btn-sm btn-warning" href="" id="editujian" data-bs-toggle="modal" data-bs-target="#UjianModal" data-id="{{Crypt::encrypt($showexam->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.exam.destroy', Crypt::encrypt($showexam->id))}}" method="post" class="d-inline" >
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -135,7 +135,7 @@
                             <select class="form-control" id="matapelajaran" name="matapelajaran">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($subject as $subject)
-                                    <option value="{{$subject->id}}">{{$subject->matapelajaran}}</option>
+                                    <option value="{{$subject->matapelajaran}}">{{$subject->matapelajaran}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -144,7 +144,7 @@
                             <select class="form-control" id="jurusan" name="jurusan">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($department as $department)
-                                    <option value="{{$department->id}}">{{$department->jurusan}}</option>
+                                    <option value="{{$department->jurusan}}">{{$department->jurusan}}</option>
                                 @endforeach
                             </select>
                         </div>

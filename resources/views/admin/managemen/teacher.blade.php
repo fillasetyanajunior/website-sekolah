@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -39,13 +39,35 @@
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
                                 </a>
+                                <form action="{{route("admin.teacher.store")}}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary d-none d-sm-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <line x1="12" y1="5" x2="12" y2="19" />
+                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                        </svg>
+                                        Tambah All
+                                    </button>
+                                    <button type="submit" class="btn btn-primary d-sm-none btn-icon" aria-label="Tambah All">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <line x1="12" y1="5" x2="12" y2="19" />
+                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                        </svg>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -70,6 +92,7 @@
                                                 <th>#</th>
                                                 <th>Nama</th>
                                                 <th>Username</th>
+                                                <th>Role    </th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -82,9 +105,10 @@
                                                     <td>{{$i++}}</td>
                                                     <td>{{$showteacher->name}}</td>
                                                     <td>{{$showteacher->username}}</td>
+                                                    <td>{{$showteacher->role}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editguru" data-bs-toggle="modal" data-bs-target="#GuruModal" data-id="{{$showteacher->id}}">Ubah</button>
-                                                        <form action="{{route('admin.teacher.destroy', $showteacher->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editguru" data-bs-toggle="modal" data-bs-target="#GuruModal" data-id="{{Crypt::encrypt($showteacher->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.teacher.destroy', Crypt::encrypt($showteacher->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
@@ -123,7 +147,7 @@
                             <select class="form-select" id="name" name="name">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($guru as $guru)
-                                    <option value="{{Crypt::encrypt($guru->id)}}">{{$guru->nama}}</option>
+                                    <option value="{{$guru->nama}}">{{$guru->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -183,7 +207,7 @@
                         _token: '{{csrf_token()}}',
                     },
                     success: function (hasil) {
-                        $('#name').val(hasil.teacher.id_guru)
+                        $('#name').val(hasil.teacher.name)
                         $('#username').val(hasil.teacher.username)
                         $('#password').val(hasil.password_encrypted)
                     }

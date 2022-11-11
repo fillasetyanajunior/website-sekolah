@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\TeacherImport;
+use App\Imports\TeachingImport;
 use App\Models\TeacherDetail;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -19,7 +20,13 @@ class AddTeacherController extends AppController
 
     public function store(Request $request)
     {
-        Excel::import(new TeacherImport($request->guru), $request->import_excel);
+        Excel::import(new TeacherImport(), $request->import_excel);
+        return redirect(route('admin.input-teacher'))->with('success', 'Data Berhasil Ditambahkan');
+    }
+
+    public function teaching(Request $request)
+    {
+        Excel::import(new TeachingImport(), $request->import_excel);
         return redirect(route('admin.input-teacher'))->with('success', 'Data Berhasil Ditambahkan');
     }
 

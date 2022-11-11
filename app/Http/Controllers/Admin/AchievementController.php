@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Achievement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class AchievementController extends AppController
 {
@@ -46,12 +47,12 @@ class AchievementController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Achievement $achievement)
+    public function edit(Request $request)
     {
-        return response()->json($achievement);
+        return response()->json(Achievement::find(Crypt::decrypt($request->achievement)));
     }
 
-    public function update(Request $request, Achievement $achievement)
+    public function update(Request $request)
     {
         if ($request->prestasi == 1) {
             $prestasi = 'Akademik';
@@ -59,7 +60,7 @@ class AchievementController extends AppController
             $prestasi = 'Non-Akademik';
         }
 
-        Achievement::where('id', $achievement->id)
+        Achievement::where('id', Crypt::decrypt($request->achievement))
                     ->update([
                         'kegiatan'      => $request->kegiatan,
                         'penyelenggara' => $request->penyelenggara,
@@ -73,9 +74,9 @@ class AchievementController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Diupdate');
     }
 
-    public function destroy(Achievement $achievement)
+    public function destroy(Request $request)
     {
-        Achievement::destroy($achievement->id);
+        Achievement::where('id', Crypt::decrypt($request->achievement))->delete();
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

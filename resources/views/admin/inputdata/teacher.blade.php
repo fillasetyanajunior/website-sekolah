@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -39,13 +39,34 @@
                                         <line x1="5" y1="12" x2="19" y2="12" />
                                     </svg>
                                 </a>
+                                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                    data-bs-target="#AddGuru" id="tambahpengajaran">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    Tambah Pengajaran
+                                </a>
+                                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                    data-bs-target="#AddGuru" id="tambahpengajaran" aria-label="Tambah Pengajaran">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -70,12 +91,11 @@
                                                 <th>#</th>
                                                 <th>Nama</th>
                                                 <th>NUPTK/NPK</th>
-                                                <th>Alamat</th>
+                                                <th>NIP</th>
                                                 <th>Nomer HP</th>
                                                 <th>Email</th>
-                                                <th>Lulusan</th>
                                                 <th>Wali Kelas</th>
-                                                <th>Status</th>
+                                                <th>Status Pegawai</th>
                                                 <th>Jabatan</th>
                                                 <th>Action</th>
                                             </tr>
@@ -89,12 +109,17 @@
                                                 <td>{{$i++}}</td>
                                                 <td>{{$showteacher->nama}}</td>
                                                 <td>{{$showteacher->nuptk}}</td>
-                                                <td>{{$showteacher->alamat}}</td>
-                                                <td>{{$showteacher->nomer}}</td>
+                                                <td>{{$showteacher->nip}}</td>
+                                                <td>{{$showteacher->nomor_hp}}</td>
                                                 <td>{{$showteacher->email}}</td>
-                                                <td>{{$showteacher->lulusan}}</td>
-                                                <td>{{$showteacher->wali_kelas != 'X' ? $showteacher->wali_kelas . ' ' . App\Models\Department::find($showteacher->wali_jurusan)->jurusan : $showteacher->wali_kelas . ' ' . $showteacher->wali_no_kelas}}</td>
-                                                <td>{{$showteacher->status}}</td>
+                                                @if ($showteacher->wali_kelas == 'X')
+                                                    <td>{{$showteacher->wali_kelas . ' ' . $showteacher->wali_no_kelas}}</td>
+                                                @elseif ($showteacher->wali_kelas == 'XI' || $showteacher->wali_kelas == 'XII')
+                                                    <td>{{$showteacher->wali_kelas . ' ' . App\Models\Department::find($showteacher->wali_jurusan)->jurusan}}</td>
+                                                @else
+                                                    <td>-</td>
+                                                @endif
+                                                <td>{{$showteacher->status_pegawai}}</td>
                                                 <td>{{$showteacher->jabatan}}</td>
                                                 <td width="100px">
                                                     <form action="{{route('admin.input-teacher.destroy', $showteacher->id)}}" method="post">
@@ -154,6 +179,12 @@
             $('.body_guru button[type=submit]').text('Add');
             $('.modal-title').text('Tambah Guru');
             $('.body_guru form').attr('action', '{{route("admin.input-teacher.store")}}');
+            $('.body_guru form').attr('method', 'post');
+        });
+        $('#tambahpengajaran').click(function () {
+            $('.body_guru button[type=submit]').text('Add');
+            $('.modal-title').text('Tambah Guru');
+            $('.body_guru form').attr('action', '{{route("admin.input-teacher.teaching")}}');
             $('.body_guru form').attr('method', 'post');
         });
     });

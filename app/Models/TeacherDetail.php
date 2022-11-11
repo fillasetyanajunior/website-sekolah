@@ -8,19 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class TeacherDetail extends Model
 {
     use HasFactory;
-    protected $filleable = [
+    protected $fillable = [
         'nama',
         'nuptk',
-        'alamat',
-        'nomer',
+        'nip',
+        'jenis_kelamin',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'nomor_hp',
         'email',
-        'lulusan',
         'wali_kelas',
         'wali_jurusan',
-        'status',
-        'avatar',
-        'sertifikat_pendidikan',
-        'izasah',
+        'wali_no_kelas',
+        'status_pegawai',
         'jabatan',
+        'avatar',
     ];
 }

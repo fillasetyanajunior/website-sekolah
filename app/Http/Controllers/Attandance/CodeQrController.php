@@ -8,6 +8,7 @@ use App\Models\QrCode;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as Qr;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class CodeQrController extends AppController
 {
@@ -19,15 +20,15 @@ class CodeQrController extends AppController
         if ($request->kelas == 'X') {
             $qr = QrCode::create([
                 'kode'          => $kode,
-                'matapelajaran' => $request->matapelajaran,
+                'matapelajaran' => Crypt::decrypt($request->matapelajaran),
                 'no_kelas'      => $request->no_kelas,
                 'kelas'         => $request->kelas,
             ]);
         } else {
             $qr = QrCode::create([
                 'kode'          => $kode,
-                'matapelajaran' => $request->matapelajaran,
-                'jurusan'       => $request->jurusan,
+                'matapelajaran' => Crypt::decrypt($request->matapelajaran),
+                'jurusan'       => Crypt::decrypt($request->jurusan),
                 'kelas'         => $request->kelas,
             ]);
         }

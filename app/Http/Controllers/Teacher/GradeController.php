@@ -8,6 +8,7 @@ use App\Models\Grade;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GradeController extends AppController
@@ -25,14 +26,14 @@ class GradeController extends AppController
         return redirect(route('teacher.grade'))->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Grade $grade)
+    public function edit(Request $request)
     {
-        return response()->json($grade);
+        return response()->json(Grade::find(Crypt::decrypt($request->grade)));
     }
 
-    public function update(Request $request, Grade $grade)
+    public function update(Request $request)
     {
-        Grade::where('id', $grade->id)
+        Grade::where('id', Crypt::decrypt($request->grade))
             ->update([
                 'angka'         => $request->angka,
                 'huruf'         => $request->huruf,
@@ -40,9 +41,9 @@ class GradeController extends AppController
         return redirect(route('teacher.grade'))->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Grade $grade)
+    public function destroy(Request $request)
     {
-        Grade::destroy($grade->id);
+        Grade::destroy(Crypt::decrypt($request->grade));
         return redirect(route('teacher.grade'))->with('success', 'Data Berhasil Delete');
     }
 }

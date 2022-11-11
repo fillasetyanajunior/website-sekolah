@@ -29,7 +29,7 @@ class StudentController extends AppController
                 'name' => 'required',
             ]);
 
-            $student = StudentDetail::find($request->name);
+            $student = StudentDetail::where('nama', $request->name)->first();
 
             $int        = '1234567890';
             $password   = substr(str_shuffle($int), 0, 6);
@@ -55,19 +55,7 @@ class StudentController extends AppController
                 $kelas = 'XII';
             }
 
-            if ($kelas == 'X') {
-                $request->validate([
-                    'kelas'     => 'required',
-                    'no_kelas'  => 'required',
-                ]);
-                $student = StudentDetail::where('kelas', $kelas)->where('no_kelas', $request->no_kelas)->get();
-            } else {
-                $request->validate([
-                    'kelas'     => 'required',
-                    'jurusan'   => 'required',
-                ]);
-                $student = StudentDetail::where('kelas', $kelas)->where('jurusan', $request->jurusan)->get();
-            }
+            $student = StudentDetail::where('kelas', $kelas)->get();
 
             foreach ($student as $showstudent) {
                 $int        = '1234567890';
@@ -110,18 +98,18 @@ class StudentController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Student $student)
+    public function edit(Request $request)
     {
+        $student = Student::where('id_siswa', Crypt::decrypt($request->student))->first();
         return response()->json([
             'student'               => $student,
             'password_encrypted'    => Crypt::decrypt($student->password_encrypted),
         ]);
     }
 
-    public function update(Request $request, Student $student)
+    public function update(Request $request)
     {
-        $student = StudentDetail::find($request->name);
-
+        $student = Student::where('id_siswa', Crypt::decrypt($request->student))->first();
         Student::where('id', $student->id)
             ->update([
                 'name'                  => $student->nama,
@@ -132,9 +120,9 @@ class StudentController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Student $student)
+    public function destroy(Request $request)
     {
-        Student::destroy($student->id);
+        Student::where('id_siswa', Crypt::decrypt($request->student))->delete();
         return redirect()->back()->with('success', 'Data Berhasil Delete');
     }
 }

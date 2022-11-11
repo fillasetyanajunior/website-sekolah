@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
 class NewsController extends AppController
@@ -31,7 +32,6 @@ class NewsController extends AppController
             $choices = 'Info';
         }
 
-
         $file = $request->file('thumnail');
         $path = Storage::putFileAs('news', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
 
@@ -44,13 +44,14 @@ class NewsController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Di Posting');
     }
 
-    public function edit(News $news)
+    public function edit(Request $request)
     {
-        return response()->json($news);
+        return response()->json(News::find(Crypt::decrypt($request->news)));
     }
 
-    public function update(News $news, Request $request)
+    public function update(Request $request)
     {
+        $news = News::find(Crypt::decrypt($request->news));
         if ($request->choices == 1) {
             $choices = 'Berita';
         } else {
@@ -65,7 +66,7 @@ class NewsController extends AppController
             $path = $news->thumnail;
         }
 
-        News::where('id', $news->id)
+        News::where('id', Crypt::decrypt($request->news))
             ->update([
                 'title'         => $request->title,
                 'description'   => $request->description,
@@ -75,9 +76,9 @@ class NewsController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(News $news)
+    public function destroy(Request $request)
     {
-        News::destroy($news->id);
+        News::destroy(Crypt::decrypt($request->news));
         return redirect()->back()->with('success', 'Data Berhasil Delete');
     }
 }

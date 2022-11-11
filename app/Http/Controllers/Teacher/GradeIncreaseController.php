@@ -7,6 +7,7 @@ use App\Models\StudentDetail;
 use App\Models\TeacherDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class GradeIncreaseController extends AppController
 {
@@ -18,7 +19,7 @@ class GradeIncreaseController extends AppController
         return view('teacher.gradeincrease.gradeincrease', compact('title', 'student'));
     }
 
-    public function update(Request $request, StudentDetail $studentDetail)
+    public function update(Request $request)
     {
         if ($request->kelas == 1) {
             $kelas = 'X';
@@ -28,7 +29,7 @@ class GradeIncreaseController extends AppController
             $kelas = 'XII';
         }
 
-        StudentDetail::where('id', $studentDetail->id)
+        StudentDetail::where('id', Crypt::decrypt($request->studentDetail))
                     ->update([
                         'kelas' => $kelas
                     ]);

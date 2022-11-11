@@ -42,6 +42,7 @@ Route::group([
 
     Route::get('input-guru', [AddTeacher::class, 'index'])->name('admin.input-teacher');
     Route::post('input-guru', [AddTeacher::class, 'store'])->name('admin.input-teacher.store');
+    Route::post('input-guru/pengajaran', [AddTeacher::class, 'teaching'])->name('admin.input-teacher.teaching');
     Route::delete('input-guru/{teacherDetail}', [AddTeacher::class, 'destroy'])->name('admin.input-teacher.destroy');
 
     Route::get('ruangkelas', [Classroom::class, 'index'])->name('admin.classroom');

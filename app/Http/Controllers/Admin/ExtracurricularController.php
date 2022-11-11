@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Imports\ExtracurricularImport;
 use App\Models\Extracurricular;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExtracurricularController extends AppController
@@ -23,14 +24,14 @@ class ExtracurricularController extends AppController
         return redirect(route('admin.extracurricular'))->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Extracurricular $extracurricular)
+    public function edit(Request $request)
     {
-        return response()->json($extracurricular);
+        return response()->json(Extracurricular::find(Crypt::decrypt($request->extracurricular)));
     }
 
-    public function update(Request $request, Extracurricular $extracurricular)
+    public function update(Request $request)
     {
-        Extracurricular::where('id', $extracurricular->id)
+        Extracurricular::where('id', Crypt::decrypt($request->extracurricular))
             ->update([
                 'angka'         => $request->angka,
                 'huruf'         => $request->huruf,
@@ -38,9 +39,9 @@ class ExtracurricularController extends AppController
         return redirect(route('admin.extracurricular'))->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Extracurricular $extracurricular)
+    public function destroy(Request $request)
     {
-        Extracurricular::destroy($extracurricular->id);
+        Extracurricular::destroy(Crypt::decrypt($request->extracurricular));
         return redirect(route('admin.extracurricular'))->with('success', 'Data Berhasil Delete');
     }
 }

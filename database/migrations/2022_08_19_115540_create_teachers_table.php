@@ -20,7 +20,7 @@ class CreateTeachersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('password_encrypted');
-            $table->enum('role', ['guru', 'wali kelas'])->default('guru');
+            $table->enum('role', ['Kepala Madrasah', 'Waka Humas', 'Waka Kurikulum', 'Waka Sapras', 'Waka Kesiswaan', 'Kepala Tata Usaha', 'Tata Usaha', 'Bendahara', 'Guru Mapel', 'Guru BK', 'Tenaga Keamanan', 'Petugas Kebersihan', 'Operator Data', 'Lainnya', 'Wali Kelas']);
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lending;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class LendingController extends AppController
 {
@@ -36,13 +37,14 @@ class LendingController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Lending $lending)
+    public function edit(Request $request)
     {
-        return response()->json($lending);
+        return response()->json(Lending::find(Crypt::decrypt($request->lending)));
     }
 
-    public function update(Request $request, Lending $lending)
+    public function update(Request $request)
     {
+        $lending = Lending::find($request->lending);
         Lending::where('id', $lending->id)
                 ->update([
                     'id_siswa'              => $request->siswa,
@@ -54,9 +56,9 @@ class LendingController extends AppController
         return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
-    public function destroy(Lending $lending)
+    public function destroy(Request $request)
     {
-        Lending::destroy($lending->id);
+        Lending::destroy(Crypt::decrypt($request->lending));
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

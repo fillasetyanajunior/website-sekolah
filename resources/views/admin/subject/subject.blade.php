@@ -5,7 +5,7 @@
     <x-sliderbar-admin></x-sliderbar-admin>
     <div class="page-wrapper">
         <div class="page-wrapper">
-            <div class="container-xl">
+            <div class="container-fluid">
                 <div class="page-header d-print-none">
                     <div class="row g-2 align-items-center">
                         <div class="col">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <div class="row row-deck row-cards">
                         <div class="col-12">
                             <div class="card">
@@ -81,8 +81,8 @@
                                                     <td>{{$i++}}</td>
                                                     <td>{{$showsubject->matapelajaran}}</td>
                                                     <td width="100px">
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editmatapelajaran" data-bs-toggle="modal" data-bs-target="#MatapelajaranModal" data-id="{{$showsubject->id}}">Ubah</button>
-                                                        <form action="{{route('admin.subject.destroy', $showsubject->id)}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editmatapelajaran" data-bs-toggle="modal" data-bs-target="#MatapelajaranModal" data-id="{{Crypt::encrypt($showsubject->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.subject.destroy', Crypt::encrypt($showsubject->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

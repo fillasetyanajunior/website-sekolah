@@ -7,6 +7,7 @@ use App\Models\Material;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends AppController
@@ -41,7 +42,7 @@ class MaterialController extends AppController
 
         Material::create([
             'id_guru'       => Auth::user()->id,
-            'matapelajaran' => $request->mapel,
+            'matapelajaran' => Subject::where('matapelajaran', $request->mapel)->first()->id,
             'judul'         => $request->judul,
             'kelas'         => $kelas,
             'path'          => $path,
@@ -50,13 +51,14 @@ class MaterialController extends AppController
         return redirect(route('teacher.material'))->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Material $material)
+    public function edit(Request $request)
     {
-        return response()->json($material);
+        return response()->json(Material::find(Crypt::decrypt($request->material)));
     }
 
-    public function update(Request $request, Material $material)
+    public function update(Request $request)
     {
+        $material = Material::find(Crypt::decrypt($request->material));
         if ($request->kelas == 1) {
             $kelas = 'X';
         } elseif ($request->kelas == 2) {
@@ -66,7 +68,6 @@ class MaterialController extends AppController
         }
 
         if ($request->hasFile('file')) {
-
             Storage::delete($material->path);
             $file = $request->file('file');
             $path = Storage::putFileAs('materi', $file, $request->judul . rand(1, 100) . '.' . $file->extension());
@@ -86,9 +87,9 @@ class MaterialController extends AppController
         return redirect(route('teacher.meterial'))->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Material $material)
+    public function destroy(Request $request)
     {
-        Material::destroy($material->id);
+        Material::destroy(Crypt::decrypt($request->material));
         return redirect(route('teacher.meterial'))->with('success', 'Data Berhasil Delete');
     }
 }

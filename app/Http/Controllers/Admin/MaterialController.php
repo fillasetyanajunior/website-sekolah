@@ -7,6 +7,7 @@ use App\Models\Material;
 use App\Models\Subject;
 use App\Models\TeacherDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends AppController
@@ -41,8 +42,8 @@ class MaterialController extends AppController
         }
 
         Material::create([
-            'id_guru'       => $request->guru,
-            'matapelajaran' => $request->mapel,
+            'id_guru'       => TeacherDetail::where('nama', $request->guru)->first()->id,
+            'matapelajaran' => Subject::where('matapelajaran', $request->mapel)->first()->id,
             'judul'         => $request->judul,
             'kelas'         => $kelas,
             'path'          => $path,
@@ -51,13 +52,20 @@ class MaterialController extends AppController
         return redirect(route('admin.material'))->with('success', 'Data Berhasil Ditambahkan');
     }
 
-    public function edit(Material $material)
+    public function edit(Request $request)
     {
-        return response()->json($material);
+        $material = Material::find(Crypt::decrypt($request->material));
+        return response()->json([
+            'id_guru'       => TeacherDetail::find($material->id_guru)->nama,
+            'matapelajaran' => Subject::find($material->mapel)->id,
+            'judul'         => $material->judul,
+            'kelas'         => $material->kelas,
+        ]);
     }
 
-    public function update(Request $request, Material $material)
+    public function update(Request $request)
     {
+        $material = Material::find(Crypt::decrypt($request->material));
         if ($request->kelas == 1) {
             $kelas = 'X';
         } elseif ($request->kelas == 2) {
@@ -77,10 +85,10 @@ class MaterialController extends AppController
             $path = $material->path;
         }
 
-        Material::where('id', $material->id)
+        Material::where('id', Crypt::decrypt($request->material))
             ->update([
-                'id_guru'       => $request->guru,
-                'matapelajaran' => $request->mapel,
+                'id_guru'       => TeacherDetail::where('nama', $request->guru)->first()->id,
+                'matapelajaran' => Subject::where('matapelajaran', $request->mapel)->first()->id,
                 'judul'         => $request->judul,
                 'kelas'         => $kelas,
                 'path'          => $path,
@@ -89,9 +97,9 @@ class MaterialController extends AppController
         return redirect(route('admin.meterial'))->with('success', 'Data Berhasil Update');
     }
 
-    public function destroy(Material $material)
+    public function destroy(Request $request)
     {
-        Material::destroy($material->id);
+        Material::destroy(Crypt::decrypt($request->material));
         return redirect(route('admin.meterial'))->with('success', 'Data Berhasil Delete');
     }
 }
