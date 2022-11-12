@@ -6,6 +6,7 @@ use App\Models\StudentDetail;
 use App\Models\Teacher;
 use App\Models\TeacherDetail;
 use App\Models\Teaching;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +22,7 @@ class TeacherSeeder extends Seeder
     {
         for ($j = 1; $j <= 100; $j++) {
 
-            $jabatan    = ['Kepala Sekolah', 'Waka Humas', 'Waka Kurikulum', 'Waka Sapras', 'Waka Kesiswaan', 'KTU', 'Pramubakti', 'Bendahara', 'Guru'];
+            $jabatan    = ['Kepala Madrasah', 'Waka Humas', 'Waka Kurikulum', 'Waka Sapras', 'Waka Kesiswaan', 'Kepala Tata Usaha', 'Tata Usaha', 'Bendahara', 'Guru Mapel', 'Guru BK', 'Tenaga Keamanan', 'Petugas Kebersihan', 'Operator Data', 'Lainnya'];
             $y          = array_rand($jabatan, 1);
 
             $status     = ['PNS', 'Non PNS'];
@@ -52,31 +53,38 @@ class TeacherSeeder extends Seeder
                 $jrs = array_rand($jurusan, 1);
             }
 
+            $jenis          = ['Laki-laki', 'Perempuan'];
+            $jenis_kelamin  = array_rand($jenis, 1);
+
             if ($walikelas[$wk] == 'X') {
                 $id_guru = TeacherDetail::create([
-                    'nama'          => 'Teacher ' . $j,
-                    'nuptk'         => '123456789012',
-                    'alamat'        => 'Jl. Kebon Kacang',
-                    'nomer'         => '08123456789',
-                    'email'         => 'teacher@teacher.com',
-                    'lulusan'       => 'S1',
-                    'wali_kelas'    => $walikelas[$wk],
-                    'wali_no_kelas' => $no_kelas[$nks],
-                    'status'        => $status[$i],
-                    'jabatan'       => $jabatan[$y],
+                    'nama'              => 'Teacher ' . $j,
+                    'nuptk'             => '123456789012',
+                    'nip'               => '123456789012',
+                    'jenis_kelamin'     => $jenis[$jenis_kelamin],
+                    'tempat_lahir'      => 'Buleleng',
+                    'tanggal_lahir'     => Carbon::now(),
+                    'nomor_hp'          => '08123456789',
+                    'email'             => 'teacher@teacher.com',
+                    'wali_kelas'        => $walikelas[$wk],
+                    'wali_no_kelas'     => $no_kelas[$nks],
+                    'status_pegawai'    => $status[$i],
+                    'jabatan'           => $jabatan[$y],
                 ]);
             } else {
                 $id_guru = TeacherDetail::create([
-                    'nama'          => 'Teacher ' . $j,
-                    'nuptk'         => '123456789012',
-                    'alamat'        => 'Jl. Kebon Kacang',
-                    'nomer'         => '08123456789',
-                    'email'         => 'teacher@teacher.com',
-                    'lulusan'       => 'S1',
-                    'wali_kelas'    => $walikelas[$wk],
-                    'wali_jurusan'  => $jurusan[$jrs],
-                    'status'        => $status[$i],
-                    'jabatan'       => $jabatan[$y],
+                    'nama'              => 'Teacher ' . $j,
+                    'nuptk'             => '123456789012',
+                    'nip'               => '123456789012',
+                    'jenis_kelamin'     => $jenis[$jenis_kelamin],
+                    'tempat_lahir'      => 'Buleleng',
+                    'tanggal_lahir'     => Carbon::now(),
+                    'nomor_hp'          => '08123456789',
+                    'email'             => 'teacher@teacher.com',
+                    'wali_kelas'        => $walikelas[$wk],
+                    'wali_jurusan'      => $jurusan[$jrs],
+                    'status_pegawai'    => $status[$i],
+                    'jabatan'           => $jabatan[$y],
                 ]);
             }
 
