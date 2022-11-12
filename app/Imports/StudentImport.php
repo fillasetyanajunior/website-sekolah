@@ -92,9 +92,6 @@ class StudentImport implements ToModel, WithHeadingRow
             $desa = 0;
         }else {
             $desa = Village::where('district_id', $kecamatan)->where('name', Str::upper($row['desa']))->first()->id;
-            if ($desa == null) {
-                dd(Str::upper($row['provinsi']) . ' ' . Str::upper($row['kabupaten']) . ' ' . Str::upper($row['kecamatan']) . ' ' . Str::upper($row['desa']) . ' ' . $row['no']);
-            }
         }
 
         if ($row['kelas'] == 'X') {

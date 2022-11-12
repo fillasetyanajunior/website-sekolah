@@ -10,10 +10,10 @@ class LogoutController extends Controller
 {
     public function logout(Request $request)
     {
-        Auth::guard('counsling')->logout();
+        Auth::guard('counseling')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect(route('counsling.login.form'))->with(['error' => 'Anda berhasil logout']);
+        return redirect(route('counseling.login.form'))->with(['error' => 'Anda berhasil logout']);
     }
 }
