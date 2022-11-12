@@ -34,7 +34,7 @@ Route::group([
     Route::post('login', [Login::class, 'login'])->name('admin.login.post');
     Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
 
-    Route::get('', [Dashboard::class, 'index'])->name('admin.dashboard');
+    // Route::get('', [Dashboard::class, 'index'])->name('admin.dashboard');
 
     Route::get('input-siswa', [AddStudent::class, 'index'])->name('admin.input-student');
     Route::post('input-siswa', [AddStudent::class, 'store'])->name('admin.input-student.store');
