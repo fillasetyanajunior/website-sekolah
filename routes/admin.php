@@ -24,17 +24,18 @@ use App\Http\Controllers\Auth\Admin\LogoutController as Logout;
 use Illuminate\Support\Facades\Route;
 
 $root = getDomain(config('app.url'));
-$param = 'admin';
+$param = 'admins';
 
 Route::group([
     'domain' => 'admin.' . $root,
     'prefix' => $param,
 ], function () {
-    Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
 
     Route::get('login', [Login::class, 'form'])->name('admin.login.form');
     Route::post('login', [Login::class, 'login'])->name('admin.login.post');
     Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
+
+    Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
 
     Route::get('input-siswa', [AddStudent::class, 'index'])->name('admin.input-student');
     Route::post('input-siswa', [AddStudent::class, 'store'])->name('admin.input-student.store');
