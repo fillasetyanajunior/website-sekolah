@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Attandance;
+namespace App\Http\Controllers\Attendance;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;

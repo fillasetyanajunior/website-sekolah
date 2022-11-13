@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\Teacher\LoginController as Login;
 use App\Http\Controllers\Auth\Teacher\LogoutController as Logout;
+use App\Http\Controllers\Teacher\AttendanceController as Attendance;
 use App\Http\Controllers\Teacher\DashboardController as Dashboard;
 use App\Http\Controllers\Teacher\ExtracurricularController as Extracurricular;
 use App\Http\Controllers\Teacher\FinalReportController as FinalReport;
@@ -23,6 +24,13 @@ Route::group([
 
     Route::get('/', [Dashboard::class, 'index'])->name('teacher.dashboard');
     Route::get('profile', [Dashboard::class, 'profile'])->name('teacher.profile');
+
+    Route::get('absen', [Attendance::class, 'index'])->name('teacher.attendance');
+    Route::post('absen/studentshow', [Attendance::class, 'student'])->name('teacher.attendance.getstudent');
+    Route::post('absen/store', [Attendance::class, 'store'])->name('teacher.attendance.store');
+    Route::post('absen/edit/{attendance}', [Attendance::class, 'edit'])->name('teacher.attendance.edit');
+    Route::post('absen/update/{attendance}', [Attendance::class, 'update'])->name('teacher.attendance.update');
+    Route::delete('absen/destroy/{attendance}', [Attendance::class, 'destroy'])->name('teacher.attendance.destroy');
 
     Route::get('ekstra', [Extracurricular::class, 'index'])->name('teacher.extracurricular');
     Route::post('ekstra/store', [Extracurricular::class, 'store'])->name('teacher.extracurricular.store');

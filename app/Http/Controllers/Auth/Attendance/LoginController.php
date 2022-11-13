@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Attandance;
+namespace App\Http\Controllers\Auth\Attendance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,10 +16,10 @@ class LoginController extends Controller
     public function form()
     {
         if (Auth::guard('app')->check()) {
-            return redirect(route('attandance.splash'));
+            return redirect(route('attendance.splash'));
         }
         $title = 'Login';
-        return view('attandance.login', compact('title'));
+        return view('attendance.login', compact('title'));
     }
 
     public function login(Request $request)
@@ -32,8 +32,8 @@ class LoginController extends Controller
         $credentials = ['username' => $request->username, 'password' => $request->password];
 
         if (Auth::guard('app')->attempt($credentials))
-            return redirect()->route('attandance.splash');
+            return redirect()->route('attendance.splash');
 
-        return redirect()->route('attandance.login.form')->with(['error' => "Kata sandi dan username tidak cocok"]);
+        return redirect()->route('attendance.login.form')->with(['error' => "Kata sandi dan username tidak cocok"]);
     }
 }

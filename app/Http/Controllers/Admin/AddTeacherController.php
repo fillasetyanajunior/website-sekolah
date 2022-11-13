@@ -13,20 +13,20 @@ class AddTeacherController extends AppController
 {
     public function index()
     {
-        $title = 'Input Guru';
-        $teacher = TeacherDetail::orderBy('nama')->paginate(20);
+        $title      = 'Input Guru';
+        $teacher    = TeacherDetail::orderBy('nama')->paginate(20);
         return view('admin.inputdata.teacher', compact('title', 'teacher'));
     }
 
     public function store(Request $request)
     {
-        Excel::import(new TeacherImport(), $request->import_excel);
+        Excel::import(new TeacherImport, $request->import_excel);
         return redirect(route('admin.input-teacher'))->with('success', 'Data Berhasil Ditambahkan');
     }
 
     public function teaching(Request $request)
     {
-        Excel::import(new TeachingImport(), $request->import_excel);
+        Excel::import(new TeachingImport, $request->import_excel);
         return redirect(route('admin.input-teacher'))->with('success', 'Data Berhasil Ditambahkan');
     }
 

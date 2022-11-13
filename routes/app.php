@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Attandance\AttandanceController as Attandance;
-use App\Http\Controllers\Attandance\CodeQrController  as CodeQr;
-use App\Http\Controllers\Attandance\DashboardController as Dashboard;
-use App\Http\Controllers\Auth\Attandance\LoginController as Login;
-use App\Http\Controllers\Auth\Attandance\LogoutController as Logout;
+use App\Http\Controllers\Attendance\AttendanceController as Attendance;
+use App\Http\Controllers\Attendance\CodeQrController  as CodeQr;
+use App\Http\Controllers\Attendance\DashboardController as Dashboard;
+use App\Http\Controllers\Auth\Attendance\LoginController as Login;
+use App\Http\Controllers\Auth\Attendance\LogoutController as Logout;
 use Illuminate\Support\Facades\Route;
 
 $root = getDomain(config('app.url'));
@@ -14,19 +14,19 @@ Route::group([
     'domain' => 'app.' . $root,
     'prefix' => $param,
 ], function () {
-    Route::get('login', [Login::class, 'form'])->name('attandance.login.form');
-    Route::post('login', [Login::class, 'login'])->name('attandance.login.login');
-    Route::post('logout', [Logout::class, 'logout'])->name('attandance.logout');
+    Route::get('login', [Login::class, 'form'])->name('attendance.login.form');
+    Route::post('login', [Login::class, 'login'])->name('attendance.login.login');
+    Route::post('logout', [Logout::class, 'logout'])->name('attendance.logout');
 
-    Route::get('/', [Dashboard::class, 'index'])->name('attandance.splash');
-    Route::get('dashboard/{id}', [Dashboard::class, 'dashboard'])->name('attandance.dashboard');
+    Route::get('/', [Dashboard::class, 'index'])->name('attendance.splash');
+    Route::get('dashboard/{id}', [Dashboard::class, 'dashboard'])->name('attendance.dashboard');
 
-    Route::post('qrkode', [CodeQr::class, 'store'])->name('attandance.qrcode.store');
-    Route::post('qrkode/update', [CodeQr::class, 'update'])->name('attandance.qrcode.update');
-    Route::post('qrkode/destroy', [CodeQr::class, 'destroy'])->name('attandance.qrcode.destroy');
+    Route::post('qrkode', [CodeQr::class, 'store'])->name('attendance.qrcode.store');
+    Route::post('qrkode/update', [CodeQr::class, 'update'])->name('attendance.qrcode.update');
+    Route::post('qrkode/destroy', [CodeQr::class, 'destroy'])->name('attendance.qrcode.destroy');
 
-    Route::post('absen', [Attandance::class, 'absen'])->name('attandance.attandance.store');
-    Route::post('absenall', [Attandance::class, 'absenall'])->name('attandance.attandance.storeall');
-    Route::post('absen/edit', [Attandance::class, 'edit'])->name('attandance.attandance.edit');
-    Route::post('absen/update', [Attandance::class, 'update'])->name('attandance.attandance.update');
+    Route::post('absen', [Attendance::class, 'absen'])->name('attendance.attendance.store');
+    Route::post('absenall', [Attendance::class, 'absenall'])->name('attendance.attendance.storeall');
+    Route::post('absen/edit', [Attendance::class, 'edit'])->name('attendance.attendance.edit');
+    Route::post('absen/update', [Attendance::class, 'update'])->name('attendance.attendance.update');
 });

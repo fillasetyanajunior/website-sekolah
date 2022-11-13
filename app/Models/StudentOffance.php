@@ -16,6 +16,7 @@ class StudentOffance extends Model
         'pilihan_pelapor',
         'pelapor',
         'pembinaan',
+        'pembinaan_lainnya',
         'keterangan',
     ];
 }

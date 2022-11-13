@@ -21,6 +21,11 @@
                                     <h3 class="card-title">Data Diri Anda</h3>
                                 </div>
                                 <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="nik">NIK</label>
+                                        <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik" placeholder="NIK" name="nik"
+                                            value="{{old('nik')}}">
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label" for="nama">Nama Lengkap</label>
@@ -28,7 +33,7 @@
                                                 id="nama" placeholder="Full Name" name="nama" value="{{old('nama')}}">
                                         </div>
                                         <div class="col-lg-6 mb-3">
-                                            <label class="form-label" for="nisn">NIN</label>
+                                            <label class="form-label" for="nisn">NISN</label>
                                             <input type="text" class="form-control @error('nisn') is-invalid @enderror"
                                                 id="nisn" placeholder="NISN" name="nisn" value="{{old('nisn')}}">
                                         </div>
@@ -75,7 +80,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6 mb-3">
-                                            <label class="form-label" for="nomerhp">Nomer Hp</label>
+                                            <label class="form-label" for="nomerhp">Nomer Hp Siswa</label>
                                             <input type="text" class="form-control @error('nomer_hp') is-invalid @enderror"
                                                 id="nomerhp" placeholder="Phone Number" name="nomer_hp"
                                                 value="{{old('nomer_hp')}}">
@@ -87,6 +92,21 @@
                                         </div>
                                     </div>
                                     <div class="row mt-4">
+                                        <div class="col-lg-6 mb-3">
+                                            <label class="form-label" for="nik_ibu">NIK Ibu</label>
+                                            <input type="text" class="form-control @error('nik_ibu') is-invalid @enderror"
+                                                id="nik_ibu" placeholder="Mother's Name" name="nik_ibu"
+                                                value="{{old('nik_ibu')}}">
+                                        </div>
+                                        <div class="col-lg-6 mb-3">
+                                            <label class="form-label" for="nik_bapak">NIK Bapak</label>
+                                            <input type="text"
+                                                class="form-control @error('nik_bapak') is-invalid @enderror"
+                                                id="nik_bapak" placeholder="Father's Name" name="nik_bapak"
+                                                value="{{old('nik_bapak')}}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label" for="nama_ibu">Nama Ibu</label>
                                             <input type="text" class="form-control @error('nama_ibu') is-invalid @enderror"
@@ -133,95 +153,9 @@
                                             <select class="form-control @error('pekerjaan_ibu') is-invalid @enderror"
                                                 id="pekerjaan_ibu" name="pekerjaan_ibu">
                                                 <option value="">-- Pilih --</option>
-                                                <option value="1">BELUM/TIDAK BEKERJA</option>
-                                                <option value="2">MENGURUS RUMAH TANGGA</option>
-                                                <option value="3">PELAJAR/MAHASISWA</option>
-                                                <option value="4">PENSIUNAN</option>
-                                                <option value="5">PEGAWAI NEGERI SIPIL</option>
-                                                <option value="6">TENTARA NASIONAL INDONESIA</option>
-                                                <option value="7">KEPOLISIAN RI</option>
-                                                <option value="8">PERDAGANGAN</option>
-                                                <option value="9">PETANI/PEKEBUN</option>
-                                                <option value="10">PETERNAK</option>
-                                                <option value="11">NELAYAN/PERIKANAN</option>
-                                                <option value="12">INDUSTRI</option>
-                                                <option value="13">KONSTRUKSI</option>
-                                                <option value="14">TRANSPORTASI</option>
-                                                <option value="15">KARYAWAN SWASTA</option>
-                                                <option value="16">KARYAWAN BUMN</option>
-                                                <option value="17">KARYAWAN BUMD</option>
-                                                <option value="18">KARYAWAN HONORER</option>
-                                                <option value="19">BURUH HARIAN LEPAS</option>
-                                                <option value="20">BURUH TANI/PERKEBUNAN</option>
-                                                <option value="21">BURUH NELAYAN/PERIKANAN</option>
-                                                <option value="22">BURUH PETERNAKAN</option>
-                                                <option value="23">PEMBANTU RUMAH TANGGA</option>
-                                                <option value="24">TUKANG CUKUR</option>
-                                                <option value="25">TUKANG LISTRIK</option>
-                                                <option value="26">TUKANG BATU</option>
-                                                <option value="27">TUKANG KAYU</option>
-                                                <option value="28">TUKANG SOL SEPATU</option>
-                                                <option value="29">TUKANG LAS/PANDAI BESI</option>
-                                                <option value="30">TUKANG JAHIT</option>
-                                                <option value="31">TUKANG GIGI</option>
-                                                <option value="32">PENATA RIAS</option>
-                                                <option value="33">PENATA BUSANA</option>
-                                                <option value="34">PENATA RAMBUT</option>
-                                                <option value="35">MEKANIK</option>
-                                                <option value="36">SENIMAN</option>
-                                                <option value="37">TABIB</option>
-                                                <option value="38">PARAJI</option>
-                                                <option value="39">PERANCANG BUSANA</option>
-                                                <option value="40">PENTERJEMAH</option>
-                                                <option value="41">IMAM MESJID</option>
-                                                <option value="42">PENDETA</option>
-                                                <option value="43">PASTOR</option>
-                                                <option value="44">WARTAWAN</option>
-                                                <option value="45">USTADZ/MUBALIGH</option>
-                                                <option value="46">JURU MASAK</option>
-                                                <option value="47">PROMOTOR ACARA</option>
-                                                <option value="48">ANGGOTA DPR-RI</option>
-                                                <option value="49">ANGGOTA DPD</option>
-                                                <option value="50">ANGGOTA BPK</option>
-                                                <option value="51">PRESIDEN</option>
-                                                <option value="52">WAKIL PRESIDEN</option>
-                                                <option value="53">ANGGOTA MAHKAMAH KONSTITUSI</option>
-                                                <option value="54">ANGGOTA KABINET/KEMENTERIAN</option>
-                                                <option value="55">DUTA BESAR</option>
-                                                <option value="56">GUBERNUR</option>
-                                                <option value="57">WAKIL GUBERNUR</option>
-                                                <option value="58">BUPATI</option>
-                                                <option value="59">WAKIL BUPATI</option>
-                                                <option value="60">WALIKOTA</option>
-                                                <option value="61">WAKIL WALIKOTA</option>
-                                                <option value="62">ANGGOTA DPRD PROVINSI</option>
-                                                <option value="63">ANGGOTA DPRD KABUPATEN/KOTA</option>
-                                                <option value="64">DOSEN</option>
-                                                <option value="65">GURU</option>
-                                                <option value="66">PILOT</option>
-                                                <option value="67">PENGACARA</option>
-                                                <option value="68">NOTARIS</option>
-                                                <option value="69">ARSITEK</option>
-                                                <option value="70">AKUNTAN</option>
-                                                <option value="71">KONSULTAN</option>
-                                                <option value="72">DOKTER</option>
-                                                <option value="73">BIDAN</option>
-                                                <option value="74">PERAWAT</option>
-                                                <option value="75">APOTEKER</option>
-                                                <option value="76">PSIKIATER/PSIKOLOG</option>
-                                                <option value="77">PENYIAR TELEVISI</option>
-                                                <option value="78">PENYIAR RADIO</option>
-                                                <option value="79">PELAUT</option>
-                                                <option value="80">PENELITI</option>
-                                                <option value="81">SOPIR</option>
-                                                <option value="82">PIALANG</option>
-                                                <option value="83">PARANORMAL</option>
-                                                <option value="84">PEDAGANG</option>
-                                                <option value="85">PERANGKAT DESA</option>
-                                                <option value="86">KEPALA DESA</option>
-                                                <option value="87">BIARAWATI</option>
-                                                <option value="88">WIRASWASTA</option>
-                                                <option value="89">LAINNYA</option>
+                                                @foreach ($employment as $showemployment)
+                                                    <option value="{{$showemployment->nama}}">{{$showemployment->nama}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-lg-6 mb-3">
@@ -229,95 +163,9 @@
                                             <select class="form-control @error('pekerjaan_bapak') is-invalid @enderror"
                                                 id="pekerjaan_bapak" name="pekerjaan_bapak">
                                                 <option value="">-- Pilih --</option>
-                                                <option value="1">BELUM/TIDAK BEKERJA</option>
-                                                <option value="2">MENGURUS RUMAH TANGGA</option>
-                                                <option value="3">PELAJAR/MAHASISWA</option>
-                                                <option value="4">PENSIUNAN</option>
-                                                <option value="5">PEGAWAI NEGERI SIPIL</option>
-                                                <option value="6">TENTARA NASIONAL INDONESIA</option>
-                                                <option value="7">KEPOLISIAN RI</option>
-                                                <option value="8">PERDAGANGAN</option>
-                                                <option value="9">PETANI/PEKEBUN</option>
-                                                <option value="10">PETERNAK</option>
-                                                <option value="11">NELAYAN/PERIKANAN</option>
-                                                <option value="12">INDUSTRI</option>
-                                                <option value="13">KONSTRUKSI</option>
-                                                <option value="14">TRANSPORTASI</option>
-                                                <option value="15">KARYAWAN SWASTA</option>
-                                                <option value="16">KARYAWAN BUMN</option>
-                                                <option value="17">KARYAWAN BUMD</option>
-                                                <option value="18">KARYAWAN HONORER</option>
-                                                <option value="19">BURUH HARIAN LEPAS</option>
-                                                <option value="20">BURUH TANI/PERKEBUNAN</option>
-                                                <option value="21">BURUH NELAYAN/PERIKANAN</option>
-                                                <option value="22">BURUH PETERNAKAN</option>
-                                                <option value="23">PEMBANTU RUMAH TANGGA</option>
-                                                <option value="24">TUKANG CUKUR</option>
-                                                <option value="25">TUKANG LISTRIK</option>
-                                                <option value="26">TUKANG BATU</option>
-                                                <option value="27">TUKANG KAYU</option>
-                                                <option value="28">TUKANG SOL SEPATU</option>
-                                                <option value="29">TUKANG LAS/PANDAI BESI</option>
-                                                <option value="30">TUKANG JAHIT</option>
-                                                <option value="31">TUKANG GIGI</option>
-                                                <option value="32">PENATA RIAS</option>
-                                                <option value="33">PENATA BUSANA</option>
-                                                <option value="34">PENATA RAMBUT</option>
-                                                <option value="35">MEKANIK</option>
-                                                <option value="36">SENIMAN</option>
-                                                <option value="37">TABIB</option>
-                                                <option value="38">PARAJI</option>
-                                                <option value="39">PERANCANG BUSANA</option>
-                                                <option value="40">PENTERJEMAH</option>
-                                                <option value="41">IMAM MESJID</option>
-                                                <option value="42">PENDETA</option>
-                                                <option value="43">PASTOR</option>
-                                                <option value="44">WARTAWAN</option>
-                                                <option value="45">USTADZ/MUBALIGH</option>
-                                                <option value="46">JURU MASAK</option>
-                                                <option value="47">PROMOTOR ACARA</option>
-                                                <option value="48">ANGGOTA DPR-RI</option>
-                                                <option value="49">ANGGOTA DPD</option>
-                                                <option value="50">ANGGOTA BPK</option>
-                                                <option value="51">PRESIDEN</option>
-                                                <option value="52">WAKIL PRESIDEN</option>
-                                                <option value="53">ANGGOTA MAHKAMAH KONSTITUSI</option>
-                                                <option value="54">ANGGOTA KABINET/KEMENTERIAN</option>
-                                                <option value="55">DUTA BESAR</option>
-                                                <option value="56">GUBERNUR</option>
-                                                <option value="57">WAKIL GUBERNUR</option>
-                                                <option value="58">BUPATI</option>
-                                                <option value="59">WAKIL BUPATI</option>
-                                                <option value="60">WALIKOTA</option>
-                                                <option value="61">WAKIL WALIKOTA</option>
-                                                <option value="62">ANGGOTA DPRD PROVINSI</option>
-                                                <option value="63">ANGGOTA DPRD KABUPATEN/KOTA</option>
-                                                <option value="64">DOSEN</option>
-                                                <option value="65">GURU</option>
-                                                <option value="66">PILOT</option>
-                                                <option value="67">PENGACARA</option>
-                                                <option value="68">NOTARIS</option>
-                                                <option value="69">ARSITEK</option>
-                                                <option value="70">AKUNTAN</option>
-                                                <option value="71">KONSULTAN</option>
-                                                <option value="72">DOKTER</option>
-                                                <option value="73">BIDAN</option>
-                                                <option value="74">PERAWAT</option>
-                                                <option value="75">APOTEKER</option>
-                                                <option value="76">PSIKIATER/PSIKOLOG</option>
-                                                <option value="77">PENYIAR TELEVISI</option>
-                                                <option value="78">PENYIAR RADIO</option>
-                                                <option value="79">PELAUT</option>
-                                                <option value="80">PENELITI</option>
-                                                <option value="81">SOPIR</option>
-                                                <option value="82">PIALANG</option>
-                                                <option value="83">PARANORMAL</option>
-                                                <option value="84">PEDAGANG</option>
-                                                <option value="85">PERANGKAT DESA</option>
-                                                <option value="86">KEPALA DESA</option>
-                                                <option value="87">BIARAWATI</option>
-                                                <option value="88">WIRASWASTA</option>
-                                                <option value="89">LAINNYA</option>
+                                                @foreach ($employment as $showemployment)
+                                                    <option value="{{$showemployment->nama}}">{{$showemployment->nama}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -327,8 +175,7 @@
                                             <select class="form-control @error('penghasilan_ibu') is-invalid @enderror"
                                                 id="penghasilan_ibu" name="penghasilan_ibu">
                                                 <option value="">-- Pilih --</option>
-                                                <option value="1">500.000 < </option> <option value="2">500.000 > 1.000.000
-                                                </option>
+                                                <option value="1">500.000 < </option> <option value="2">500.000 > 1.000.000</option>
                                                 <option value="2">1.000.000 > 5.000.000</option>
                                                 <option value="2">5.000.000 > 10.000.000</option>
                                                 <option value="2">10.000.000 ></option>
@@ -339,13 +186,16 @@
                                             <select class="form-control @error('penghasilan_bapak') is-invalid @enderror"
                                                 id="penghasilan_bapak" name="penghasilan_bapak">
                                                 <option value="">-- Pilih --</option>
-                                                <option value="1">500.000 < </option> <option value="2">500.000 > 1.000.000
-                                                </option>
+                                                <option value="1">500.000 < </option> <option value="2">500.000 > 1.000.000</option>
                                                 <option value="2">1.000.000 > 5.000.000</option>
                                                 <option value="2">5.000.000 > 10.000.000</option>
                                                 <option value="2">10.000.000 ></option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="nomer_hp_wali">Nomer Hp Orang Tua</label>
+                                        <input type="text" class="form-control" name="nomer_hp_wali" id="nomer_hp_wali">
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AchievementController as Achievement;
+use App\Http\Controllers\Admin\AddScheduleController as AddSchedule;
 use App\Http\Controllers\Admin\AddStudentController as AddStudent;
 use App\Http\Controllers\Admin\AddTeacherController as AddTeacher;
 use App\Http\Controllers\Admin\ClassroomController as Classroom;
@@ -36,6 +37,9 @@ Route::group([
     Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
+
+    Route::get('input-jadwal', [AddSchedule::class, 'index'])->name('admin.input-schedule');
+    Route::post('input-jadwal', [AddSchedule::class, 'store'])->name('admin.input-schedule.store');
 
     Route::get('input-siswa', [AddStudent::class, 'index'])->name('admin.input-student');
     Route::post('input-siswa', [AddStudent::class, 'store'])->name('admin.input-student.store');

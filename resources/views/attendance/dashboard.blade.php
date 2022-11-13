@@ -12,7 +12,7 @@
                                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalAbsenManual">Absen Manual</button>
                                     <button type="button" class="btn btn-primary mb-3" id="absenqr" data-bs-toggle="modal" data-bs-target="#ModalAbsenQR">Absen QR</button>
                                     <button type="button" class="btn btn-primary mb-5" id="absenall">Absen Semua Siswa</button>
-                                    <form action="{{route('attandance.logout')}}" method="post">
+                                    <form action="{{route('attendance.logout')}}" method="post">
                                         @csrf
                                         <button type="submit" class="btn btn-primary mb-3 col-sm-12" id="logout">Logout</button>
                                     </form>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                            </div>
-                           @livewire('attandance-dashboard-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan])
+                           @livewire('attendance-dashboard-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan])
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-lg-6" style="overflow: auto; white-space: nowrap; padding:10px; height:300px;">
                             <div class="table-responsive">
-                                @livewire('attandance-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan])
+                                @livewire('attendance-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan])
                             </div>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                 var id   = $(this).data('id');
                 $.ajax({
                     type: 'POST',
-                    url: "{{route('attandance.attandance.edit')}}",
+                    url: "{{route('attendance.attendance.edit')}}",
                     data: {
                         _token: "{{csrf_token()}}",
                         id : id,
@@ -195,7 +195,7 @@
                 $('#id').val('');
                 $.ajax({
                     type: 'POST',
-                    url: "{{route('attandance.attandance.update')}}",
+                    url: "{{route('attendance.attendance.update')}}",
                     data: {
                         _token: "{{csrf_token()}}",
                         id : id,
@@ -217,7 +217,7 @@
                 $('#random').val('');
                 $.ajax({
                     type: 'POST',
-                    url: "{{route('attandance.attandance.store')}}",
+                    url: "{{route('attendance.attendance.store')}}",
                     data: {
                         _token: "{{csrf_token()}}",
                         nis : tahun + jurusan + random,
@@ -263,7 +263,7 @@
             $('#absenall').click(function () {
                 $.ajax({
                     type: 'POST',
-                    url: "{{route('attandance.attandance.storeall')}}",
+                    url: "{{route('attendance.attendance.storeall')}}",
                     data: {
                         _token: "{{csrf_token()}}",
                         matapelajaran : "{{Crypt::encrypt($material->matapelajaran)}}",
@@ -286,7 +286,7 @@
                 if (kode == '') {
                     $.ajax({
                         type: 'POST',
-                        url: "{{route('attandance.qrcode.store')}}",
+                        url: "{{route('attendance.qrcode.store')}}",
                         data: {
                             _token: "{{csrf_token()}}",
                             matapelajaran : "{{Crypt::encrypt($material->matapelajaran)}}",
@@ -311,7 +311,7 @@
                     var kode = $('#kode_qr').val();
                     $.ajax({
                         type: 'POST',
-                        url: "{{route('attandance.qrcode.update')}}",
+                        url: "{{route('attendance.qrcode.update')}}",
                         data: {
                             _token: "{{csrf_token()}}",
                             kode : kode,
@@ -331,7 +331,7 @@
                 var kode = $('#kode_qr').val();
                 $.ajax({
                     type: 'POST',
-                    url: "{{route('attandance.qrcode.destroy')}}",
+                    url: "{{route('attendance.qrcode.destroy')}}",
                     data: {
                         _token: "{{csrf_token()}}",
                         kode : kode,
@@ -348,7 +348,7 @@
             function logout() {
                 $.ajax({
                     type: 'POST',
-                    url: "{{route('attandance.logout')}}",
+                    url: "{{route('attendance.logout')}}",
                     data: {
                         _token: "{{csrf_token()}}",
                     },

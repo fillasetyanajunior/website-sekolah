@@ -60,7 +60,7 @@ class SplashLivewire extends Component
             ]);
         }
 
-        return redirect(route('attandance.dashboard', $material->id));
+        return redirect(route('attendance.dashboard', $material->id));
     }
 
     public function jurusan_no_kelas()

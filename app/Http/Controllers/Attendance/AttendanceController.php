@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Attandance;
+namespace App\Http\Controllers\Attendance;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 
-class AttandanceController extends Controller
+class AttendanceController extends Controller
 {
     public function absen(Request $request)
     {

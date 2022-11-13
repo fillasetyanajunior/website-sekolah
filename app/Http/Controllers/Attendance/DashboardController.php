@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Attandance;
+namespace App\Http\Controllers\Attendance;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
@@ -16,7 +16,7 @@ class DashboardController extends AppController
     public function index()
     {
         $title      = 'Informasi';
-        return view('attandance.splash', compact('title'));
+        return view('attendance.splash', compact('title'));
     }
 
     public function dashboard(Request $request)
@@ -62,6 +62,6 @@ class DashboardController extends AppController
         $studentcount   = Attendance::where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)->where('tanggal', date('Y-m-d'))->count();
         $students       = Attendance::where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)->where('tanggal', date('Y-m-d'))->get();
 
-        return view('attandance.dashboard', compact('title', 'material', 'jam_start', 'jam_end', 'schedule', 'hari', 'studentcount', 'students'));
+        return view('attendance.dashboard', compact('title', 'material', 'jam_start', 'jam_end', 'schedule', 'hari', 'studentcount', 'students'));
     }
 }

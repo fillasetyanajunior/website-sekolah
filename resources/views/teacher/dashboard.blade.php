@@ -30,22 +30,20 @@
                                             <div class="row align-items-center">
                                                 <div class="col-auto">
                                                     <span class="bg-blue text-white avatar">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                            height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-stairs" width="24" height="24"
+                                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                                                             stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
-                                                            <path d="M12 3v3m0 12v3" /></svg>
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                            <path d="M4 18h4v-4h4v-4h4v-4h4"></path>
+                                                        </svg>
                                                     </span>
                                                 </div>
                                                 <div class="col">
                                                     <div class="font-weight-medium">
-                                                        132 Sales
+                                                        Jumlah Kelas Mengajar
                                                     </div>
                                                     <div class="text-muted">
-                                                        12 waiting payments
+                                                        {{count(App\Models\Schedule::groupBy('kelas')->where('guru', Auth::user()->id_guru)->get('kelas')) . ' Kelas'}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -58,23 +56,27 @@
                                             <div class="row align-items-center">
                                                 <div class="col-auto">
                                                     <span class="bg-green text-white avatar">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                            height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building" width="24" height="24"
+                                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                                                             stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <circle cx="6" cy="19" r="2" />
-                                                            <circle cx="17" cy="19" r="2" />
-                                                            <path d="M17 17h-11v-14h-2" />
-                                                            <path d="M6 5l14 1l-1 7h-13" /></svg>
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                            <line x1="3" y1="21" x2="21" y2="21"></line>
+                                                            <line x1="9" y1="8" x2="10" y2="8"></line>
+                                                            <line x1="9" y1="12" x2="10" y2="12"></line>
+                                                            <line x1="9" y1="16" x2="10" y2="16"></line>
+                                                            <line x1="14" y1="8" x2="15" y2="8"></line>
+                                                            <line x1="14" y1="12" x2="15" y2="12"></line>
+                                                            <line x1="14" y1="16" x2="15" y2="16"></line>
+                                                            <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"></path>
+                                                        </svg>
                                                     </span>
                                                 </div>
                                                 <div class="col">
                                                     <div class="font-weight-medium">
-                                                        78 Orders
+                                                        Jumlah Jurusan Mengajar
                                                     </div>
                                                     <div class="text-muted">
-                                                        32 shipped
+                                                        {{count(App\Models\Schedule::groupBy('jurusan')->groupBy('kelas')->where('guru', Auth::user()->id_guru)->get('jurusan')) . ' Jurusan'}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,50 +89,22 @@
                                             <div class="row align-items-center">
                                                 <div class="col-auto">
                                                     <span class="bg-twitter text-white avatar">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                            height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock-hour-9" width="24" height="24"
+                                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                                                             stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
-                                                            </svg>
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                            <circle cx="12" cy="12" r="9"></circle>
+                                                            <path d="M12 12h-3.5"></path>
+                                                            <path d="M12 7v5"></path>
+                                                        </svg>
                                                     </span>
                                                 </div>
                                                 <div class="col">
                                                     <div class="font-weight-medium">
-                                                        623 Shares
+                                                        Jumlah Jam Mengajar
                                                     </div>
                                                     <div class="text-muted">
-                                                        16 today
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-3">
-                                    <div class="card card-sm">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="bg-facebook text-white avatar">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                            height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                            stroke="currentColor" fill="none" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
-                                                            </svg>
-                                                    </span>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="font-weight-medium">
-                                                        132 Likes
-                                                    </div>
-                                                    <div class="text-muted">
-                                                        21 today
+                                                        {{App\Models\Schedule::where('guru', Auth::user()->id_guru)->count() . ' Jam'}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,9 +125,9 @@
                                                 <th>Hari</th>
                                                 <th>Jam</th>
                                                 <th>Mata Pelajaran</th>
+                                                <th>Kelas</th>
                                                 <th>Jurusan</th>
                                                 <th>Bagian Kelas</th>
-                                                <th>Kelas</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -162,9 +136,9 @@
                                                     <td class="text-capitalize">{{$showschedule->hari}}</td>
                                                     <td>{{$showschedule->jam_start . ' - ' . $showschedule->jam_end}}</td>
                                                     <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{$showschedule->jurusan!= null ? App\Models\Department::find($showschedule->jurusan)->jurusan : ''}}</td>
-                                                    <td>{{$showschedule->no_kelas}}</td>
                                                     <td>{{$showschedule->kelas}}</td>
+                                                    <td>{{$showschedule->jurusan != null ? App\Models\Department::find($showschedule->jurusan)->jurusan : '-'}}</td>
+                                                    <td>{{$showschedule->no_kelas != null ? $showschedule->no_kelas : '-'}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

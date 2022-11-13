@@ -9,12 +9,12 @@
     </thead>
     <tbody>
         <?php $i = 1;?>
-        @foreach ($attandance as $showattandance)
+        @foreach ($attendance as $showattendance)
             <tr>
                 <td>{{$i++}}</td>
-                <td>{{$showattandance->jam}}</td>
-                <td>{{$showattandance->nis}}</td>
-                <td>{{App\Models\StudentDetail::find($showattandance->id_siswa)->nama}}</td>
+                <td>{{$showattendance->jam}}</td>
+                <td>{{$showattendance->nis}}</td>
+                <td>{{App\Models\StudentDetail::find($showattendance->id_siswa)->nama}}</td>
             </tr>
         @endforeach
     </tbody>

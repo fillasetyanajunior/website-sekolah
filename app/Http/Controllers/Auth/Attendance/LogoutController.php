@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Attandance;
+namespace App\Http\Controllers\Auth\Attendance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,6 +14,6 @@ class LogoutController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect(route('attandance.login.form'))->with(['error' => 'Anda berhasil logout']);
+        return redirect(route('attendance.login.form'))->with(['error' => 'Anda berhasil logout']);
     }
 }

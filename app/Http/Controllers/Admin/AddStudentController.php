@@ -19,7 +19,7 @@ class AddStudentController extends AppController
 
     public function store(Request $request)
     {
-        Excel::import(new StudentImport($request->guru), $request->import_excel);
+        Excel::import(new StudentImport, $request->import_excel);
         return redirect(route('admin.input-student'))->with('success', 'Data Berhasil Ditambahkan');
     }
 

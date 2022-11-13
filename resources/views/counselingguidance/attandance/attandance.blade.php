@@ -29,7 +29,8 @@
                                 Tambah Pelanggaran
                             </a>
                             <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                                data-bs-target="#PelanggaranModal" id="tambahpelanggaran" aria-label="Tambah Pelanggaran">
+                                data-bs-target="#PelanggaranModal" id="tambahpelanggaran"
+                                aria-label="Tambah Pelanggaran">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -68,29 +69,36 @@
                                     <tbody>
                                         <?php $i = 1;?>
                                         @foreach ($offensestudent as $showoffensestudent)
-                                            <tr>
-                                                <td>{{$i++}}</td>
-                                                <td>{{App/Models/StudentDetail::find($showoffensestudent->id_siswa)->nama}}</td>
-                                                <td>{{$showoffensestudent->tanggal}}</td>
-                                                <td>{{App/Models/Offense::find($showoffensestudent->jenis_pelanggaran)->nama}}</td>
-                                                <td>{{$showoffensestudent->sekor}}</td>
-                                                <td>{{$showoffensestudent->pembinaan}}</td>
-                                                <td>{{$showoffensestudent->keterangan}}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-warning" id="editpelanggaran" data-bs-toggle="modal" data-bs-target="#PelanggaranModal" data-id="{{Crypt::encrypt($showoffensestudent->id)}}">Ubah</button>
-                                                    <form action="{{route('counseling.offense.destroy', Crypt::encrypt($showoffensestudent->id))}}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>{{$i++}}</td>
+                                            <td>{{App/Models/StudentDetail::find($showoffensestudent->id_siswa)->nama}}
+                                            </td>
+                                            <td>{{$showoffensestudent->tanggal}}</td>
+                                            <td>{{App/Models/Offense::find($showoffensestudent->jenis_pelanggaran)->nama}}
+                                            </td>
+                                            <td>{{$showoffensestudent->sekor}}</td>
+                                            <td>{{$showoffensestudent->pembinaan}}</td>
+                                            <td>{{$showoffensestudent->keterangan}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning"
+                                                    id="editpelanggaran" data-bs-toggle="modal"
+                                                    data-bs-target="#PelanggaranModal"
+                                                    data-id="{{Crypt::encrypt($showoffensestudent->id)}}">Ubah</button>
+                                                <form
+                                                    action="{{route('counseling.offense.destroy', Crypt::encrypt($showoffensestudent->id))}}"
+                                                    method="post" class="d-inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-primary">Hapus</button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                             <div class="card-footer d-flex align-items-center">
-                               {{$offensestudent->links()}}
+                                {{$offensestudent->links()}}
                             </div>
                         </div>
                     </div>
@@ -116,7 +124,7 @@
                             <select class="form-select" name="nama">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($student as $showstudent)
-                                    <option value="{{$showstudent->id}}">{{$showstudent->nama}}</option>
+                                <option value="{{$showstudent->id}}">{{$showstudent->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -125,7 +133,7 @@
                             <select class="form-select" name="pelanggaran">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($offense as $showoffense)
-                                    <option value="{{$showoffense->id}}">{{$showoffense->nama}}</option>
+                                <option value="{{$showoffense->id}}">{{$showoffense->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -146,7 +154,7 @@
                                     <select name="pelapor" id="pelapor" class="form-select">
                                         <option value="">-- Pilih --</option>
                                         @foreach ($teacher as $showteacher)
-                                            <option value="{{$showteacher->nama}}">{{$showteacher->nama}}</option>
+                                        <option value="{{$showteacher->nama}}">{{$showteacher->nama}}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Employment;
 use App\Models\Province;
 use App\Models\Registration;
 use App\Models\RegistrationDetail;
@@ -17,42 +18,45 @@ class RegistrationController extends Controller
         $province           = Province::all();
         $department_first   = Department::all();
         $department_second  = Department::all();
-        return view('home.pendaftaran', compact('department_first', 'department_second', 'title', 'province'));
+        $employment         = Employment::all();
+        return view('home.pendaftaran', compact('department_first', 'department_second', 'title', 'province', 'employment'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nama'                  => ['required', 'max:255'],
-            'nisn'                  => ['required', 'max:15'],
-            'tempat_lahir'          => ['required', 'max:255'],
-            'tanggal_lahir'         => ['required'],
-            'jenis_kelamin'         => ['required'],
-            'agama'                 => ['required'],
-            'nomer_hp'              => ['required', 'max:12'],
-            'email'                 => ['required', 'email'],
-            'nama_ibu'              => ['required'],
-            'nama_bapak'            => ['required'],
-            'pendidikan_ibu'        => ['required'],
-            'pendidikan_bapak'      => ['required'],
-            'pekerjaan_ibu'         => ['required'],
-            'pekerjaan_bapak'       => ['required'],
-            'penghasilan_ibu'       => ['required'],
-            'penghasilan_bapak'     => ['required'],
-            'pendidikan'            => ['required'],
-            'nama_sekolah'          => ['required'],
-            'nama_jalan'            => ['required'],
-            'rt'                    => ['required'],
-            'rw'                    => ['required'],
-            'dusun'                 => ['required'],
-            'desa'                  => ['required'],
-            'kecamatan'             => ['required'],
-            'kabupaten'             => ['required'],
-            'provinsi'              => ['required'],
-            'kode_pos'              => ['required'],
-            'pilihan_1'             => ['required'],
-            'pilihan_2'             => ['required'],
-            'info'                  => ['required'],
+            'nama'              => 'required',
+            'nik'               => 'required',
+            'nisn'              => 'required',
+            'tempat_lahir'      => 'required',
+            'tanggal_lahir'     => 'required',
+            'jenis_kelamin'     => 'required',
+            'agama'             => 'required',
+            'nomer_hp_siswa'    => 'required',
+            'email'             => 'required',
+            'nama_ibu'          => 'required',
+            'nama_bapak'        => 'required',
+            'nik_ibu'           => 'required',
+            'pendidikan_ibu'    => 'required',
+            'nik_bapak'         => 'required',
+            'pendidikan_bapak'  => 'required',
+            'pekerjaan_ibu'     => 'required',
+            'pekerjaan_bapak'   => 'required',
+            'penghasilan_ibu'   => 'required',
+            'penghasilan_bapak' => 'required',
+            'nomer_hp_wali'     => 'required',
+            'pendidikan'        => 'required',
+            'nama_sekolah'      => 'required',
+            'provinsi_id'       => 'required',
+            'kabupaten_id'      => 'required',
+            'kecamatan_id'      => 'required',
+            'desa_id'           => 'required',
+            'dusun'             => 'required',
+            'rw'                => 'required',
+            'rt'                => 'required',
+            'alamat'            => 'required',
+            'kode_pos'          => 'required',
+            'info'              => 'required',
         ]);
 
         if ($request->jenis_kelamin == 1) {
@@ -76,33 +80,37 @@ class RegistrationController extends Controller
         }
 
         $siswa = RegistrationDetail::create([
-            'nama'                  => $request->nama,
-            'nisn'                  => $request->nisn,
-            'tempat_lahir'          => $request->tempat_lahir,
-            'tanggal_lahir'         => $request->tanggal_lahir,
-            'jenis_kelamin'         => $jenis_kelamin,
-            'agama'                 => $agama,
-            'nomer_hp'              => $request->nomer_hp,
-            'email'                 => $request->email,
-            'nama_ibu'              => $request->nama_ibu,
-            'nama_bapak'            => $request->nama_bapak,
-            'pendidikan_ibu'        => $request->pendidikan_ibu,
-            'pendidikan_bapak'      => $request->pendidikan_bapak,
-            'pekerjaan_ibu'         => $request->pekerjaan_ibu,
-            'pekerjaan_bapak'       => $request->pekerjaan_bapak,
-            'penghasilan_ibu'       => $request->penghasilan_ibu,
-            'penghasilan_bapak'     => $request->penghasilan_bapak,
-            'pendidikan'            => $request->pendidikan,
-            'nama_sekolah'          => $request->nama_sekolah,
-            'provinsi_id'           => $request->provinsi,
-            'kabupaten_id'          => $request->kabupaten,
-            'kecamatan_id'          => $request->kecamatan,
-            'desa_id'               => $request->desa,
-            'dusun'                 => $request->dusun,
-            'rw'                    => $request->rw,
-            'rt'                    => $request->rt,
-            'alamat'                => $request->nama_jalan,
-            'kode_pos'              => $request->kode_pos,
+            'nama'              => $request->nama,
+            'nik'               => $request->nik,
+            'nisn'              => $request->nisn,
+            'tempat_lahir'      => $request->tempat_lahir,
+            'tanggal_lahir'     => $request->tanggal_lahir,
+            'jenis_kelamin'     => $jenis_kelamin,
+            'agama'             => $agama,
+            'nomer_hp_siswa'    => $request->nomer_hp_siswa,
+            'email'             => $request->email,
+            'nik_ibu'           => $request->nik_ibu,
+            'nama_ibu'          => $request->nama_ibu,
+            'nik_bapak'         => $request->nik_bapak,
+            'nama_bapak'        => $request->nama_bapak,
+            'pendidikan_ibu'    => $request->pendidikan_ibu,
+            'pendidikan_bapak'  => $request->pendidikan_bapak,
+            'pekerjaan_ibu'     => $request->pekerjaan_ibu,
+            'pekerjaan_bapak'   => $request->pekerjaan_bapak,
+            'penghasilan_ibu'   => $request->penghasilan_ibu,
+            'penghasilan_bapak' => $request->penghasilan_bapak,
+            'nomer_hp_wali'     => $request->nomer_hp_wali,
+            'pendidikan'        => $request->pendidikan,
+            'nama_sekolah'      => $request->nama_sekolah,
+            'provinsi_id'       => $request->provinsi,
+            'kabupaten_id'      => $request->kabupaten,
+            'kecamatan_id'      => $request->kecamatan,
+            'desa_id'           => $request->desa,
+            'dusun'             => $request->dusun,
+            'rw'                => $request->rw,
+            'rt'                => $request->rt,
+            'alamat'            => $request->nama_jalan,
+            'kode_pos'          => $request->kode_pos,
         ]);
 
         $permitted_chars    = '0123456789';
