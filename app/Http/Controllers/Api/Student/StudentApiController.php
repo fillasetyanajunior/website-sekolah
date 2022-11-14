@@ -16,7 +16,7 @@ class StudentApiController extends Controller
             return response()->json(['status' => 'error']);
         }
         $avatar = StudentDetail::find(Auth::user()->id_siswa)->avatar;
-        if ($avatar == null) {
+        if ($avatar == 'default.jpg') {
             return response()->json([
                 'id'        => Auth::user()->id_siswa,
                 'nama'      => Auth::user()->name,
@@ -39,7 +39,7 @@ class StudentApiController extends Controller
             return response()->json(['status' => 'error']);
         }
         $avatar = StudentDetail::find(Auth::user()->id_siswa)->avatar;
-        if ($avatar == null) {
+        if ($avatar == 'default.jpg') {
             return response()->json([
                 'nama'      => Auth::user()->name,
                 'nis'       => Auth::user()->username,
