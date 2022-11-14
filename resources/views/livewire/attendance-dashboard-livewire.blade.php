@@ -1,4 +1,4 @@
-<div class="card" wire:poll.750ms>
+<div class="card" wire:poll.1500ms>
     <div class="table-responsive">
         <table class="table card-table table-vcenter text-nowrap datatable">
             <thead>
