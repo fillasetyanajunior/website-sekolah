@@ -17,7 +17,7 @@ class ScheduleController extends AppController
     public function index()
     {
         $title      = 'Jadwal Pelajaran';
-        $schedule   = Schedule::groupBy('matapelajaran')->select('matapelajaran')->paginate(20);
+        $schedule   = Schedule::orderBy('hari')->orderBy('kelas')->groupBy('matapelajaran')->select('matapelajaran')->paginate(20);
         $subject    = Subject::all();
         $teacher    = Teacher::all();
         $year       = Year::all();

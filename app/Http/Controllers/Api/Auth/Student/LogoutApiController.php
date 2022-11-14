@@ -11,9 +11,6 @@ class LogoutApiController extends Controller
     {
         $user = request()->user();
         $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
-        $respon = [
-            'status_code' => 200,
-        ];
-        return response()->json($respon, 200);
+        return response()->json(['status_code' => 200]);
     }
 }

@@ -20,13 +20,13 @@ class DeuteronomiApiController extends Controller
             $deuteronomi = Deuteronomi::join('subjects', 'subjects.id', '=', 'deuteronomis.matapelajaran')
                                       ->join('years', 'years.id', '=', 'deuteronomis.tahun')
                                      ->where('deuteronomis.kelas', $student->kelas)->where('deuteronomis.no_kelas', $student->no_kelas)->where('tanggal', date('Y-m-d'))->where('id_siswa', Auth::user()->id_siswa)
-                                    ->select('deuteronomis.id', 'deuteronomis.tanggal', 'deuteronomis.jam', 'subjects.matapelajaran', 'years.tahun', 'deuteronomis.no_kelas', 'deuteronomis.kelas', 'deuteronomis.kursi', 'deuteronomis.ruangan')->get();
+                                    ->select('deuteronomis.id', 'deuteronomis.tanggal', 'deuteronomis.jam', 'subjects.matapelajaran', 'years.tahun', 'deuteronomis.no_kelas as jurusan', 'deuteronomis.kelas', 'deuteronomis.kursi', 'deuteronomis.ruangan')->get();
         } else {
             $deuteronomi = Deuteronomi::join('subjects', 'subjects.id', '=', 'deuteronomis.matapelajaran')
                                       ->join('years', 'years.id', '=', 'deuteronomis.tahun')
                                       ->join('departments', 'departments.id', '=', 'deuteronomis.jurusan')
                                      ->where('deuteronomis.kelas', $student->kelas)->where('deuteronomis.jurusan', $student->jurusan)->where('tanggal', date('Y-m-d'))->where('id_siswa', Auth::user()->id_siswa)
-                                    ->select('deuteronomis.id', 'deuteronomis.tanggal', 'deuteronomis.jam', 'subjects.matapelajaran', 'years.tahun', 'departments.jurusan', 'deuteronomis.kelas', 'deuteronomis.kursi', 'deuteronomis.ruangan')->get();
+                                    ->select('deuteronomis.id', 'deuteronomis.tanggal', 'deuteronomis.jam', 'subjects.matapelajaran', 'years.tahun', 'departments.jurusan as jurusan', 'deuteronomis.kelas', 'deuteronomis.kursi', 'deuteronomis.ruangan')->get();
         }
         return response()->json($deuteronomi);
     }
@@ -38,13 +38,13 @@ class DeuteronomiApiController extends Controller
             $deuteronomi = Deuteronomi::join('subjects', 'subjects.id', '=', 'deuteronomis.matapelajaran')
                                       ->join('years', 'years.id', '=', 'deuteronomis.tahun')
                                      ->where('deuteronomis.kelas', $student->kelas)->where('deuteronomis.no_kelas', $student->no_kelas)->where('id_siswa', Auth::user()->id_siswa)
-                                    ->select('deuteronomis.id', 'deuteronomis.tanggal', 'deuteronomis.jam', 'subjects.matapelajaran', 'years.tahun', 'deuteronomis.no_kelas', 'deuteronomis.kelas', 'deuteronomis.kursi', 'deuteronomis.ruangan')->get();
+                                    ->select('deuteronomis.id', 'deuteronomis.tanggal', 'deuteronomis.jam', 'subjects.matapelajaran', 'years.tahun', 'deuteronomis.no_kelas as jurusan', 'deuteronomis.kelas', 'deuteronomis.kursi', 'deuteronomis.ruangan')->get();
         } else {
             $deuteronomi = Deuteronomi::join('subjects', 'subjects.id', '=', 'deuteronomis.matapelajaran')
                                       ->join('years', 'years.id', '=', 'deuteronomis.tahun')
                                       ->join('departments', 'departments.id', '=', 'deuteronomis.jurusan')
                                      ->where('deuteronomis.kelas', $student->kelas)->where('deuteronomis.jurusan', $student->jurusan)->where('id_siswa', Auth::user()->id_siswa)
-                                    ->select('deuteronomis.id', 'deuteronomis.tanggal', 'deuteronomis.jam', 'subjects.matapelajaran', 'years.tahun', 'departments.jurusan', 'deuteronomis.kelas', 'deuteronomis.kursi', 'deuteronomis.ruangan')->get();
+                                    ->select('deuteronomis.id', 'deuteronomis.tanggal', 'deuteronomis.jam', 'subjects.matapelajaran', 'years.tahun', 'departments.jurusan as jurusan', 'deuteronomis.kelas', 'deuteronomis.kursi', 'deuteronomis.ruangan')->get();
         }
 
         return response()->json($deuteronomi);

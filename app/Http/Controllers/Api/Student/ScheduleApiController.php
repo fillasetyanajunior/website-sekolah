@@ -32,7 +32,7 @@ class ScheduleApiController extends Controller
                                    ->join('years', 'years.id', '=', 'schedules.tahun')
                                    ->join('teacher_details', 'teacher_details.id', '=', 'schedules.guru')
                                   ->where('schedules.kelas', $student->kelas)->where('schedules.no_kelas', $student->no_kelas)->where('hari', $hari[date('N')])
-                                 ->select('schedules.id', 'schedules.hari', 'schedules.jam_start', 'schedules.jam_end', 'subjects.matapelajaran', 'teacher_details.nama as guru', 'years.tahun', 'schedules.no_kelas', 'schedules.kelas')->get();
+                                 ->select('schedules.id', 'schedules.hari', 'schedules.jam_start', 'schedules.jam_end', 'subjects.matapelajaran', 'teacher_details.nama as guru', 'years.tahun', 'schedules.no_kelas as jurusan', 'schedules.kelas')->get();
         } else {
             $schedule = Schedule::orderBy('schedules.jam_start')
                                    ->join('subjects', 'subjects.id', '=', 'schedules.matapelajaran')
@@ -40,7 +40,7 @@ class ScheduleApiController extends Controller
                                    ->join('teacher_details', 'teacher_details.id', '=', 'schedules.guru')
                                    ->join('departments', 'departments.id', '=', 'schedules.jurusan')
                                   ->where('schedules.kelas', $student->kelas)->where('schedules.jurusan', $student->jurusan)->where('hari', $hari[date('N')])
-                                 ->select('schedules.id', 'schedules.hari', 'schedules.jam_start', 'schedules.jam_end', 'subjects.matapelajaran', 'teacher_details.nama as guru', 'years.tahun', 'departments.jurusan', 'schedules.kelas')->get();
+                                 ->select('schedules.id', 'schedules.hari', 'schedules.jam_start', 'schedules.jam_end', 'subjects.matapelajaran', 'teacher_details.nama as guru', 'years.tahun', 'departments.jurusan as jurusan', 'schedules.kelas')->get();
         }
 
         return response()->json($schedule);
@@ -58,7 +58,7 @@ class ScheduleApiController extends Controller
                                    ->join('years', 'years.id', '=', 'schedules.tahun')
                                    ->join('teacher_details', 'teacher_details.id', '=', 'schedules.guru')
                                   ->where('schedules.kelas', $student->kelas)->where('schedules.no_kelas', $student->no_kelas)
-                                 ->select('schedules.id', 'schedules.hari', 'schedules.jam_start', 'schedules.jam_end', 'subjects.matapelajaran', 'teacher_details.nama as guru', 'years.tahun', 'schedules.no_kelas', 'schedules.kelas')->get();
+                                 ->select('schedules.id', 'schedules.hari', 'schedules.jam_start', 'schedules.jam_end', 'subjects.matapelajaran', 'teacher_details.nama as guru', 'years.tahun', 'schedules.no_kelas as jurusan', 'schedules.kelas')->get();
         } else {
             $schedule = Schedule::orderBy('schedules.jam_start')->orderBy('schedules.hari')
                                    ->join('subjects', 'subjects.id', '=', 'schedules.matapelajaran')
@@ -66,7 +66,7 @@ class ScheduleApiController extends Controller
                                    ->join('teacher_details', 'teacher_details.id', '=', 'schedules.guru')
                                    ->join('departments', 'departments.id', '=', 'schedules.jurusan')
                                   ->where('schedules.kelas', $student->kelas)->where('schedules.jurusan', $student->jurusan)
-                                 ->select('schedules.id', 'schedules.hari', 'schedules.jam_start', 'schedules.jam_end', 'subjects.matapelajaran', 'teacher_details.nama as guru', 'years.tahun', 'departments.jurusan', 'schedules.kelas')->get();
+                                 ->select('schedules.id', 'schedules.hari', 'schedules.jam_start', 'schedules.jam_end', 'subjects.matapelajaran', 'teacher_details.nama as guru', 'years.tahun', 'departments.jurusan as jurusan', 'schedules.kelas')->get();
         }
 
         return response()->json($schedule);
