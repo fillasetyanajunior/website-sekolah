@@ -40,7 +40,7 @@ class AttendanceApiController extends Controller
         }
 
         $year       = Year::find($schedule->tahun);
-        $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', Carbon::now()->isoFormat('Y-M-d'))->first();
+        $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->first();
 
         if ($kode != null) {
             if ($kode->jurusan == $student->jurusan && $kode->kelas == $student->kelas && $kode->matapelajaran == $schedule->matapelajaran) {
@@ -53,7 +53,7 @@ class AttendanceApiController extends Controller
                         'guru'          => $schedule->guru,
                         'tahun'         => $year->tahun,
                         'kelas'         => $student->kelas,
-                        'tanggal'       => Carbon::now()->isoFormat('Y-M-d'),
+                        'tanggal'       => date('Y-m-d'),
                         'semester'      => $year->semester,
                         'jam'           => date('H:i:s'),
                         'keterangan'    => 'Hadir',
@@ -73,7 +73,7 @@ class AttendanceApiController extends Controller
                         'guru'          => $schedule->guru,
                         'tahun'         => $year->tahun,
                         'kelas'         => $student->kelas,
-                        'tanggal'       => Carbon::now()->isoFormat('Y-M-d'),
+                        'tanggal'       => date('Y-m-d'),
                         'semester'      => $year->semester,
                         'jam'           => date('H:i:s'),
                         'keterangan'    => 'Hadir',
