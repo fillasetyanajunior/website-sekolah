@@ -34,15 +34,10 @@ class AttendanceApiController extends Controller
         $kode       = QrCode::where('kode', $request->kodeqr)->first();
         $student    = StudentDetail::find(Auth::user()->id_siswa);
         if ($student->kelas == 'X') {
-            $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->first();
+            $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('matapelajaran', $kode->matapelajaran)->where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->first();
         } else {
-            $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
+            $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('matapelajaran', $kode->matapelajaran)->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
         }
-        // if ($student->kelas == 'X') {
-        //     $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('jam_start', date('H:i:s'))->where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->first();
-        // } else {
-        //     $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('jam_start', date('H:i:s'))->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
-        // }
 
         $year       = Year::find($schedule->tahun);
         $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', Carbon::now()->isoFormat('Y-M-d'))->first();
