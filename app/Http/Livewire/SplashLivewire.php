@@ -15,7 +15,7 @@ class SplashLivewire extends Component
 
     public function render()
     {
-        $allkelas   = Teaching::groupBy('kelas')->where('id_guru', Auth::user()->id_guru)->get('kelas');
+        $allkelas = Teaching::groupBy('kelas')->where('id_guru', Auth::user()->id_guru)->get('kelas');
         return view('livewire.splash-livewire', compact('allkelas'));
     }
 

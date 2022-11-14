@@ -20,9 +20,9 @@ class AttendanceDashboardLivewire extends Component
     public function render()
     {
         if ($this->kelas == 'X') {
-            $students = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('no_kelas', $this->no_kelas)->where('tanggal', date('Y-m-d'))->get();
+            $students = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('no_kelas', $this->no_kelas)->where('tanggal', date('Y-M-d'))->get();
         } else {
-            $students = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('jurusan', $this->jurusan)->where('tanggal', date('Y-m-d'))->get();
+            $students = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('jurusan', $this->jurusan)->where('tanggal', date('Y-M-d'))->get();
         }
         return view('livewire.attendance-dashboard-livewire', compact('students'));
     }
