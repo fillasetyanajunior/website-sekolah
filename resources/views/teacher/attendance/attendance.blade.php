@@ -205,8 +205,12 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="mapel">Mata Pelajaran</label>
-                            <select class="form-control" id="mapel" name="mapel">
+                            <label for="tanggal" class="form-label">Tanggal</label>
+                            <input type="date" name="tanggal" id="tanggal" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="matapelajaran">Mata Pelajaran</label>
+                            <select class="form-control" id="matapelajaran" name="matapelajaran">
                                 <option value="">-- Pilih --</option>
                                 @foreach ($subject as $showsubject)
                                     <option value="{{App\Models\Subject::find($showsubject->matapelajaran)->matapelajaran}}">{{App\Models\Subject::find($showsubject->matapelajaran)->matapelajaran}}</option>
@@ -248,6 +252,16 @@
                             <label class="form-label" for="siswa">Siswa</label>
                             <select class="form-control" id="siswa" name="siswa">
                                 <option value="">-- Pilih --</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="keterangan">Keterangan</label>
+                            <select class="form-control" id="keterangan" name="keterangan">
+                                <option value="">-- Pilih --</option>
+                                <option value="1">Hadir</option>
+                                <option value="2">Sakit</option>
+                                <option value="3">Izin</option>
+                                <option value="4">Tanpa Keterangan</option>
                             </select>
                         </div>
                     </div>

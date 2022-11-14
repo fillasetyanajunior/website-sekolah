@@ -8,10 +8,13 @@ use App\Models\StudentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ScheduleApiController extends AppController
+class ScheduleApiController extends Controller
 {
     public function jadwal()
     {
+        if (request()->user()->currentAccessToken()->name != 'student') {
+            return response()->json(['status' => 'error']);
+        }
         $hari = array(
             1 =>
             'Senin',
@@ -45,6 +48,9 @@ class ScheduleApiController extends AppController
 
     public function show()
     {
+        if (request()->user()->currentAccessToken()->name != 'student') {
+            return response()->json(['status' => 'error']);
+        }
         $student = StudentDetail::find(Auth::user()->id_siswa);
         if ($student->kelas == 'X') {
             $schedule = Schedule::orderBy('schedules.jam_start')->orderBy('schedules.hari')

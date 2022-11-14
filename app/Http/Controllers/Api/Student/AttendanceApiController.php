@@ -13,10 +13,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AttendanceApiController extends AppController
+class AttendanceApiController extends Controller
 {
     public function absen(Request $request)
     {
+        if (request()->user()->currentAccessToken()->name != 'student') {
+            return response()->json(['status' => 'error']);
+        }
         $hari = array(
             1 =>
             'Senin',
@@ -89,6 +92,9 @@ class AttendanceApiController extends AppController
 
     public function show(Request $request)
     {
+        if (request()->user()->currentAccessToken()->name != 'student') {
+            return response()->json(['status' => 'error']);
+        }
         $subject    = Attendance::groupBy('matapelajaran')->where('kelas', $request->kelas)->where('semester', $request->semester)->where('id_siswa', Auth::user()->id_siswa)->get('matapelajaran');
         $subjects   = Attendance::where('kelas', $request->kelas)->where('semester', $request->semester)->where('id_siswa', Auth::user()->id_siswa)->first();
         if ($subjects == null) {

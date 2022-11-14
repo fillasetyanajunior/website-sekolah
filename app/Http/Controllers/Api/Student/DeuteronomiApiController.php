@@ -8,10 +8,13 @@ use App\Models\StudentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class DeuteronomiApiController extends AppController
+class DeuteronomiApiController extends Controller
 {
     public function ulangan()
     {
+        if (request()->user()->currentAccessToken()->name != 'student') {
+            return response()->json(['status' => 'error']);
+        }
         $student = StudentDetail::find(Auth::user()->id_siswa);
         if ($student->kelas == 'X') {
             $deuteronomi = Deuteronomi::join('subjects', 'subjects.id', '=', 'deuteronomis.matapelajaran')
@@ -49,6 +52,9 @@ class DeuteronomiApiController extends AppController
 
     public function day()
     {
+        if (request()->user()->currentAccessToken()->name != 'student') {
+            return response()->json(['status' => 'error']);
+        }
         $student = StudentDetail::find(Auth::user()->id_siswa);
         if ($student->kelas == 'X') {
             $deuteronomi = Deuteronomi::groupBy('tanggal')

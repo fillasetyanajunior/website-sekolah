@@ -25,9 +25,13 @@ class AttendanceController extends AppController
         return view('teacher.attendance.attendance', compact('attendance', 'title', 'subject', 'class', 'no_class', 'department'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tanggal' => 'required|date',
+            'matapelajaran' => 'required',
+
+        ]);
     }
 
     public function show(Request $request)

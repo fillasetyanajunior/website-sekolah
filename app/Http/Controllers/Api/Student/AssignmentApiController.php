@@ -9,10 +9,13 @@ use App\Models\StudentDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AssignmentApiController extends AppController
+class AssignmentApiController extends Controller
 {
     public function assignment()
     {
+        if (request()->user()->currentAccessToken()->name != 'student') {
+            return response()->json(['status' => 'error']);
+        }
         $student    = StudentDetail::find(Auth::user()->id_siswa);
         if ($student->kelas == 'X') {
             $classroom  = Classroom::where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->get();
