@@ -92,7 +92,7 @@ class AttendanceApiController extends Controller
                 return response()->json(['status' => 'Absen Gagal']);
             }
         } else {
-            return response()->json(['status' => 'Absen Gagal']);
+            return response()->json(['status' => 'Kode Gagal']);
         }
     }
 
