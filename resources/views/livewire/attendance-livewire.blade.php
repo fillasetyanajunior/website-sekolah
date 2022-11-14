@@ -1,4 +1,4 @@
-<table class="table card-table table-vcenter text-nowrap datatable">
+<table class="table card-table table-vcenter text-nowrap datatable" wire:poll.10000ms>
     <thead>
         <tr>
             <th>No.</th>

@@ -22,11 +22,12 @@ class SplashLivewire extends Component
     public function next()
     {
         $this->display = 2;
+        $mapel = Subject::where('matapelajaran', $this->matapelajaran)->first()->id;
         if ($this->kelas == 'X') {
-            $this->materi = MaterialInput::where('guru', Auth::user()->id_guru)->where('matapelajaran', $this->matapelajaran)->where('no_kelas', $this->jurusan_no_kelas)->get();
+            $this->materi = MaterialInput::where('guru', Auth::user()->id_guru)->where('matapelajaran', $mapel)->where('no_kelas', $this->jurusan_no_kelas)->get();
         } else {
             $jurusan        = Department::where('jurusan', $this->jurusan_no_kelas)->first();
-            $this->materi   = MaterialInput::where('guru', Auth::user()->id_guru)->where('matapelajaran', $this->matapelajaran)->where('jurusan', $jurusan->id)->get();
+            $this->materi   = MaterialInput::where('guru', Auth::user()->id_guru)->where('matapelajaran', $mapel)->where('jurusan', $jurusan->id)->get();
         }
     }
 
@@ -38,24 +39,24 @@ class SplashLivewire extends Component
 
     public function submit()
     {
-        $mapel      = Subject::where('matapelajaran', $this->matapelajaran)->first();
-        $jurusan    = Department::where('jurusan', $this->jurusan_no_kelas)->first();
+        $mapel      = Subject::where('matapelajaran', $this->matapelajaran)->first()->id;
         if ($this->kelas == 'X') {
             $material = MaterialInput::create([
                 'judul'         => $this->judul,
                 'pembahasan'    => $this->description,
                 'kelas'         => $this->kelas,
-                'matapelajaran' => $mapel->id,
+                'matapelajaran' => $mapel,
                 'no_kelas'      => $this->jurusan_no_kelas,
                 'guru'          => Auth::user()->id_guru,
             ]);
         } else {
+            $jurusan    = Department::where('jurusan', $this->jurusan_no_kelas)->first()->id;
             $material = MaterialInput::create([
                 'judul'         => $this->judul,
                 'pembahasan'    => $this->description,
                 'kelas'         => $this->kelas,
-                'matapelajaran' => $mapel->id,
-                'jurusan'       => $jurusan->id,
+                'matapelajaran' => $mapel,
+                'jurusan'       => $jurusan,
                 'guru'          => Auth::user()->id_guru,
             ]);
         }
