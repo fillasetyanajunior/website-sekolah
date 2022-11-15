@@ -11,6 +11,7 @@ use App\Models\Teacher;
 use App\Models\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ScheduleController extends AppController
 {

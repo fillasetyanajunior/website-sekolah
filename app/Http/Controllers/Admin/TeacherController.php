@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\TeacherExport;
 use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use App\Models\TeacherDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherController extends AppController
 {
@@ -68,6 +70,11 @@ class TeacherController extends AppController
         }
 
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan');
+    }
+
+    public function show()
+    {
+        return Excel::download(new TeacherExport, 'usernameTeacher.xlsx');
     }
 
     public function edit(Request $request)

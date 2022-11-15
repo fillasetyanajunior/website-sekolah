@@ -105,6 +105,7 @@ Route::group([
     Route::get('siswa', [Student::class,'index'])->name('admin.student');
     Route::post('siswa/store', [Student::class, 'store'])->name('admin.student.store');
     Route::post('siswa/edit/{student}', [Student::class, 'edit'])->name('admin.student.edit');
+    Route::post('siswa/show', [Student::class, 'show'])->name('admin.student.show');
     Route::post('siswa/update/{student}', [Student::class, 'update'])->name('admin.student.update');
     Route::delete('siswa/destroy/{student}', [Student::class, 'destroy'])->name('admin.student.destroy');
 
