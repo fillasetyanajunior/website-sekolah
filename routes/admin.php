@@ -112,6 +112,7 @@ Route::group([
     Route::get('guru', [Teacher::class,'index'])->name('admin.teacher');
     Route::post('guru/store', [Teacher::class, 'store'])->name('admin.teacher.store');
     Route::post('guru/edit/{teacher}', [Teacher::class, 'edit'])->name('admin.teacher.edit');
+    Route::post('guru/show', [Teacher::class, 'show'])->name('admin.teacher.show');
     Route::post('guru/update/{teacher}', [Teacher::class, 'update'])->name('admin.teacher.update');
     Route::delete('guru/destroy/{teacher}', [Teacher::class, 'destroy'])->name('admin.teacher.destroy');
 
