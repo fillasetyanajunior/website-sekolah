@@ -7,7 +7,7 @@
             <div class="card-body text-center py-4 p-sm-5">
                 <h1 class="mt-5">MAN Buleleng</h1>
             </div>
-            <div class="hr-text hr-text-center hr-text-spaceless">your data</div>
+            <div class="hr-text hr-text-center hr-text-spaceless"></div>
             <div class="card-body">
                 <div class="mb-3">
                     <label class="form-label">Kelas</label>
@@ -91,14 +91,14 @@
             <div class="card-body text-center py-4 p-sm-5">
                 <h1 class="mt-5">MAN Buleleng</h1>
             </div>
-            <div class="hr-text hr-text-center hr-text-spaceless">your data</div>
+            <div class="hr-text hr-text-center hr-text-spaceless"></div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label for="judul" class="form-label">Judul</label>
+                    <label for="judul" class="form-label">Judul Materi</label>
                     <input type="text" wire:model="judul" id="judul" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="description" class="form-label">Deskripsi</label>
+                    <label for="description" class="form-label">Pembahasan Materi</label>
                     <textarea wire:model="description" id="description" rows="10" class="form-control"></textarea>
                 </div>
                 <div class="card" style="overflow: auto; white-space: nowrap; padding:10px; height:300px;">
