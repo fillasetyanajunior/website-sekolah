@@ -107,11 +107,11 @@ class AttendanceController extends Controller
         if ($request->kelas == 'X') {
             $student    = StudentDetail::where('kelas', $request->kelas)->where('no_kelas', $request->no_kelas)->get();
             // $schedule   = Schedule::where('kelas', $request->kelas)->where('matapelajaran', $request->matapelajaran)->where('no_kelas', $request->no_kelas)->first();
-                $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $request->matapelajaran)->where('no_kelas', $student->no_kelas)->first();
+            $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $request->kelas)->where('matapelajaran', Crypt::decrypt($request->matapelajaran))->where('no_kelas', $request->no_kelas)->first();
         } else {
-            $student    = StudentDetail::where('kelas', $request->kelas)->where('jurusan', $request->jurusan)->get();
+            $student    = StudentDetail::where('kelas', $request->kelas)->where('jurusan', Crypt::decrypt($request->jurusan))->get();
             // $schedule   = Schedule::where('kelas', $request->kelas)->where('matapelajaran', $request->matapelajaran)->where('jurusan', $request->jurusan)->first();
-                $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $request->matapelajaran)->where('jurusan', $request->jurusan)->first();
+            $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $request->kelas)->where('matapelajaran', Crypt::decrypt($request->matapelajaran))->where('jurusan', $request->jurusan)->first();
         }
 
         $year = Year::find($schedule->tahun);

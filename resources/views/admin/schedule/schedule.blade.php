@@ -81,21 +81,18 @@
                                         <tbody>
                                             <?php $i = 1; ?>
                                             @foreach ($schedule as $showschedule)
-                                                @php
-                                                    $detail = App\Models\Schedule::where('matapelajaran', $showschedule->matapelajaran)->first();
-                                                @endphp
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td class="text-capitalize">{{$detail->hari}}</td>
-                                                    <td>{{App\Models\Subject::find($detail->matapelajaran)->matapelajaran}}</td>
-                                                    <td>{{$detail->guru == 0 ? '' : App\Models\TeacherDetail::find($detail->guru)->nama}}</td>
-                                                    <td>{{App\Models\Year::find($detail->tahun)->tahun . ' - ' . App\Models\Year::find($detail->tahun)->semester}}</td>
-                                                    <td>{{$detail->kelas}}</td>
-                                                    <td>{{$detail->jurusan != null ? App\Models\Department::find($detail->jurusan)->jurusan : ''}}</td>
-                                                    <td>{{$detail->no_kelas}}</td>
+                                                    <td class="text-capitalize">{{$showschedule->hari}}</td>
+                                                    <td>{{App\Models\Subject::find($showschedule->matapelajaran)->matapelajaran}}</td>
+                                                    <td>{{$showschedule->guru == 0 ? '' : App\Models\TeacherDetail::find($showschedule->guru)->nama}}</td>
+                                                    <td>{{App\Models\Year::find($showschedule->tahun)->tahun . ' - ' . App\Models\Year::find($showschedule->tahun)->semester}}</td>
+                                                    <td>{{$showschedule->kelas}}</td>
+                                                    <td>{{$showschedule->jurusan != null ? App\Models\Department::find($showschedule->jurusan)->jurusan : ''}}</td>
+                                                    <td>{{$showschedule->no_kelas}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-warning" id="editjadwal" data-bs-toggle="modal" data-bs-target="#JadwalModal" data-id="{{Crypt::encrypt($detail->id)}}">Ubah</button>
-                                                        <form action="{{route('admin.schedule.destroy', Crypt::encrypt($detail->id))}}" method="post" class="d-inline">
+                                                        <button type="button" class="btn btn-sm btn-warning" id="editjadwal" data-bs-toggle="modal" data-bs-target="#JadwalModal" data-id="{{Crypt::encrypt($showschedule->id)}}">Ubah</button>
+                                                        <form action="{{route('admin.schedule.destroy', Crypt::encrypt($showschedule->id))}}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-sm btn-primary">Hapus</button>

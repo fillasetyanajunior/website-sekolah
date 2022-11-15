@@ -162,7 +162,7 @@
                 }
             });
 
-            $('#editabsen').click(function () {
+            $('#editabsen*').click(function () {
                 var id   = $(this).data('id');
                 $.ajax({
                     type: 'POST',
@@ -273,9 +273,7 @@
                     },
                     success: function (hasil) {
                         if (hasil.status_code == 200) {
-                            console.log("berhasil bang");
-                        }else{
-                            console.log("gagal bang");
+                            location.reload();
                         }
                     }
                 });
