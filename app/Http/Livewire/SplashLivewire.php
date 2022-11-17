@@ -39,7 +39,7 @@ class SplashLivewire extends Component
 
     public function submit()
     {
-        $mapel      = Subject::where('matapelajaran', $this->matapelajaran)->first()->id;
+        $mapel = Subject::where('matapelajaran', $this->matapelajaran)->first()->id;
         if ($this->kelas == 'X') {
             $material = MaterialInput::create([
                 'judul'         => $this->judul,
@@ -51,7 +51,7 @@ class SplashLivewire extends Component
             ]);
         } else {
             $jurusan    = Department::where('jurusan', $this->jurusan_no_kelas)->first()->id;
-            $material = MaterialInput::create([
+            $material   = MaterialInput::create([
                 'judul'         => $this->judul,
                 'pembahasan'    => $this->description,
                 'kelas'         => $this->kelas,

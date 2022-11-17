@@ -10,6 +10,7 @@ use App\Models\Schedule;
 use App\Models\Teaching;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DashboardController extends AppController
 {
@@ -42,10 +43,12 @@ class DashboardController extends AppController
         // }
         if ($material->kelas == 'X') {
             $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
-                                ->where('no_kelas', $material->no_kelas)->where('hari', $hari[date('N')])->get();
+                                ->where('no_kelas', $material->no_kelas)->where('hari', Str::lower($hari[date('N')]))->get();
+            $schedulecount  = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)->where('no_kelas', $material->no_kelas)->where('hari', Str::lower($hari[date('N')]))->count();
         } else {
+            $schedulecount  = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)->where('jurusan', $material->jurusan)->where('hari', Str::lower($hari[date('N')]))->count();
             $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
-                                ->where('jurusan', $material->jurusan)->where('hari', $hari[date('N')])->get();
+                                ->where('jurusan', $material->jurusan)->where('hari', Str::lower($hari[date('N')]))->get();
         }
 
         if (count($schedule) == 1) {
@@ -62,6 +65,6 @@ class DashboardController extends AppController
         $studentcount   = Attendance::where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)->where('tanggal', date('Y-m-d'))->count();
         $students       = Attendance::where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)->where('tanggal', date('Y-m-d'))->get();
 
-        return view('attendance.dashboard', compact('title', 'material', 'jam_start', 'jam_end', 'schedule', 'hari', 'studentcount', 'students'));
+        return view('attendance.dashboard', compact('title', 'material', 'jam_start', 'jam_end', 'schedule', 'hari', 'studentcount', 'students', 'schedulecount'));
     }
 }

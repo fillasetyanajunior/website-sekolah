@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class AttendanceController extends Controller
 {
@@ -24,7 +25,7 @@ class AttendanceController extends Controller
             'Selasa',
             'Rabu',
             'Kamis',
-            'Jumat',
+            'Jum`at',
             'Sabtu',
             'Minggu'
         );
@@ -38,13 +39,12 @@ class AttendanceController extends Controller
         //     $schedule   = Schedule::where('kelas', $student->kelas)->where('matapelajaran', $request->matapelajaran)->where('jurusan', $student->jurusan)->first();
         // }
         if ($student->kelas == 'X') {
-            $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $request->matapelajaran)->where('no_kelas', $student->no_kelas)->first();
+            $schedule   = Schedule::where('hari', Str::lower($hari[date('N')]))->where('kelas', $student->kelas)->where('matapelajaran', Crypt::decrypt($request->matapelajaran))->where('no_kelas', $student->no_kelas)->first();
         } else {
-            $jurusan    = Department::where('jurusan', $student->jurusan)->first();
-            $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $student->kelas)->where('matapelajaran', $request->matapelajaran)->where('jurusan', $jurusan->id)->first();
+            $schedule   = Schedule::where('hari', Str::lower($hari[date('N')]))->where('kelas', $student->kelas)->where('matapelajaran', Crypt::decrypt($request->matapelajaran))->where('jurusan', $student->jurusan)->first();
         }
 
-        $year       = Year::find($schedule->tahun);
+        $year = Year::find($schedule->tahun);
 
         if ($request->keterangan == 1) {
             $keterangan = 'Izin';
@@ -106,46 +106,49 @@ class AttendanceController extends Controller
 
         if ($request->kelas == 'X') {
             $student    = StudentDetail::where('kelas', $request->kelas)->where('no_kelas', $request->no_kelas)->get();
-            // $schedule   = Schedule::where('kelas', $request->kelas)->where('matapelajaran', $request->matapelajaran)->where('no_kelas', $request->no_kelas)->first();
             $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $request->kelas)->where('matapelajaran', Crypt::decrypt($request->matapelajaran))->where('no_kelas', $request->no_kelas)->first();
+            // $schedule   = Schedule::where('kelas', $request->kelas)->where('matapelajaran', $request->matapelajaran)->where('no_kelas', $request->no_kelas)->first();
         } else {
             $student    = StudentDetail::where('kelas', $request->kelas)->where('jurusan', Crypt::decrypt($request->jurusan))->get();
+            $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $request->kelas)->where('matapelajaran', Crypt::decrypt($request->matapelajaran))->where('jurusan', Crypt::decrypt($request->jurusan))->first();
             // $schedule   = Schedule::where('kelas', $request->kelas)->where('matapelajaran', $request->matapelajaran)->where('jurusan', $request->jurusan)->first();
-            $schedule   = Schedule::where('hari', $hari[date('N')])->where('kelas', $request->kelas)->where('matapelajaran', Crypt::decrypt($request->matapelajaran))->where('jurusan', $request->jurusan)->first();
         }
 
         $year = Year::find($schedule->tahun);
 
         if (Student::where('id_siswa', $student[0]->id)->first() != null) {
             foreach ($student as $showstudent) {
-                if ($request->kelas == 'X') {
-                    Attendance::create([
-                        'id_siswa'      => $showstudent->id,
-                        'nis'           => Student::where('id_siswa', $showstudent->id)->first()->username,
-                        'matapelajaran' => $schedule->matapelajaran,
-                        'no_kelas'      => $request->no_kelas,
-                        'guru'          => $schedule->guru,
-                        'tahun'         => $year->tahun,
-                        'kelas'         => $request->kelas,
-                        'tanggal'       => date('Y-m-d'),
-                        'semester'      => $year->semester,
-                        'jam'           => date('H:i:s'),
-                        'keterangan'    => 'Hadir',
-                    ]);
-                } else {
-                    Attendance::create([
-                        'id_siswa'      => $showstudent->id,
-                        'nis'           => Student::where('id_siswa', $showstudent->id)->first()->username,
-                        'matapelajaran' => $schedule->matapelajaran,
-                        'jurusan'       => $request->jurusan,
-                        'guru'          => $schedule->guru,
-                        'tahun'         => $year->tahun,
-                        'kelas'         => $request->kelas,
-                        'tanggal'       => date('Y-m-d'),
-                        'semester'      => $year->semester,
-                        'jam'           => date('H:i:s'),
-                        'keterangan'    => 'Hadir',
-                    ]);
+                $attendance = Attendance::where('id_siswa', $showstudent->id)->where('tanggal', date('Y-m-d'))->first();
+                if ($attendance == null) {
+                    if ($request->kelas == 'X') {
+                        Attendance::create([
+                            'id_siswa'      => $showstudent->id,
+                            'nis'           => Student::where('id_siswa', $showstudent->id)->first()->username,
+                            'matapelajaran' => $schedule->matapelajaran,
+                            'no_kelas'      => $request->no_kelas,
+                            'guru'          => $schedule->guru,
+                            'tahun'         => $year->tahun,
+                            'kelas'         => $request->kelas,
+                            'tanggal'       => date('Y-m-d'),
+                            'semester'      => $year->semester,
+                            'jam'           => date('H:i:s'),
+                            'keterangan'    => 'Hadir',
+                        ]);
+                    } else {
+                        Attendance::create([
+                            'id_siswa'      => $showstudent->id,
+                            'nis'           => Student::where('id_siswa', $showstudent->id)->first()->username,
+                            'matapelajaran' => $schedule->matapelajaran,
+                            'jurusan'       => Crypt::decrypt($request->jurusan),
+                            'guru'          => $schedule->guru,
+                            'tahun'         => $year->tahun,
+                            'kelas'         => $request->kelas,
+                            'tanggal'       => date('Y-m-d'),
+                            'semester'      => $year->semester,
+                            'jam'           => date('H:i:s'),
+                            'keterangan'    => 'Hadir',
+                        ]);
+                    }
                 }
             }
             return response()->json(['status_code' => 200]);

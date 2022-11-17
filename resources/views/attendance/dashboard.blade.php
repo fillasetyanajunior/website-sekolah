@@ -3,10 +3,10 @@
 @section('content')
     <div class="page">
         <div class="page-wrapper">
-            <div class="page-body">
-                <div class="container-xl">
-                    <div class="row g-4">
-                        <div class="col-3">
+            <div class="container-xl">
+                <div class="page-body">
+                    <div class="row g-4 px-2">
+                        <div class="col-lg-3">
                             <div>
                                 <div class="list-group list-group-transparent mb-3">
                                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#ModalAbsenManual">Absen Manual</button>
@@ -14,7 +14,7 @@
                                     <button type="button" class="btn btn-primary mb-5" id="absenall">Absen Semua Siswa</button>
                                     <form action="{{route('attendance.logout')}}" method="post">
                                         @csrf
-                                        <button type="submit" class="btn btn-primary mb-3 col-sm-12" id="logout">Logout</button>
+                                        <button type="submit" class="btn btn-primary mb-3 col-md-12" id="logout">Logout</button>
                                     </form>
                                 </div>
                                 <div class="list-group list-group-transparent mb-3">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-9">
+                        <div class="col-lg-9">
                            <div class="card bg-red mb-5">
                                 <div class="card-body">
                                     <div class="mb-3">
@@ -107,6 +107,16 @@
                                 <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" id="random" class="form-control">
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="keterangan">Keterangan</label>
+                            <select class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan">
+                                <option value="">-- Pilih --</option>
+                                <option value="1">Izin</option>
+                                <option value="2">Tanpa Keterangan</option>
+                                <option value="3">Sakit</option>
+                                <option value="4">Hadir</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -127,8 +137,8 @@
                     </div>
                     <input type="hidden" id="id" name="id">
                     <div class="mb-3">
-                        <label class="form-label" for="keterangan">Keterangan</label>
-                        <select class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" name="keterangan">
+                        <label class="form-label" for="keteranganedit">Keterangan</label>
+                        <select class="form-control @error('keterangan') is-invalid @enderror" id="keteranganedit" name="keterangan">
                             <option value="">-- Pilih --</option>
                             <option value="1">Izin</option>
                             <option value="2">Tanpa Keterangan</option>
@@ -175,23 +185,23 @@
                         $('#nis').val(hasil.nis);
                         $('#id').val(hasil.id);
                         if (hasil.keterangan == 'Izin') {
-                            $('#keterangan').val(1);
+                            $('#keteranganedit').val(1);
                         }else if (hasil.keterangan == 'Tanpa Keterangan') {
-                            $('#keterangan').val(2);
+                            $('#keteranganedit').val(2);
                         }else if (hasil.keterangan == 'Sakit') {
-                            $('#keterangan').val(3);
+                            $('#keteranganedit').val(3);
                         } else {
-                            $('#keterangan').val(4);
+                            $('#keteranganedit').val(4);
                         }
                     }
                 });
             });
 
              $('#submitedit').click(function () {
-                var keterangan  = $('#keterangan').val();
+                var keterangan  = $('#keteranganedit').val();
                 var id          = $('#id').val();
 
-                $('#keterangan').val('');
+                $('#keteranganedit').val('');
                 $('#id').val('');
                 $.ajax({
                     type: 'POST',
@@ -208,9 +218,10 @@
             });
 
             $('#submit').click(function () {
-                var tahun   = $('#tahun').val();
+                var tahun       = $('#tahun').val();
                 var jurusan = $('#jurusan').val();
-                var random  = $('#random').val();
+                var random      = $('#random').val();
+                var keterangan  = $('#keterangan').val();
 
                 $.ajax({
                     type: 'POST',
@@ -219,17 +230,17 @@
                         _token: "{{csrf_token()}}",
                         nis : tahun + jurusan + random,
                         matapelajaran : "{{Crypt::encrypt($material->matapelajaran)}}",
+                        keterangan : keterangan,
                     },
                     success: function (hasil) {
                         if (hasil.status_code == 200) {
-                            startTimer()
                             startTimer(10, "Absen Berhasil", "#00ff1a");
-                            $('#tahun').val('');
-                            $('#jurusan').val('');
-                            $('#random').val('');
                         }else if(hasil.status_code){
                             startTimer(10, "Anda Sudah Absen", "#e5ff00");
                         }
+                        $('#tahun').val('');
+                        $('#jurusan').val('');
+                        $('#random').val('');
                     }
                 });
             });
@@ -371,7 +382,7 @@
             minutes2    = minutes2 < 10 ? "0" + minutes2 : minutes2;
             seconds2    = seconds2 < 10 ? "0" + seconds2 : seconds2;
 
-            $('#lama_sesi').val(hours2 + ":" + minutes2 + ":" + seconds2); // Display the result in the element with id="demo"
+            $('#lama_sesi').val("{{$schedulecount}} Jam Pelajaran (" + hours2 + ":" + minutes2 + ":" + seconds2 + ")"); // Display the result in the element with id="demo"
 
             // Update the count down every 1 second
             var x = setInterval(function () {
