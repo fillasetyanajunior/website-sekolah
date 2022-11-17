@@ -16,7 +16,7 @@ class DashboardController extends AppController
 {
     public function index()
     {
-        $title      = 'Informasi';
+        $title = 'Informasi';
         return view('attendance.splash', compact('title'));
     }
 
@@ -42,13 +42,13 @@ class DashboardController extends AppController
         //                         ->where('jurusan', $material->jurusan)->get();
         // }
         if ($material->kelas == 'X') {
-            $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
-                                ->where('no_kelas', $material->no_kelas)->where('hari', Str::lower($hari[date('N')]))->get();
+            $schedule       = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
+                                      ->where('no_kelas', $material->no_kelas)->where('hari', Str::lower($hari[date('N')]))->get();
             $schedulecount  = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)->where('no_kelas', $material->no_kelas)->where('hari', Str::lower($hari[date('N')]))->count();
         } else {
             $schedulecount  = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)->where('jurusan', $material->jurusan)->where('hari', Str::lower($hari[date('N')]))->count();
-            $schedule = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
-                                ->where('jurusan', $material->jurusan)->where('hari', Str::lower($hari[date('N')]))->get();
+            $schedule       = Schedule::where('guru', Auth::user()->id_guru)->where('kelas', $material->kelas)->where('matapelajaran', $material->matapelajaran)
+                                      ->where('jurusan', $material->jurusan)->where('hari', Str::lower($hari[date('N')]))->get();
         }
 
         if (count($schedule) == 1) {

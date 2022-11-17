@@ -18,13 +18,12 @@ class ScheduleController extends AppController
     public function index()
     {
         $title      = 'Jadwal Pelajaran';
-        $schedule   = Schedule::paginate(20);
         $subject    = Subject::all();
         $teacher    = Teacher::all();
         $year       = Year::all();
         $department = Department::all();
         $class      = StudentDetail::groupBy('no_kelas')->get('no_kelas');
-        return view('admin.schedule.schedule', compact('schedule', 'subject', 'teacher', 'year', 'department', 'title', 'class'));
+        return view('admin.schedule.schedule', compact('subject', 'teacher', 'year', 'department', 'title', 'class'));
     }
 
     public function store(Request $request)

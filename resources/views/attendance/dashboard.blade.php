@@ -219,7 +219,7 @@
 
             $('#submit').click(function () {
                 var tahun       = $('#tahun').val();
-                var jurusan = $('#jurusan').val();
+                var jurusan     = $('#jurusan').val();
                 var random      = $('#random').val();
                 var keterangan  = $('#keterangan').val();
 
@@ -332,7 +332,7 @@
                             }
                         }
                     });
-                },10000);
+                },20000);
             }
 
             $('#selesai').click(function () {
