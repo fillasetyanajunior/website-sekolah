@@ -118,7 +118,12 @@ class AttendanceController extends Controller
 
         if (Student::where('id_siswa', $student[0]->id)->first() != null) {
             foreach ($student as $showstudent) {
-                $attendance = Attendance::where('id_siswa', $showstudent->id)->where('tanggal', date('Y-m-d'))->first();
+                if ($showstudent->kelas == 'X') {
+                    $attendance = Attendance::where('id_siswa', $showstudent->id)->where('tanggal', date('Y-m-d'))->where('kelas', $schedule->kelas)->where('matapelajaran', $schedule->matapelajaran)->where('no_kelas', $schedule->no_kelas)->first();
+                } else {
+                    $attendance = Attendance::where('id_siswa', $showstudent->id)->where('tanggal', date('Y-m-d'))->where('kelas', $schedule->kelas)->where('matapelajaran', $schedule->matapelajaran)->where('jurusan', $schedule->jurusan)->first();
+                }
+
                 if ($attendance == null) {
                     if ($request->kelas == 'X') {
                         Attendance::create([
