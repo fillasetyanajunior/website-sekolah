@@ -212,9 +212,6 @@
                 var jurusan = $('#jurusan').val();
                 var random  = $('#random').val();
 
-                $('#tahun').val('');
-                $('#jurusan').val('');
-                $('#random').val('');
                 $.ajax({
                     type: 'POST',
                     url: "{{route('attendance.attendance.store')}}",
@@ -227,6 +224,9 @@
                         if (hasil.status_code == 200) {
                             startTimer()
                             startTimer(10, "Absen Berhasil", "#00ff1a");
+                            $('#tahun').val('');
+                            $('#jurusan').val('');
+                            $('#random').val('');
                         }else if(hasil.status_code){
                             startTimer(10, "Anda Sudah Absen", "#e5ff00");
                         }
