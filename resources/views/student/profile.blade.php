@@ -21,7 +21,8 @@
             </div>
             <div class="page-body">
                 <div class="container-fluid">
-                    <form action="{{route('student.profile.update', Crypt::encrypt($student->id))}}" class="row row-deck row-cards">
+                    <form action="{{route('student.profile.update', Crypt::encrypt($student->id))}}" method="POST" class="row row-deck row-cards">
+                        @csrf
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
