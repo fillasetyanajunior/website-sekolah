@@ -27,7 +27,7 @@ class AttendanceApiController extends Controller
             'Selasa',
             'Rabu',
             'Kamis',
-            'Jumat',
+            'Jum`at',
             'Sabtu',
             'Minggu'
         );

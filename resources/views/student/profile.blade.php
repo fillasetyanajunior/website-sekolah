@@ -192,8 +192,8 @@
                                             <input type="text" class="form-control" id="rt" name="rt" value="{{$student->rt}}">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label" for="alamat">Nama Jalan/Gang</label>
-                                            <input type="text" class="form-control" id="alamat" name="nama_jalan" value="{{$student->alamat}}">
+                                            <label class="form-label" for="alamat">Alamat</label>
+                                            <input type="text" class="form-control" id="alamat" name="alamat" value="{{$student->alamat}}">
                                         </div>
                                     </div>
                                     <div class="mb-3">

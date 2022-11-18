@@ -21,7 +21,7 @@ class ScheduleApiController extends Controller
             'Selasa',
             'Rabu',
             'Kamis',
-            'Jumat',
+            'Jum`at',
             'Sabtu',
             'Minggu'
         );
