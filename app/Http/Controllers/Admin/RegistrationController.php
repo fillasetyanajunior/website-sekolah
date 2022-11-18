@@ -47,7 +47,7 @@ class RegistrationController extends AppController
                 'tanggal_lahir'     => $detail->tanggal_lahir,
                 'jenis_kelamin'     => $detail->jenis_kelamin,
                 'agama'             => $detail->agama,
-                'nomer_hp'          => $detail->nomer_hp,
+                'nomer_hp'          => $detail->nomerhp,
                 'email'             => $detail->email,
                 'nama_ibu'          => $detail->nama_ibu,
                 'nama_bapak'        => $detail->nama_bapak,

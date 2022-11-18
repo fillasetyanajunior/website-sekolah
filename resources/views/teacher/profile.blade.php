@@ -69,10 +69,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="d-flex">
+                                <button type="submit" class="btn btn-primary ms-auto">Update</button>
+                            </div>
                         </form>
-                        <div class="d-flex">
-                            <button type="submit" class="btn btn-primary ms-auto">Update</button>
-                        </div>
                     </div>
                 </div>
             </div>

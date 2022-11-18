@@ -21,7 +21,7 @@
             </div>
             <div class="page-body">
                 <div class="container-fluid">
-                    <div class="row row-deck row-cards">
+                    <form action="{{route('student.profile.update', Crypt::encrypt($student->id))}}" class="row row-deck row-cards">
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
@@ -223,7 +223,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="d-flex">
+                            <button type="submit" class="btn btn-primary ms-auto">Update</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <x-footer></x-footer>

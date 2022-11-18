@@ -21,6 +21,7 @@ Route::group([
 
     Route::get('/', [Dashboard::class, 'index'])->name('student.dashboard');
     Route::get('profile', [Dashboard::class, 'profile'])->name('student.profile');
+    Route::post('profile', [Dashboard::class, 'update'])->name('student.profile.update');
 
     Route::get('nilai', [Grade::class, 'index'])->name('student.grade');
 
