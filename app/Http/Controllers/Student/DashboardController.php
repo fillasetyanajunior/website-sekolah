@@ -40,6 +40,7 @@ class DashboardController extends AppController
 
     public function update(Request $request)
     {
+
         StudentDetail::where('id', Crypt::decrypt($request->id))
                     ->update([
                         'nisn'              => $request->nisn,
