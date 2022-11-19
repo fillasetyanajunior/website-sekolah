@@ -19,7 +19,7 @@ class UpdateDataController extends Controller
         foreach ($attendance as $showattendance) {
             Attendance::where('id', $showattendance->id)
                 ->update([
-                    'jam' => $request->jam . ':' . rand(1,60) . ':' . rand(1, 60)
+                    'jam' => $request->jam . ':' . rand(1,59) . ':' . rand(1, 59)
                 ]);
         }
 
