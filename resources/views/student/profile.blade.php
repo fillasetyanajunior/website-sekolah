@@ -55,11 +55,11 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="nomerhp">Nomer Hp</label>
-                                        <input type="text" class="form-control" id="nomerhp" value="{{$student->nomer_hp}}">
+                                        <input type="text" class="form-control" id="nomerhp" name="nomerhp" value="{{$student->nomer_hp}}">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="email">E-mail</label>
-                                        <input type="email" class="form-control" id="email" value="{{$student->email}}">
+                                        <input type="email" class="form-control" id="email" name="email" value="{{$student->email}}">
                                     </div>
                                 </div>
                             </div>

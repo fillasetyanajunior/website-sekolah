@@ -45,7 +45,7 @@ class DashboardController extends AppController
                         'nisn'              => $request->nisn,
                         'tempat_lahir'      => $request->tempat_lahir,
                         'tanggal_lahir'     => $request->tanggal_lahir,
-                        'nomer_hp'          => $request->nomer_hp != null ? $request->nomer_hp : '-',
+                        'nomer_hp'          => $request->nomerhp != null ? $request->nomerhp : '-',
                         'email'             => $request->email != null ? $request->email : '-',
                         'nama_ibu'          => $request->nama_ibu,
                         'pendidikan_ibu'    => $request->pendidikan_ibu != null ? $request->pendidikan_ibu : 0,

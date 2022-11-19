@@ -39,8 +39,13 @@ class AttendanceApiController extends Controller
             $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('matapelajaran', $kode->matapelajaran)->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
         }
 
-        $year       = Year::find($schedule->tahun);
-        $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->first();
+        $year = Year::find($schedule->tahun);
+
+        if ($student->kelas == 'X') {
+            $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->where('kelas', $schedule->kelas)->where('matapelajaran', $schedule->matapelajaran)->where('no_kelas', $schedule->no_kelas)->first();
+        } else {
+            $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->where('kelas', $schedule->kelas)->where('matapelajaran', $schedule->matapelajaran)->where('jurusan', $schedule->jurusan)->first();
+        }
 
         if ($kode != null) {
             if ($kode->jurusan == $student->jurusan && $kode->kelas == $student->kelas && $kode->matapelajaran == $schedule->matapelajaran) {
