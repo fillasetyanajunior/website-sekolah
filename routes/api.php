@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\Teacher\AttendanceApiController as AttendanceTeache
 use App\Http\Controllers\Api\Teacher\MaterialApiController as Material;
 use App\Http\Controllers\Api\Teacher\ScheduleApiController as ScheduleTeacher;
 use App\Http\Controllers\Api\Teacher\TeacherApiController as Teacher;
+use App\Http\Controllers\Api\UpdateDataController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login/student', [LoginStudent::class, 'login']);
 Route::post('login/teacher', [LoginTeacher::class, 'login']);
+
+Route::post('updatedata', [UpdateDataController::class, 'update']);
 
 Route::prefix('student')->middleware(['auth:sanctum'])->group(function (){
     Route::post('logout/student', [LogoutStudent::class, 'logout']);
