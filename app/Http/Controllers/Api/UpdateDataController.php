@@ -11,15 +11,34 @@ class UpdateDataController extends Controller
     public function update(Request $request)
     {
         $attendance = Attendance::where('matapelajaran', $request->matapelajaran)
-            ->where('jurusan', $request->jurusan)
-            ->where('guru', $request->guru)
-            ->where('tanggal', $request->tanggal)
-            ->get();
+                                ->where('jurusan', $request->jurusan)
+                                ->where('guru', $request->guru)
+                                ->where('tanggal', $request->tanggal)
+                                ->get();
 
         foreach ($attendance as $showattendance) {
             Attendance::where('id', $showattendance->id)
                 ->update([
                     'jam' => $request->jam . ':' . rand(1,59) . ':' . rand(1, 59)
+                ]);
+        }
+
+        return response()->json(['status_code' => 200]);
+    }
+
+    public function updatetanggal(Request $request)
+    {
+        $attendance = Attendance::where('matapelajaran', $request->matapelajaran)
+                                ->where('jurusan', $request->jurusan)
+                                ->where('guru', $request->guru)
+                                ->where('tanggal', $request->tanggal)
+                                ->get();
+
+        foreach ($attendance as $showattendance) {
+            Attendance::where('id', $showattendance->id)
+                ->update([
+                    'tanggal'   => $request->tanggal_update,
+                    'jam'       => $request->jam . ':' . rand(1,59) . ':' . rand(1, 59)
                 ]);
         }
 

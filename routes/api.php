@@ -34,6 +34,7 @@ Route::post('login/student', [LoginStudent::class, 'login']);
 Route::post('login/teacher', [LoginTeacher::class, 'login']);
 
 Route::post('updatedata', [UpdateDataController::class, 'update']);
+Route::post('update-date', [UpdateDataController::class, 'updatetanggal']);
 
 Route::prefix('student')->middleware(['auth:sanctum'])->group(function (){
     Route::post('logout/student', [LogoutStudent::class, 'logout']);
