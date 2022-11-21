@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                            </div>
-                           @livewire('attendance-dashboard-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan, 'guru' = >$material->guru])
+                           @livewire('attendance-dashboard-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan, 'guru' => $material->guru])
                         </div>
                     </div>
                 </div>
