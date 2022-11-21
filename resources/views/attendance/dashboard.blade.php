@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                            </div>
-                           @livewire('attendance-dashboard-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan])
+                           @livewire('attendance-dashboard-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan, 'guru' = >$material->guru])
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-lg-6" style="overflow: auto; white-space: nowrap; padding:10px; height:300px;">
                             <div class="table-responsive">
-                                @livewire('attendance-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan])
+                                @livewire('attendance-livewire', ['kelas' => $material->kelas, 'matapelajaran' => $material->matapelajaran, 'no_kelas' => $material->no_kelas, 'jurusan' => $material->jurusan, 'guru' => $material->guru])
                             </div>
                         </div>
                     </div>
