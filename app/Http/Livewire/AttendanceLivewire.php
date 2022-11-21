@@ -20,10 +20,10 @@ class AttendanceLivewire extends Component
     public function render()
     {
         if ($this->kelas == 'X') {
-            $students = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('guru', $this->guru)->where('no_kelas', $this->no_kelas)->where('tanggal', date('Y-m-d'))->get();
+            $attendance = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('guru', $this->guru)->where('no_kelas', $this->no_kelas)->where('tanggal', date('Y-m-d'))->get();
         } else {
-            $students = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('guru', $this->guru)->where('jurusan', $this->jurusan)->where('tanggal', date('Y-m-d'))->get();
+            $attendance = Attendance::where('kelas', $this->kelas)->where('matapelajaran', $this->matapelajaran)->where('guru', $this->guru)->where('jurusan', $this->jurusan)->where('tanggal', date('Y-m-d'))->get();
         }
-        return view('livewire.attendance-livewire', compact('students'));
+        return view('livewire.attendance-livewire', compact('attendance'));
     }
 }
