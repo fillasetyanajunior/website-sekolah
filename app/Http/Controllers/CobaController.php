@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -17,5 +18,7 @@ class CobaController extends Controller
         //     $bln2 = date('y', strtotime('-' . abs($bln) . 'month', strtotime('+1 year', strtotime('-3 year'))));
         // }
         // dd($bln2);
+        $attendance = Attendance::orderBy('tanggal')->orderBy('matapelajaran')->orderBy('jurusan')->get();
+        return view('coba',compact('attendance'));
     }
 }

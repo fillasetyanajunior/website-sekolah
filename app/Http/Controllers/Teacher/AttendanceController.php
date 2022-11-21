@@ -17,18 +17,18 @@ class AttendanceController extends AppController
     public function index()
     {
         $title      = 'Rekap Absen';
-        $attendance = Attendance::where('guru', Auth::user()->id)->paginate(30);
-        $subject    = Teaching::groupBy('matapelajaran')->where('id_guru', Auth::user()->id)->get('matapelajaran');
-        $class      = Teaching::groupBy('kelas')->where('id_guru', Auth::user()->id)->get('kelas');
-        $no_class   = Teaching::groupBy('no_kelas')->where('id_guru', Auth::user()->id)->get('no_kelas');
-        $department = Teaching::groupBy('jurusan')->where('id_guru', Auth::user()->id)->get('jurusan');
+        $attendance = Attendance::where('guru', Auth::user()->id_guru)->paginate(30);
+        $subject    = Teaching::groupBy('matapelajaran')->where('id_guru', Auth::user()->id_guru)->get('matapelajaran');
+        $class      = Teaching::groupBy('kelas')->where('id_guru', Auth::user()->id_guru)->get('kelas');
+        $no_class   = Teaching::groupBy('no_kelas')->where('id_guru', Auth::user()->id_guru)->get('no_kelas');
+        $department = Teaching::groupBy('jurusan')->where('id_guru', Auth::user()->id_guru)->get('jurusan');
         return view('teacher.attendance.attendance', compact('attendance', 'title', 'subject', 'class', 'no_class', 'department'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'tanggal' => 'required|date',
+            'tanggal'       => 'required|date',
             'matapelajaran' => 'required',
 
         ]);

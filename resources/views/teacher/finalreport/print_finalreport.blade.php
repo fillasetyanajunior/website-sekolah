@@ -61,7 +61,7 @@
             </tbody>
         </table>
         <table class="table table-bordered mb-5">
-            <thead class="text-center align-middle">
+            <thead class="text-center align-middle bg-secondary">
                 <tr>
                     <th>No.</th>
                     <th>Mata Pelajaran</th>
@@ -88,7 +88,7 @@
         </table>
         <table class="table table-bordered mb-5">
             <thead>
-                <tr class="text-center">
+                <tr class="text-center bg-secondary">
                     <th>No.</th>
                     <th>Ektrakulikuler</th>
                     <th>Keterangan</th>
@@ -111,31 +111,31 @@
         <div class="d-flex">
             <div class="">
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="bg-secondary">
                         <tr>
                             <th colspan="2" class="text-center">Ketidakhadiran</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td width="150px">Sakit</td>
-                            <td width="100px">{{$hadir}} Hari</td>
+                            <td class="w-auto">Sakit</td>
+                            <td class="w-auto">{{$sakit}} Hari</td>
                         </tr>
                         <tr>
-                            <td>Izin</td>
-                            <td>{{$izin}} Hari</td>
+                            <td class="w-auto">Izin</td>
+                            <td class="w-auto">{{$izin}} Hari</td>
                         </tr>
                         <tr>
-                            <td>Tanpa Keterangan</td>
-                            <td>{{$tanpaket}} Hari</td>
+                            <td class="w-auto">Tanpa Keterangan</td>
+                            <td class="w-auto">{{$tanpaket}} Hari</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="ms-auto">
+            <div class="ms-auto mt-3 me-5">
                 <div class="d-flex flex-column">
                     <div>
-                        <b>Tempat, Tanggal rapor</b>
+                        <b style="font-size: 11pt;">Tempat, Tanggal rapor</b>
                     </div>
                     <div>
                         &nbsp;
@@ -150,15 +150,21 @@
                         &nbsp;
                     </div>
                     <div>
-                        <b>TTD Wali Kelas</b>
+                        &nbsp;
+                    </div>
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div class="text-center">
+                        <b style="font-size: 11pt;">TTD Wali Kelas</b>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-between">
-            <div class="d-flex flex-column">
+        <div class="row">
+            <div class="col-4 d-flex flex-column text-center">
                 <div>
-                    <b>TTD Orang Tua Peserta Didik</b>
+                    <b style="font-size: 11pt;">TTD Orang Tua Peserta Didik</b>
                 </div>
                 <div>
                     &nbsp;
@@ -173,12 +179,12 @@
                     &nbsp;
                 </div>
                 <div>
-                    <b>.................................................</b>
+                    <b>........................................</b>
                 </div>
             </div>
-            <div class="d-flex flex-column mt-5 mb-5">
+            <div class="col-4 d-flex flex-column my-5">
                 <div class="text-center">
-                    <b>TTD Kepala Sekolah</b>
+                    <b style="font-size: 11pt;">TTD Kepala Sekolah</b>
                 </div>
                 <div>
                     &nbsp;
@@ -193,16 +199,33 @@
                     &nbsp;
                 </div>
                 <div class="text-center">
-                    <b>.................................................</b>
+                    <b>......................................</b>
                 </div>
             </div>
-            <div>
-                &nbsp;
+            <div class="col-4 d-flex flex-column my-5">
+                <div class="text-center">
+                    &nbsp;
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+                <div class="text-center">
+                    &nbsp;
+                </div>
             </div>
         </div>
 
         <script>
-            window.print();
+            // window.print();
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
