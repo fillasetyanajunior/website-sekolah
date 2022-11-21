@@ -14,12 +14,13 @@ class CodeQrController extends AppController
 {
     public function store(Request $request)
     {
-        $int            = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $kode           =  substr(str_shuffle($int), 0, 6);
+        $int    = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $kode   =  substr(str_shuffle($int), 0, 6);
 
         if ($request->kelas == 'X') {
             $qr = QrCode::create([
                 'kode'          => $kode,
+                'guru'          => Crypt::decrypt($request->guru),
                 'matapelajaran' => Crypt::decrypt($request->matapelajaran),
                 'no_kelas'      => $request->no_kelas,
                 'kelas'         => $request->kelas,
@@ -27,6 +28,7 @@ class CodeQrController extends AppController
         } else {
             $qr = QrCode::create([
                 'kode'          => $kode,
+                'guru'          => Crypt::decrypt($request->guru),
                 'matapelajaran' => Crypt::decrypt($request->matapelajaran),
                 'jurusan'       => Crypt::decrypt($request->jurusan),
                 'kelas'         => $request->kelas,

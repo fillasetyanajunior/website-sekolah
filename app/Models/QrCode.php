@@ -10,6 +10,7 @@ class QrCode extends Model
     use HasFactory;
     protected $fillable = [
         'kode',
+        'guru',
         'matapelajaran',
         'jurusan',
         'no_kelas',

@@ -34,17 +34,17 @@ class AttendanceApiController extends Controller
         $kode       = QrCode::where('kode', $request->kodeqr)->first();
         $student    = StudentDetail::find(Auth::user()->id_siswa);
         if ($student->kelas == 'X') {
-            $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('matapelajaran', $kode->matapelajaran)->where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->first();
+            $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('guru', $kode->guru)->where('matapelajaran', $kode->matapelajaran)->where('kelas', $student->kelas)->where('no_kelas', $student->no_kelas)->first();
         } else {
-            $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('matapelajaran', $kode->matapelajaran)->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
+            $schedule = Schedule::where('hari', Str::lower($hari[date('N')]))->where('guru', $kode->guru)->where('matapelajaran', $kode->matapelajaran)->where('kelas', $student->kelas)->where('jurusan', $student->jurusan)->first();
         }
 
         $year = Year::find($schedule->tahun);
 
         if ($student->kelas == 'X') {
-            $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->where('kelas', $schedule->kelas)->where('matapelajaran', $schedule->matapelajaran)->where('no_kelas', $schedule->no_kelas)->first();
+            $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->where('kelas', $schedule->kelas)->where('guru', $kode->guru)->where('matapelajaran', $schedule->matapelajaran)->where('no_kelas', $schedule->no_kelas)->first();
         } else {
-            $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->where('kelas', $schedule->kelas)->where('matapelajaran', $schedule->matapelajaran)->where('jurusan', $schedule->jurusan)->first();
+            $attendance = Attendance::where('id_siswa', $student->id)->where('tanggal', date('Y-m-d'))->where('kelas', $schedule->kelas)->where('guru', $kode->guru)->where('matapelajaran', $schedule->matapelajaran)->where('jurusan', $schedule->jurusan)->first();
         }
 
         if ($kode != null) {

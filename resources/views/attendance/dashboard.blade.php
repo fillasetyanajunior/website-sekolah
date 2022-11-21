@@ -301,6 +301,7 @@
                         data: {
                             _token: "{{csrf_token()}}",
                             matapelajaran : "{{Crypt::encrypt($material->matapelajaran)}}",
+                            guru : "{{Crypt::encrypt($material->guru)}}",
                             jurusan : "{{Crypt::encrypt($material->jurusan)}}",
                             no_kelas : "{{$material->no_kelas}}",
                             kelas : "{{$material->kelas}}",
