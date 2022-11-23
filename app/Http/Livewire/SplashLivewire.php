@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Department;
 use App\Models\MaterialInput;
+use App\Models\Schedule;
 use App\Models\Subject;
 use App\Models\Teaching;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,17 @@ class SplashLivewire extends Component
 
     public function render()
     {
-        $allkelas = Teaching::groupBy('kelas')->where('id_guru', Auth::user()->id_guru)->get('kelas');
+        $hari = array(
+            1 =>    'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jum`at',
+            'Sabtu',
+            'Minggu'
+        );
+
+        $allkelas = Schedule::groupBy('kelas')->where('hari', $hari[date('N')])->where('guru', Auth::user()->id_guru)->get('kelas');
         return view('livewire.splash-livewire', compact('allkelas'));
     }
 
@@ -66,23 +77,41 @@ class SplashLivewire extends Component
 
     public function jurusan_no_kelas()
     {
+        $hari = array(
+            1 =>    'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jum`at',
+            'Sabtu',
+            'Minggu'
+        );
         $this->jurusan_no_kelas = '';
-        $this->matapelajaran = '';
+        $this->matapelajaran    = '';
         if ($this->kelas == 'X') {
-            $this->alljurusan_no_kelas = Teaching::orderBy('no_kelas')->where('id_guru', Auth::user()->id_guru)->where('kelas', $this->kelas)->get();
+            $this->alljurusan_no_kelas = Schedule::orderBy('no_kelas')->where('hari', $hari[date('N')])->where('guru', Auth::user()->id_guru)->where('kelas', $this->kelas)->get();
         } else {
-            $this->alljurusan_no_kelas = Teaching::orderBy('jurusan')->where('id_guru', Auth::user()->id_guru)->where('kelas', $this->kelas)->get();
+            $this->alljurusan_no_kelas = Schedule::orderBy('jurusan')->where('hari', $hari[date('N')])->where('guru', Auth::user()->id_guru)->where('kelas', $this->kelas)->get();
         }
     }
 
     public function matapelajaran()
     {
+        $hari = array(
+            1 =>    'Senin',
+            'Selasa',
+            'Rabu',
+            'Kamis',
+            'Jum`at',
+            'Sabtu',
+            'Minggu'
+        );
         $this->matapelajaran = '';
         if ($this->kelas == 'X') {
-            $this->allmatapelajaran = Teaching::orderBy('matapelajaran')->where('id_guru', Auth::user()->id_guru)->where('no_kelas', $this->jurusan_no_kelas)->where('kelas', $this->kelas)->get();
+            $this->allmatapelajaran = Schedule::orderBy('matapelajaran')->where('hari', $hari[date('N')])->where('guru', Auth::user()->id_guru)->where('no_kelas', $this->jurusan_no_kelas)->where('kelas', $this->kelas)->get();
         } else {
             $jurusan                = Department::where('jurusan', $this->jurusan_no_kelas)->first();
-            $this->allmatapelajaran = Teaching::orderBy('matapelajaran')->where('id_guru', Auth::user()->id_guru)->where('jurusan', $jurusan->id)->where('kelas', $this->kelas)->get();
+            $this->allmatapelajaran = Schedule::orderBy('matapelajaran')->where('hari', $hari[date('N')])->where('guru', Auth::user()->id_guru)->where('jurusan', $jurusan->id)->where('kelas', $this->kelas)->get();
         }
     }
 

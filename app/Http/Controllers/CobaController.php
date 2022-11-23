@@ -18,7 +18,21 @@ class CobaController extends Controller
         //     $bln2 = date('y', strtotime('-' . abs($bln) . 'month', strtotime('+1 year', strtotime('-3 year'))));
         // }
         // dd($bln2);
-        $attendance = Attendance::orderBy('tanggal')->orderBy('matapelajaran')->orderBy('jurusan')->get();
-        return view('coba',compact('attendance'));
+        // $angka = [];
+        // $attendance = Attendance::all();
+        // foreach ($attendance as $key => $value) {
+        //     $angka[] = $value->id;
+        // }
+        // $angkaTerkecil = min($angka);
+        // $angkaTerbesar = max($angka);
+
+        // for ($x = $angkaTerkecil; $x <= $angkaTerbesar; $x++) {
+        //     if (!in_array($x, $angka)) {
+        //         echo "$x <- Tidak ditemukan!" . "<br>";
+        //     } else {
+        //         echo "$x" . "<br>";
+        //     }
+        // }
+        // return view('coba',compact('attendance'));
     }
 }

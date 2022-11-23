@@ -58,8 +58,16 @@
                     <label class="form-label">Mata Pelajaran</label>
                     <select class="form-select" wire:model="matapelajaran">
                         <option value="">-- Pilih --</option>
+                        @php
+                            $validmapel = null;
+                        @endphp
                         @foreach ($allmatapelajaran as $showallmatapelajaran)
-                            <option value="{{App\Models\Subject::find($showallmatapelajaran->matapelajaran)->matapelajaran}}">{{App\Models\Subject::find($showallmatapelajaran->matapelajaran)->matapelajaran}}</option>
+                            @if ($showallmatapelajaran->matapelajaran != $validmapel)
+                                <option value="{{App\Models\Subject::find($showallmatapelajaran->matapelajaran)->matapelajaran}}">{{App\Models\Subject::find($showallmatapelajaran->matapelajaran)->matapelajaran}}</option>
+                            @endif
+                            @php
+                                $validmapel = $showallmatapelajaran->matapelajaran;
+                            @endphp
                         @endforeach
                     </select>
                 </div>
