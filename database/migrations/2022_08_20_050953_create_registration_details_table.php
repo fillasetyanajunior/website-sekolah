@@ -26,9 +26,9 @@ class CreateRegistrationDetailsTable extends Migration
             $table->string('email');
             $table->string('nama_ibu');
             $table->string('nama_bapak');
-            $table->integer('nik_ibu');
+            $table->string('nik_ibu');
             $table->integer('pendidikan_ibu');
-            $table->integer('nik_bapak');
+            $table->string('nik_bapak');
             $table->integer('pendidikan_bapak');
             $table->integer('pekerjaan_ibu');
             $table->integer('pekerjaan_bapak');

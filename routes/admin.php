@@ -37,6 +37,7 @@ Route::group([
     Route::post('logout', [Logout::class, 'logout'])->name('admin.logout');
 
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
+    Route::post('testdata', [Dashboard::class, 'testdata'])->name('admin.testdata');
 
     Route::get('input-jadwal', [AddSchedule::class, 'index'])->name('admin.input-schedule');
     Route::post('input-jadwal', [AddSchedule::class, 'store'])->name('admin.input-schedule.store');

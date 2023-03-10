@@ -28,6 +28,7 @@ if ($layout == 'auth'){
 <body class="{!! $class !!}">
     @yield('content')
     <!-- Libs JS -->
+    <script src="{{url('assets/dashboard/dist/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
     <!-- Tabler Core -->
     <script src="{{url('assets/dashboard/dist/js/tabler.min.js')}}"></script>
     <script src="{{url('assets/dashboard/dist/js/demo.min.js')}}"></script>
